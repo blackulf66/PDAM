@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface SubPostsRepository extends JpaRepository<Post, Long> {
 
-    Optional<SubPosts> findByName(String subredditName);
+    Optional<SubPosts> findByPostName(String subredditName);
 
 
 

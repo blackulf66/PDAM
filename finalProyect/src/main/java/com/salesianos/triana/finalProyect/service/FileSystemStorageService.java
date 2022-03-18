@@ -1,9 +1,11 @@
 package com.salesianos.triana.finalProyect.service;
 
+
 import com.salesianos.triana.finalProyect.config.StorageProperties;
 import com.salesianos.triana.finalProyect.exception.FileNotFoundException;
 import com.salesianos.triana.finalProyect.exception.StorageException;
 import com.salesianos.triana.finalProyect.utils.MediaTypeUrlResource;
+import lombok.SneakyThrows;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -208,6 +210,6 @@ public class FileSystemStorageService implements StorageService {
         ImageIO.write(scalada , extension ,baos);
 
         return new MockMultipartFile(finalName , baos.toByteArray());
-     }
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.salesianos.triana.finalProyect.security.jwt;
 
 
-import com.salesianostriana.dam.users.models.UserEntity;
+import com.salesianos.triana.finalProyect.model.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -24,7 +24,7 @@ public class JwtProvider {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    @Value("${jwt.secret:traingamefoosdespidermandijojjj}")
+    @Value("${jwt.secret:traingamefotosdespidermandijojjj093847uio3hg90834h098gf734hf798h3240rh}")
     private String jwtSecret;
 
     @Value("${jwt.duration:86400}")
@@ -52,10 +52,9 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setHeaderParam("typ", TOKEN_TYPE)
-                .setSubject(user.getId().toString())
+                .setSubject(user.getUserId().toString())
                 .setIssuedAt(tokenExpirationDate)
-                .claim("nick", user.getNick())
-                .claim("role", user.getRole().name())
+                .claim("nick", user.getUsername())
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .compact();
 

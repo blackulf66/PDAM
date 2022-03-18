@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.dto.post;
 
+import com.salesianos.triana.finalProyect.model.Categoria;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,8 @@ public class GetPostDto {
     private UserEntity userEntity;
 
     private Instant createdDate;
+
+    private Categoria categoria;
 
     private SubPosts subposts;
 }

@@ -42,6 +42,8 @@ public class Post {
 
     private Instant createdDate;
 
+    private Categoria categoria;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private SubPosts subposts;

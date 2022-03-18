@@ -14,6 +14,7 @@ public class PostDtoConverter {
                 .userEntity(c.getUserEntity())
                 .subposts(c.getSubposts())
                 .imagenPortada(c.getImagenPortada())
+                .categoria(c.getCategoria())
                 .build();
     }
 
@@ -27,6 +28,7 @@ public class PostDtoConverter {
                 .userEntity(c.getUserEntity())
                 .subposts(c.getSubposts())
                 .imagenPortada(c.getImagenportada())
+                .categoria(c.getCategoria())
                 .build();
     }
 

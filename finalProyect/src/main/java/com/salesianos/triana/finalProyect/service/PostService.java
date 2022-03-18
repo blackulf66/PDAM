@@ -134,7 +134,7 @@ public class PostService {
 
     public List<GetPostDto> findByPostEnum(SubPosts subreddit) {
 
-        List<Post> listaa = postRepository.findAllBySubreddit(subreddit);
+        List<Post> listaa = postRepository.findAllBySubposts(subreddit);
 
        return listaa.stream().map(postDtoConverter::postToGetPostDto).toList();
     }
