@@ -1,0 +1,171 @@
+package service;
+
+import com.salesianostriana.dam.dto.post.CreatePostDto;
+import com.salesianostriana.dam.dto.post.GetPostDto;
+import com.salesianostriana.dam.dto.post.PostDtoConverter;
+import com.salesianostriana.dam.exception.SingleEntityNotFoundException;
+import com.salesianostriana.dam.model.Post;
+import com.salesianostriana.dam.model.PostEnum;
+import com.salesianostriana.dam.repository.PostRepository;
+import com.salesianostriana.dam.users.models.UserEntity;
+import com.salesianostriana.dam.users.repositorys.UserEntityRepository;
+import exception.FileNotFoundException;
+import lombok.RequiredArgsConstructor;
+import model.UserEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import repository.PostRepository;
+import repository.SubPostsRepository;
+
+import javax.imageio.ImageIO;
+import javax.persistence.EntityNotFoundException;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class PostService {
+
+    private final PostRepository postRepository;
+    private final SubPostsRepository subPostsRepository;
+    private final StorageService storageService;
+    private final PostDtoConverter postDtoConverter;
+    private final UserEntityRepository userEntityRepository;
+
+    public Post save(CreatePostDto createPostDto, MultipartFile file ,UserEntity user) throws IOException {
+
+        String filenameOriginal = storageService.store(file);
+
+        String filename = storageService.store(file);
+
+        String extension = StringUtils.getFilenameExtension(filename);
+
+        BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+        BufferedImage escaledImage = storageService.simpleResizer(originalImage,1024);
+
+        OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
+
+        OutputStream outputStream2 = Files.newOutputStream(storageService.load(filenameOriginal));
+
+        ImageIO.write(escaledImage,extension,outputStream);
+
+        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(filename)
+                .toUriString();
+
+        Post post3 = Post.builder()
+                .titulo(createPostDto.getTitulo())
+                .texto(createPostDto.getTexto())
+                .postEnum(createPostDto.getPostEnum())
+                .imagen(uri)
+                .user(user)
+                .build();
+
+        userEntityRepository.save(user);
+
+        return postRepository.save(post3);
+    }
+
+    public void deletePost(Long id, UserEntity usuario) throws FileNotFoundException {
+
+        usuario = usuarioRepository.findFirstByNickname(usuario.getNickname()).get();
+        Optional<Post> postAEliminar = postRepository.findById(id);
+
+        if(postAEliminar.isPresent()) {
+            storageService.deleteFile(postAEliminar.get().getUrlFichero1());
+            storageService.deleteFile(postAEliminar.get().getUrlFichero2());
+            postRepository.deleteById(id);
+        }
+
+        else if(!usuario.equals(postAEliminar.get().getUsuarioPublicacion())){
+            throw new FileNotFoundException("No encontrado");
+        }
+        else {
+            throw new EntityNotFoundException(id, Post.class);
+        }
+
+    }
+
+    public void deletePosts(Long id){
+
+
+        Optional<Post> postAEliminar = postRepository.findById(id);
+
+        if(postAEliminar.isPresent()) {
+            storageService.deleteFile(postAEliminar.get().getUrlFichero1());
+            storageService.deleteFile(postAEliminar.get().getUrlFichero2());
+            postRepository.deleteById(id);
+        }
+
+        else {
+            throw new EntityNotFoundException(id, Post.class);
+        }
+
+    }
+    public Optional<GetPostDto> updatePost (Long id, CreatePostDto p, MultipartFile file ,UserEntity user) throws EntityNotFoundException {
+
+            Optional<Post> data = postRepository.findById(id);
+            String name = StringUtils.cleanPath(String.valueOf(data.get().getImagen())).replace("http://localhost:8080/download", "");
+            Path pa = storageService.load(name);
+            String filename = StringUtils.cleanPath(String.valueOf(pa)).replace("http://localhost:8080/download", "");
+            storageService.deleteFile(filename);
+
+            String or = storageService.storeOr(file);
+            String newFilename = storageService.storePost(file);
+
+            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(newFilename)
+                    .toUriString();
+
+            return data.map(m -> {
+                m.setTitulo(p.getTitulo());
+                m.setTexto(p.getTexto());
+                m.setImagen(uri);
+                postRepository.save(m);
+                return postDtoConverter.postToGetPostDto(m);
+            });
+        }
+
+    public List<GetPostDto> findByPostEnum(PostEnum postEnum) {
+
+        List<Post> listaa = postRepository.findByPostEnum(postEnum);
+
+       return listaa.stream().map(postDtoConverter::postToGetPostDto).toList();
+    }
+
+    public Optional<Post> findPostById(Long id){
+        return postRepository.findById(id);
+    }
+
+    public List<GetPostDto> findPostByUserNickname(String nick, UserEntity user){
+
+        List<Post> publiList = postRepository.findAll();
+        List<Post> publiList1 = postRepository.findByUserNick(nick);
+        List<Post> publiList2 = postRepository.findByPostEnum(PostEnum.PUBLICO);
+        UserEntity u = userEntityRepository.findByNick(nick);
+        UserEntity s = userEntityRepository.findByFollowingContains(user);
+        if(publiList.isEmpty() && publiList.isEmpty()){
+            return Collections.EMPTY_LIST;
+        }else if (!u.equals(s)){
+            return publiList2.stream().map(postDtoConverter::postToGetPostDto).collect(Collectors.toList());
+        }else{
+            return publiList1.stream().map(postDtoConverter::postToGetPostDto).collect(Collectors.toList());
+        }
+
+    }
+
+    }
+
+
