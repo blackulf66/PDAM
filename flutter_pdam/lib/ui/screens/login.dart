@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_const, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants.dart';
@@ -40,17 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
           return LoginBloc(authRepository);
         },
         child: _createBody(context));
-        
   }
 
   _createBody(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.black,
-
       body: Center(
         child: Container(
-            color: Colors.white,
-            padding: const EdgeInsets.fromLTRB(20,0,20,20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: BlocConsumer<LoginBloc, LoginState>(
                 listenWhen: (context, state) {
               return state is LoginSuccessState || state is LoginErrorState;
@@ -71,11 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 return _login(ctx);
               }
             })),
-            
       ),
-      
     );
-    
   }
 
   Future<void> _loginSuccess(BuildContext context, LoginResponse late) async {
@@ -101,27 +94,70 @@ class _LoginScreenState extends State<LoginScreen> {
   _login(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(24.0,0, 24.0, 0),
+        padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
-              padding: const EdgeInsets.only(bottom: 80),
-              child: Center(
-                child: SizedBox(
-                  width: 100.0,
-                  height: 120.0,
-                  child: DecoratedBox(
-                    decoration:  BoxDecoration(
-                      color: Style.VKNGGron,
-                       borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(10.0),
-              bottomLeft: Radius.circular(10.0))
+                padding: const EdgeInsets.only(bottom: 80),
+                child: Center(
+                  child: SizedBox(
+                    width: 100.0,
+                    height: 120.0,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: Style.VKNGGron,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0))),
+                    ),
                   ),
+                )),
+            Center(
+              child: Container(
+                height: 30,
+                width: 300,
+                decoration: BoxDecoration(
+                          color: Style.VKNGGron,
+                          borderRadius: BorderRadius.circular(20)),
+                child: new Row(
+                 children: <Widget>[
+              Expanded(
+                child: Container(),
+                ),
+              new RaisedButton(
+                splashColor: Colors.pinkAccent,
+                color: Colors.transparent,
+                child: new Text(
+                  "login",
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                ),
+                onPressed: () {},
+              ),
+              new Expanded(
+                child: Container(),
+              ),
+              RaisedButton(
+                splashColor: Colors.pinkAccent,
+                color: Colors.transparent,
+                child: new Text(
+                  "signup",
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                ),
+              onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MenuScreen()),
+                  );
+}
+              ),
+              new Expanded(
+                child: Container(),
+              ),
+            ],
                 ),
               ),
-            )),
-            
+            ),
             Padding(
               padding: const EdgeInsets.all(19.0),
               child: Form(
@@ -141,15 +177,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         onSaved: (String? value) {},
                         controller: emailController,
                         decoration: const InputDecoration(
-                          hintText: 'Email',
+                          hintText: 'Email', hintStyle: TextStyle(color:Colors.white),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
                         ),
                       ),
                     ),
-                                                                 Divider(color: Colors.grey,),
-
+                    Divider(
+                      color: Colors.grey,
+                    ),
                     const SizedBox(
                       height: 32,
                     ),
@@ -162,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: true,
                           decoration: const InputDecoration(
                             hintText: 'Password',
+                            hintStyle: TextStyle(color:Colors.white),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -173,8 +211,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : null;
                           }),
                     ),
-                                             Divider(color: Colors.grey,)
-
+                    Divider(
+                      color: Colors.grey,
+                    )
                   ],
                 ),
               ),
@@ -204,7 +243,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           .add(DoLoginEvent(loginDto));
                     }
                   },
-                  child: const Text('Login' , style: TextStyle(color:Colors.black),),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
             ),
@@ -212,7 +254,6 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                
               ),
             ),
           ],
