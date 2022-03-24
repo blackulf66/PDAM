@@ -1,8 +1,12 @@
 
 import 'dart:convert';
-import 'dart:html' as http;
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/auth/login_dto.dart';
+import '../../models/auth/login_response.dart';
 import '../../models/auth/register_dto.dart';
+import '../../models/auth/register_response.dart';
 import 'auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {

@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../models/auth/login_dto.dart';
+import '../../../models/auth/login_response.dart';
+import '../../../repository/authrepository/auth_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
