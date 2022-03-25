@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants.dart';
 import 'package:flutter_application_1/ui/screens/menu_screen.dart';
+import 'package:flutter_application_1/ui/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late Future<SharedPreferences> _prefs;
+  bool _passwordVisible = false;
+
 
   @override
   void initState() {
@@ -75,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _prefs.then((SharedPreferences prefs) {
       prefs.setString('token', late.token);
       prefs.setString('avatar', late.avatar);
-      prefs.setString('nick', late.nick);
+      prefs.setString('username', late.username);
 
       Navigator.push(
         context,
@@ -83,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     });
   }
-
   void _showSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -98,21 +100,28 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-                padding: const EdgeInsets.only(bottom: 80),
-                child: Center(
-                  child: SizedBox(
-                    width: 100.0,
-                    height: 120.0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: Style.VKNGGron,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0))),
-                    ),
-                  ),
-                )),
+             Stack(
+               children: [
+                 Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: Center(
+                      child: SizedBox(
+                        width: 120.0,
+                        height: 120.0,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Style.VKNGGron,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0))),
+                        ),
+                      ),
+                    )),
+                    SizedBox(
+                      
+                    )
+               ],
+             ),
             Center(
               child: Container(
                 height: 30,
@@ -147,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const MenuScreen()),
+                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
                   );
 }
               ),
@@ -177,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onSaved: (String? value) {},
                         controller: emailController,
                         decoration: const InputDecoration(
-                          hintText: 'Email', hintStyle: TextStyle(color:Colors.white),
+                          hintText: 'Email', hintStyle: TextStyle(color:Style.LetraColor),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
@@ -190,27 +199,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 32,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
+                     Container(
+                         decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14.0),
                       ),
-                      child: TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color:Colors.white),
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller: passwordController,
+                            obscureText: !_passwordVisible,
+                            decoration: InputDecoration(
+                             hintText: 'Password',
+                            hintStyle: TextStyle(color:Style.LetraColor),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.grey  ,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
+                              
+                            ),
                           ),
-                          onSaved: (String? value) {},
-                          validator: (value) {
-                            return (value == null || value.isEmpty)
-                                ? 'escribe una contraseña'
-                                : null;
-                          }),
-                    ),
+                        ),
+                    
                     Divider(
                       color: Colors.grey,
                     )
@@ -245,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: const Text(
                     'Login',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),

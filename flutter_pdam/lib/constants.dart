@@ -9,5 +9,6 @@ class Constantes{
 
 class Style{
   static const Color VKNGGron = Color.fromRGBO(96, 176, 128, 1);
-  static const Color LetraColor = Colors.black;
+  static const Color LetraColor = Color.fromARGB(123, 255, 255, 255);
+  
 }
