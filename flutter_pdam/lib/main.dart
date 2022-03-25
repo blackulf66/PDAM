@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ui/screens/home_screen.dart';
 import 'package:flutter_application_1/ui/screens/login.dart';
 import 'package:flutter_application_1/ui/screens/menu_screen.dart';
 import 'package:flutter_application_1/ui/screens/register_screen.dart';
@@ -12,16 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MiarmApp',
+      debugShowCheckedModeBanner: false,
+      title: 'FinalPDAM',
       theme: ThemeData(
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0)
       ),
-      initialRoute: '/register',
+      initialRoute: '/menu',
   routes: {
     '/': (context) => const MenuScreen(),
     '/login' : (context)  => const LoginScreen(),
-    '/register': (context) => const RegisterScreen()
+    '/register': (context) => const RegisterScreen(),
+    '/menu':(context) => const MenuScreen()
+    
 
   },
     );
