@@ -3,9 +3,11 @@ package com.salesianos.triana.finalProyect.dto.user;
 
 import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -23,9 +25,11 @@ public class CreateUserDto {
 
     private String avatar;
 
-    private Instant created;
+    private LocalDateTime created;
 
     private List<SubPosts> subpostList;
+
+    private UserRole userRole;
 
 
 }

@@ -1,10 +1,12 @@
 package com.salesianos.triana.finalProyect.dto.user;
 
 import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,15 +21,15 @@ public class GetUserDto {
 
     private String username;
 
-    private String password;
-
     private String email;
 
     private String avatar;
 
-    private Instant created;
+    private LocalDateTime created;
 
     private List<SubPosts> subpostList;
+
+    private UserRole userRole;
 
 
 }

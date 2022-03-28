@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 
 import java.time.Instant;
+import java.util.UUID;
 
 
 @Data
@@ -18,7 +19,6 @@ import java.time.Instant;
 public class GetPostDto {
 
     private String imagenPortada;
-
 
     private Long postId;
 

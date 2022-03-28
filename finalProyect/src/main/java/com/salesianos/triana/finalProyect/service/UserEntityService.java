@@ -3,6 +3,7 @@ package com.salesianos.triana.finalProyect.service;
 import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
 import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
+import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -55,18 +57,16 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .path(filename)
                 .toUriString();
 
-        if (newUser.getPassword().contentEquals(newUser.getPassword())) {
             UserEntity user = UserEntity.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(uri)
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
                     .Subposts(newUser.getSubpostList())
+                    .created(LocalDateTime.now())
+                    .userRole(newUser.getUserRole())
                     .build();
             return save(user);
-        } else {
-            return null;
-        }
     }
 
     public Optional<UserEntity> finduserById(UUID id) {

@@ -1,6 +1,7 @@
 package com.salesianos.triana.finalProyect.model;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -9,19 +10,21 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
+@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     private UUID userId;
 
     @NotBlank(message = "Username is required")
@@ -36,7 +39,7 @@ public class UserEntity {
 
     private String avatar;
 
-    private Instant created;
+    private LocalDateTime created;
 
     @OneToMany(fetch = LAZY)
     private List<Post> posts;
@@ -44,7 +47,7 @@ public class UserEntity {
     @OneToMany(fetch = LAZY)
     private List<SubPosts> Subposts;
 
-
+    private UserRole userRole;
 
     //Helpers
 
@@ -53,7 +56,7 @@ public class UserEntity {
     }
 
     public String getUsername() {
-        return email;
+        return username;
     }
 
     public boolean isAccountNonExpired() {

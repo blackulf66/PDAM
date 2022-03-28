@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -26,15 +28,15 @@ public class SubPosts {
     private Long id;
 
     @NotBlank(message = "el nombre del subpost es necesario")
-    private String name;
+    private String nombre;
 
-    private String description;
+    private String descripcion;
 
     @OneToMany(fetch = LAZY)
     private List<Post> posts;
 
-    private Instant createdDate;
+    private LocalDateTime createdDate;
     @ManyToOne(fetch = LAZY)
 
-    private UserEntity userEnity;
+    private UserEntity userEntity;
 }
