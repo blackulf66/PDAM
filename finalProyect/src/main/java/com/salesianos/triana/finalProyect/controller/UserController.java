@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,6 +26,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @CrossOrigin
 @RequestMapping("/")
+@Transactional
+
 public class UserController {
 
     private final UserEntityService userEntityService;

@@ -32,8 +32,6 @@ public class GetPostDto {
 
     private Instant createdDate;
 
-    private Categoria categoria;
-
     private SubPosts subposts;
 }
 

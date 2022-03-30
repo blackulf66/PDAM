@@ -18,6 +18,7 @@ import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,7 +35,7 @@ public class PostService {
     private final StorageService storageService;
     private final PostDtoConverter postDtoConverter;
     private final UserEntityRepository userEntityRepository;
-
+    @Transactional
     public Post save(CreatePostDto createPostDto, MultipartFile file , UserEntity user) throws IOException {
 
         String filenameOriginal = storageService.store(file);
@@ -132,7 +133,7 @@ public class PostService {
             });
         }
 
-    public List<GetPostDto> findByPostEnum(SubPosts subreddit) {
+    public List<GetPostDto> findByPostSubPost(SubPosts subreddit) {
 
         List<Post> listaa = postRepository.findAllBySubposts(subreddit);
 

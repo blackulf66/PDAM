@@ -18,6 +18,7 @@ import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,7 +31,7 @@ import java.util.UUID;
 
 @Service("userDetailsService")
 @RequiredArgsConstructor
-
+@Transactional
 public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityRepository> implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;

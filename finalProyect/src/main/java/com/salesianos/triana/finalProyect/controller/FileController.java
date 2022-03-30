@@ -1,7 +1,7 @@
 package com.salesianos.triana.finalProyect.controller;
 
 
-import com.salesianos.triana.finalProyect.dto.post.FileResponse;
+import com.salesianos.triana.finalProyect.dto.FileResponse;
 import com.salesianos.triana.finalProyect.service.StorageService;
 import com.salesianos.triana.finalProyect.utils.MediaTypeUrlResource;
 import lombok.RequiredArgsConstructor;

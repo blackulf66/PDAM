@@ -37,6 +37,18 @@ public class SubPosts {
 
     private LocalDateTime createdDate;
     @ManyToOne(fetch = LAZY)
-
     private UserEntity userEntity;
+
+    //helpers
+
+    public void addToUser(UserEntity u){
+        this.userEntity = u;
+        u.getSubposts().add(this);
+    }
+
+    public void removeFromUser(UserEntity u){
+        u.getSubposts().remove(this);
+        this.userEntity = null;
+    }
+
 }

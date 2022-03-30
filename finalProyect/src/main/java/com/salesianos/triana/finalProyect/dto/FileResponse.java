@@ -1,4 +1,4 @@
-package com.salesianos.triana.finalProyect.dto.post;
+package com.salesianos.triana.finalProyect.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

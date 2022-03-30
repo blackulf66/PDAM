@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 import java.util.UUID;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -43,9 +44,19 @@ public class Post {
 
     private Instant createdDate;
 
-    private Categoria categoria;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private SubPosts subposts;
+
+    //helpers
+
+    public void addToUsuario(UserEntity u){
+        this.userEntity = u;
+        u.getPosts().add(this);
+    }
+
+    public void removeFromUsuario(UserEntity u){
+        u.getPosts().remove(this);
+        this.userEntity = null;
+    }
 }

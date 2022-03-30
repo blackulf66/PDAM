@@ -22,7 +22,6 @@ public class JwtUserResponse {
     private String token;
     private String userRole;
     private LocalDateTime fecha;
-    private List<GetPostDto> posts;
     private List<SubPosts> subPosts;
 
 }

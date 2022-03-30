@@ -1,7 +1,6 @@
 package com.salesianos.triana.finalProyect.security;
 
 
-import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import com.salesianos.triana.finalProyect.security.dto.JwtUserResponse;
 import com.salesianos.triana.finalProyect.security.dto.LoginDto;
 import com.salesianos.triana.finalProyect.security.jwt.JwtProvider;
 
+import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,8 +44,6 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         jwt = jwtProvider.generateToken(authentication);
-
-
         UserEntity user = (UserEntity) authentication.getPrincipal();
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -53,6 +51,7 @@ public class AuthenticationController {
 
     }
 
+    @Transactional
     @GetMapping("me")
     public ResponseEntity<?> tusdatos(@AuthenticationPrincipal UserEntity user){
         return ResponseEntity.ok(convertUserToJwtUserResponse(user, jwt));
