@@ -8,7 +8,6 @@ import com.salesianos.triana.finalProyect.model.UserEntity;
 
 import com.salesianos.triana.finalProyect.model.UserRole;
 import com.salesianos.triana.finalProyect.service.UserEntityService;
-import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,6 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "Los controladores de user")
 @CrossOrigin
 @RequestMapping("/")
 public class UserController {

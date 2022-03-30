@@ -57,7 +57,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .path(filename)
                 .toUriString();
 
-            UserEntity user = UserEntity.builder()
+        UserEntity user = UserEntity.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(uri)
                     .username(newUser.getUsername())
@@ -142,8 +142,8 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return (UserDetails) this.repositorio.findByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException(username + " no encontrado"));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return this.repositorio.findFirstByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
     }
 }

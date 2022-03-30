@@ -27,7 +27,6 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
-    private final PostDtoConverter dto;
 
     String jwt="";
 

@@ -24,7 +24,7 @@ public class JwtProvider {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    @Value("${jwt.secret:traingamefotosdespidermandijojjj093847uio3hg90834h098gf734hf798h3240rh}")
+    @Value("${jwt.secret:somethinginthewaymmmmmmmmmmmmsomethingintheway}")
     private String jwtSecret;
 
     @Value("${jwt.duration:86400}")
@@ -49,13 +49,12 @@ public class JwtProvider {
                         .plusSeconds(jwtLifeInSeconds)
                         .atZone(ZoneId.systemDefault()).toInstant());
 
-
         return Jwts.builder()
                 .setHeaderParam("typ", TOKEN_TYPE)
                 .setSubject(user.getUserId().toString())
                 .setIssuedAt(tokenExpirationDate)
                 .claim("username", user.getUsername())
-                .claim("role", user.getUserRole().name())
+                .claim("userRole", user.getUserRole().name())
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .compact();
 
