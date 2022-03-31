@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ui/screens/home_screen.dart';
-import 'package:flutter_application_1/ui/screens/login.dart';
-import 'package:flutter_application_1/ui/screens/menu_screen.dart';
-import 'package:flutter_application_1/ui/screens/register_screen.dart';
+
+import 'ui/screens/login.dart';
+import 'ui/screens/menu_screen.dart';
+import 'ui/screens/register_screen.dart';
 
 void main() {
   runApp(const MyApp());

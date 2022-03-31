@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/bloc/loginbloc/bloc/login_bloc.dart';
-import 'package:flutter_application_1/ui/screens/login.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -15,12 +14,14 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/image_pick_bloc/bloc/image_pick_bloc.dart';
+import '../../bloc/loginbloc/bloc/login_bloc.dart';
 import '../../bloc/registerbloc/bloc/register_bloc.dart';
 import '../../constants.dart';
 import '../../models/auth/register_dto.dart';
 import '../../models/auth/register_response.dart';
 import '../../repository/authrepository/auth_repository.dart';
 import '../../repository/authrepository/auth_repository_impl.dart';
+import 'login.dart';
 import 'menu_screen.dart';
 
 
@@ -118,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       BuildContext context, RegisterResponse late) async {
     _prefs.then((SharedPreferences prefs) {
       prefs.setString('token', late.email);
-      prefs.setString('id', late.id);
+      prefs.setString('id', late.userId);
       prefs.setString('avatar', late.avatar);
 
       Navigator.push(

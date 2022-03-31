@@ -1,5 +1,6 @@
 
-import 'package:flutter_application_1/ui/screens/post_model.dart';
+
+import 'post_model.dart';
 
 class PostProvider{
 

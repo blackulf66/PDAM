@@ -1,8 +1,10 @@
+import 'package:PDAMFINAL/ui/screens/register_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ui/screens/home_screen.dart';
-import 'package:flutter_application_1/ui/screens/login.dart';
-import 'package:flutter_application_1/ui/screens/register_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home_screen.dart';
+import 'login.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);

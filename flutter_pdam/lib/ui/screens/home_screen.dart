@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/constants.dart';
-import 'package:flutter_application_1/ui/screens/post_model.dart';
-import 'package:flutter_application_1/ui/screens/posts_provider.dart';
 import 'package:fluttericon/typicons_icons.dart';
+
+import '../../constants.dart';
+import 'post_model.dart';
+import 'posts_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);

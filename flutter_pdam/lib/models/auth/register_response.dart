@@ -1,36 +1,40 @@
 class RegisterResponse {
   RegisterResponse({
-    required this.id,
-    required this.avatar,
-    required this.nick,
+    required this.userId,
+    required this.username,
     required this.email,
-    required this.fecha,
-    required this.posts,
+    required this.avatar,
+    required this.created,
+    this.subpostList,
+    required this.userRole,
   });
-  late final String id;
-  late final String avatar;
-  late final String nick;
+  late final String userId;
+  late final String username;
   late final String email;
-  late final Null fecha;
-  late final Null posts;
+  late final String avatar;
+  late final String created;
+  late final Null subpostList;
+  late final String userRole;
   
   RegisterResponse.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    avatar = json['avatar'];
-    nick = json['nick'];
+    userId = json['userId'];
+    username = json['username'];
     email = json['email'];
-    fecha = null;
-    posts = null;
+    avatar = json['avatar'];
+    created = json['created'];
+    subpostList = null;
+    userRole = json['userRole'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['avatar'] = avatar;
-    _data['nick'] = nick;
+    _data['userId'] = userId;
+    _data['username'] = username;
     _data['email'] = email;
-    _data['fecha'] = fecha;
-    _data['posts'] = posts;
+    _data['avatar'] = avatar;
+    _data['created'] = created;
+    _data['subpostList'] = subpostList;
+    _data['userRole'] = userRole;
     return _data;
   }
 }

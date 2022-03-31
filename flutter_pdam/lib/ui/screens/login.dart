@@ -1,17 +1,16 @@
-// ignore_for_file: unnecessary_const, deprecated_member_use
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/constants.dart';
-import 'package:flutter_application_1/ui/screens/menu_screen.dart';
-import 'package:flutter_application_1/ui/screens/register_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/loginbloc/bloc/login_bloc.dart';
+import '../../constants.dart';
 import '../../models/auth/login_dto.dart';
 import '../../models/auth/login_response.dart';
 import '../../repository/authrepository/auth_repository.dart';
 import '../../repository/authrepository/auth_repository_impl.dart';
+import 'menu_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
