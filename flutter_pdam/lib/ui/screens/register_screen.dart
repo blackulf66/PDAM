@@ -220,6 +220,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                             child: TextFormField(
+                              style: TextStyle(
+                            color: Colors.white
+                          ),
                               controller: username,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
@@ -247,6 +250,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                           child: TextFormField(
+                            style: TextStyle(
+                            color: Colors.white
+                          ),
                             controller: emailController,
                             decoration: InputDecoration(
                               prefixIcon: Icon(
@@ -277,6 +283,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                           child: TextFormField(
+                            style: TextStyle(
+                            color: Colors.white
+                          ),
                             keyboardType: TextInputType.text,
                             controller: passwordController,
                             obscureText: !_passwordVisible,
@@ -323,6 +332,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                               child: DateTimeFormField(
+                                
                                 initialDate: DateTime(2000, 10, 11),
                                 firstDate: DateTime.utc(1900),
                                 lastDate: DateTime.now(),
@@ -417,7 +427,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       final loginDto = RegisterDto(
                           username: username.text,
                           email: emailController.text,
-                          password: passwordController.text,);
+                          password: passwordController.text,
+                          role:'USER');
 
                       BlocProvider.of<RegisterBloc>(context)
                           .add(DoRegisterEvent(loginDto, path));

@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19f25d8f-8cef-4fe5-b858-87b187f16883" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../flutter_pdam/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_pdam/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flutter_pdam/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_pdam/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flutter_pdam/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_pdam/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flutter_pdam/lib/ui/screens/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_pdam/lib/ui/screens/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flutter_pdam/lib/ui/screens/register_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_pdam/lib/ui/screens/register_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

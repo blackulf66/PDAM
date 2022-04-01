@@ -40,9 +40,10 @@ class AuthRepositoryImpl extends AuthRepository {
 
     var uri = Uri.parse('http://10.0.2.2:8080/auth/register');
                     var request = http.MultipartRequest('POST', uri);
-                    request.fields['nick'] = registerDto.username;
+                    request.fields['username'] = registerDto.username;
                     request.fields['email'] = registerDto.email;
                     request.fields['password'] = registerDto.password;
+                    request.fields['role'] = registerDto.role;
                     request.files.add(await http.MultipartFile.fromPath('file', imagePath));
                     request.headers.addAll(headers);
                     var response = await request.send();
