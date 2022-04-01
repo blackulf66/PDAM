@@ -25,7 +25,7 @@ public class SubPosts {
     private String imagen;
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    private UUID id;
 
     @NotBlank(message = "el nombre del subpost es necesario")
     private String nombre;

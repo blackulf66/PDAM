@@ -1,8 +1,8 @@
 package com.salesianos.triana.finalProyect.service;
 
-import com.salesianos.triana.finalProyect.dto.post.CreatePostDto;
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
-import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
+import com.salesianos.triana.finalProyect.dto.subpost.CreatesubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
@@ -14,7 +14,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.salesianos.triana.finalProyect.repository.PostRepository;
-import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
@@ -33,10 +32,10 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final StorageService storageService;
-    private final PostDtoConverter postDtoConverter;
+    private final SubPostDtoConverter postDtoConverter;
     private final UserEntityRepository userEntityRepository;
     @Transactional
-    public Post save(CreatePostDto createPostDto, MultipartFile file , UserEntity user) throws IOException {
+    public Post save(CreatesubPostDto createPostDto, MultipartFile file , UserEntity user) throws IOException {
 
         String filenameOriginal = storageService.store(file);
 
@@ -108,7 +107,7 @@ public class PostService {
         }
 
     }
-    public Optional<GetPostDto> updatePost (Long id, CreatePostDto p, MultipartFile file , UserEntity user) throws EntityNotFoundException {
+    public Optional<GetSubPostDto> updatePost (Long id, CreatesubPostDto p, MultipartFile file , UserEntity user) throws EntityNotFoundException {
 
             Optional<Post> data = postRepository.findById(id);
             String name = StringUtils.cleanPath(String.valueOf(data.get().getImagenportada())).replace("http://localhost:8080/download", "");
@@ -133,7 +132,7 @@ public class PostService {
             });
         }
 
-    public List<GetPostDto> findByPostSubPost(SubPosts subreddit) {
+    public List<GetSubPostDto> findByPostSubPost(SubPosts subreddit) {
 
         List<Post> listaa = postRepository.findAllBySubposts(subreddit);
 
