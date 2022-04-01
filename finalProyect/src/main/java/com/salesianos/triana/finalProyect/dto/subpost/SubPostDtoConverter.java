@@ -1,32 +1,33 @@
 package com.salesianos.triana.finalProyect.dto.subpost;
 
 import com.salesianos.triana.finalProyect.model.Post;
+import com.salesianos.triana.finalProyect.model.SubPosts;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SubPostDtoConverter {
-    public CreatesubPostDto createPostDtoToPost(CreatesubPostDto c){
-        return CreatesubPostDto.builder()
-                .postId(c.getPostId())
-                .postName(c.getPostName())
-                .description(c.getDescription())
-                .createdDate(c.getCreatedDate())
+    public CreateSubPostDto createPostDtoToPost(CreateSubPostDto c){
+        return CreateSubPostDto.builder()
+                .id(c.getId())
+                .nombre(c.getNombre())
                 .userEntity(c.getUserEntity())
-                .subposts(c.getSubposts())
-                .imagenPortada(c.getImagenPortada())
+                .createdDate(c.getCreatedDate())
+                .descripcion(c.getDescripcion())
+                .imagen(c.getImagen())
+                .posts(c.getPosts())
                 .build();
     }
 
-    public GetSubPostDto postToGetPostDto(Post c){
+    public GetSubPostDto subPostToGetSubPostDto(SubPosts c){
         return GetSubPostDto
                 .builder()
-                .postId(c.getPostId())
-                .postName(c.getPostName())
-                .description(c.getDescription())
-                .createdDate(c.getCreatedDate())
+                .id(c.getId())
+                .nombre(c.getNombre())
                 .userEntity(c.getUserEntity())
-                .subposts(c.getSubposts())
-                .imagenPortada(c.getImagenportada())
+                .createdDate(c.getCreatedDate())
+                .descripcion(c.getDescripcion())
+                .imagen(c.getImagen())
+                .posts(c.getPosts())
                 .build();
     }
 

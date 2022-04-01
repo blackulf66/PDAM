@@ -12,17 +12,25 @@ import java.util.UUID;
 @Repository
 public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
     @Override
-    /*@Query(
+    @Query(
             """
              select u
              from UserEntity u
              join fetch u.Subposts
              where u.userId = id       
              """
-    )*/
+    )
     Optional<UserEntity> findById(UUID id);
 
     Optional<UserEntity> findByUsername(String username);
+    /*@Query(
+            """
+             select u
+             from UserEntity u
+             join fetch u.posts
+             where u.userId = id       
+             """
+    )*/
 
     Optional<UserEntity> findFirstByEmail(String email);
 }

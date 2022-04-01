@@ -1,14 +1,14 @@
 package com.salesianos.triana.finalProyect.controller;
 
 
-import com.salesianos.triana.finalProyect.dto.subpost.CreatesubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
-import com.salesianos.triana.finalProyect.model.Post;
+import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
-import com.salesianos.triana.finalProyect.repository.PostRepository;
+import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import com.salesianos.triana.finalProyect.service.FileSystemStorageService;
-import com.salesianos.triana.finalProyect.service.PostService;
+import com.salesianos.triana.finalProyect.service.SubPostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,43 +17,45 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.management.Query;
 import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/subpost")
 @RequiredArgsConstructor
 public class SubPostController {
 
-    private final PostService Pservice;
-    private final PostRepository postRepository;
+    private final SubPostsService Pservice;
+    private final SubPostsRepository postRepository;
     private final SubPostDtoConverter postDtoConverter;
     private final FileSystemStorageService fileSystemStorageService;
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
-                                    @RequestParam("postname") String postName,
+                                    @RequestParam("nombre") String nombre,
                                     @RequestParam("descripcion") String description,
                                     @AuthenticationPrincipal UserEntity user) throws IOException {
-        CreatesubPostDto newPost = CreatesubPostDto.builder()
-                .postName(postName)
-                .description(description)
+
+        CreateSubPostDto newPost = CreateSubPostDto.builder()
+                .nombre(nombre)
+                .descripcion(description)
                 .build();
 
-        Post postCreated = Pservice.save(newPost, file , user);
+        SubPosts subPostCreated = Pservice.save(newPost, file , user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postDtoConverter.postToGetPostDto(postCreated));
+                .body(postDtoConverter.subPostToGetSubPostDto(subPostCreated));
     }
-
+/*
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<GetSubPostDto>> updatePublicacion(@PathVariable Long id, @RequestPart("post") CreatesubPostDto updatePost, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
+    public ResponseEntity<Optional<GetSubPostDto>> updatePublicacion(@PathVariable Long id, @RequestPart("post") CreateSubPostDto updatePost, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Pservice.updatePost(id, updatePost, file , user));
 
     }
 
-   /* @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable Long id) throws Exception {
 
         Optional<Post> pOptional = Pservice.findPostById(id);

@@ -44,7 +44,7 @@ public class UserEntity implements UserDetails {
     @OneToMany(fetch = LAZY)
     private List<Post> posts;
 
-    @OneToMany(fetch = EAGER)
+    @OneToMany(fetch = LAZY)
     private List<SubPosts> Subposts;
 
     private UserRole userRole;
