@@ -27,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late Future<SharedPreferences> _prefs;
   bool _passwordVisible = false;
 
-
   @override
   void initState() {
     authRepository = AuthRepositoryImpl();
@@ -48,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Center(
         child: Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: BlocConsumer<LoginBloc, LoginState>(
                 listenWhen: (context, state) {
               return state is LoginSuccessState || state is LoginErrorState;
@@ -85,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     });
   }
+
   void _showSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -99,9 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Stack(
-               children: [
-                 Padding(
+            Stack(
+              children: [
+                Padding(
                     padding: const EdgeInsets.only(bottom: 80),
                     child: Center(
                       child: SizedBox(
@@ -116,58 +116,58 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     )),
-                    SizedBox(
-                      
-                    )
-               ],
-             ),
+                SizedBox()
+              ],
+            ),
             Center(
               child: Container(
                 height: 30,
                 width: 300,
                 decoration: BoxDecoration(
-                          color: Style.VKNGGron,
-                          borderRadius: BorderRadius.circular(20)),
+                    color: Style.VKNGGron,
+                    borderRadius: BorderRadius.circular(20)),
                 child: new Row(
-                 children: <Widget>[
-              Expanded(
-                child: Container(),
-                ),
-              new RaisedButton(
-                splashColor: Colors.pinkAccent,
-                color: Colors.transparent,
-                child: new Text(
-                  "login",
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-                onPressed: () {},
-              ),
-              new Expanded(
-                child: Container(),
-              ),
-              RaisedButton(
-                splashColor: Colors.pinkAccent,
-                color: Colors.transparent,
-                child: new Text(
-                  "signup",
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-              onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                  );
-}
-              ),
-              new Expanded(
-                child: Container(),
-              ),
-            ],
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(),
+                    ),
+                    new RaisedButton(
+                      splashColor: Colors.pinkAccent,
+                      color: Colors.transparent,
+                      child: new Text(
+                        "login",
+                        style:
+                            new TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                      onPressed: () {},
+                    ),
+                    new Expanded(
+                      child: Container(),
+                    ),
+                    RaisedButton(
+                        splashColor: Colors.pinkAccent,
+                        color: Colors.transparent,
+                        child: new Text(
+                          "signup",
+                          style: new TextStyle(
+                              fontSize: 20.0, color: Colors.white),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterScreen()),
+                          );
+                        }),
+                    new Expanded(
+                      child: Container(),
+                    ),
+                  ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(19.0),
+              padding: const EdgeInsets.all(10.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -185,7 +185,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         onSaved: (String? value) {},
                         controller: emailController,
                         decoration: const InputDecoration(
-                          hintText: 'Email', hintStyle: TextStyle(color:Style.LetraColor),
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 24.0,
+                            semanticLabel:
+                                'Text to announce in accessibility modes',
+                          ),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(color: Style.LetraColor),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
@@ -198,38 +206,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 32,
                     ),
-                     Container(
-                         decoration: BoxDecoration(
+                    Container(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14.0),
                       ),
-                          child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            controller: passwordController,
-                            obscureText: !_passwordVisible,
-                            decoration: InputDecoration(
-                             hintText: 'Password',
-                            hintStyle: TextStyle(color:Style.LetraColor),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: passwordController,
+                        obscureText: !_passwordVisible,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                           prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.white,
+                            size: 24.0,
+                            semanticLabel:
+                                'password',
+                          ),
+                          hintText: 'Password',
+                          hintStyle: TextStyle(color: Style.LetraColor),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey,
                             ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey  ,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _passwordVisible = !_passwordVisible;
-                                  });
-                                },
-                              ),
-                              
-                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
                         ),
-                    
+                      ),
+                    ),
                     Divider(
                       color: Colors.grey,
                     )

@@ -222,6 +222,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: TextFormField(
                               controller: username,
                               decoration: InputDecoration(
+                                prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 24.0,
+                            semanticLabel:
+                                'person',
+                          ),
                                 hintText: 'username',
                                 hintStyle: TextStyle(color: Style.LetraColor),
                                 border: OutlineInputBorder(
@@ -242,6 +249,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: TextFormField(
                             controller: emailController,
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                            Icons.email,
+                            color: Colors.white,
+                            size: 24.0,
+                            semanticLabel:
+                                'email',
+                          ),
                               hintText: 'Email',
                               hintStyle: TextStyle(color: Style.LetraColor),
                               border: OutlineInputBorder(
@@ -255,7 +269,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey,
                     ),
                       SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                      
                            Container(
@@ -267,6 +281,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: passwordController,
                             obscureText: !_passwordVisible,
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.white,
+                            size: 24.0,
+                            semanticLabel:
+                                'password',
+                          ),
                              hintText: 'Password',
                             hintStyle: TextStyle(color:Style.LetraColor),
                             border: OutlineInputBorder(
@@ -306,6 +327,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 firstDate: DateTime.utc(1900),
                                 lastDate: DateTime.now(),
                                 decoration: const InputDecoration(
+                                  prefixIcon: Icon(
+                            Icons.blender_rounded,
+                            color: Colors.white,
+                            size: 24.0,
+                            semanticLabel:
+                                'fecha',
+                          ),
                                   hintStyle: TextStyle(color: Style.LetraColor),
                                   errorStyle: TextStyle(color: Colors.redAccent),
                                   suffixIcon: Icon(Icons.calendar_today),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'ui/screens/login.dart';
 import 'ui/screens/menu_screen.dart';
 import 'ui/screens/register_screen.dart';
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0)
       ),
-      initialRoute: '/menu',
+      initialRoute: '/login',
   routes: {
     '/': (context) => const MenuScreen(),
     '/login' : (context)  => const LoginScreen(),
