@@ -1,10 +1,15 @@
-import 'package:PDAMFINAL/ui/screens/register_screen.dart';
+
 import 'package:flutter/material.dart';
+import 'package:pdamfinal/constants.dart';
+import 'package:pdamfinal/ui/screens/addform_screen.dart';
+import 'package:pdamfinal/ui/screens/profile_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 import 'login.dart';
+import 'register_screen.dart';
+import 'search_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -26,8 +31,9 @@ class _MenuScreenState extends State<MenuScreen> {
 
  List<Widget> pages = [
     const HomeScreen(),
-    const LoginScreen(),
-    const RegisterScreen(),
+     SearchScreen(),
+     formScreen(),//postScreen
+    const ProfileScreen(),//ProfileScreen
     
   ];
 
@@ -52,9 +58,9 @@ class _MenuScreenState extends State<MenuScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              child: Icon(Icons.home,
+              child: Icon(Icons.home,size: 35,
                   color: _currentIndex == 0
-                      ? Colors.white
+                      ? Style.VKNGGron
                       : const Color(0xff999999)),
               onTap: () {
                 setState(() {
@@ -63,9 +69,9 @@ class _MenuScreenState extends State<MenuScreen> {
               },
             ),
             GestureDetector(
-              child: Icon(Icons.search,
+              child: Icon(Icons.search,size:35,
                   color: _currentIndex == 1
-                      ? Colors.white
+                      ? Style.VKNGGron
                       : const Color(0xff999999)),
               onTap: () {
                 setState(() {
@@ -74,9 +80,9 @@ class _MenuScreenState extends State<MenuScreen> {
               },
             ),
             GestureDetector(
-              child: Icon(Icons.person,
+              child: Icon(Icons.add,size: 35,
                   color: _currentIndex == 2
-                      ? Colors.white
+                      ? Style.VKNGGron
                       : const Color(0xff999999)),
               onTap: () {
                 setState(() {
@@ -86,9 +92,9 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
 
             GestureDetector(
-              child: Icon(Icons.search,
-                  color: _currentIndex == 1
-                      ? Colors.white
+              child: Icon(Icons.person,size: 35,
+                  color: _currentIndex == 3
+                      ? Style.VKNGGron
                       : const Color(0xff999999)),
               onTap: () {
                 setState(() {

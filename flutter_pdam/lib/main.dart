@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pdamfinal/ui/screens/comunity_screen.dart';
+import 'package:pdamfinal/ui/screens/profile_screen.dart';
+import 'ui/screens/addform_screen.dart';
+import 'ui/screens/detail_screen.dart';
 import 'ui/screens/login.dart';
 import 'ui/screens/menu_screen.dart';
 import 'ui/screens/register_screen.dart';
+import 'ui/screens/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,12 +23,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0)
       ),
-      initialRoute: '/login',
+      initialRoute: '/menu',
   routes: {
     '/': (context) => const MenuScreen(),
     '/login' : (context)  => const LoginScreen(),
     '/register': (context) => const RegisterScreen(),
-    '/menu':(context) => const MenuScreen()
+    '/menu':(context) => const MenuScreen(),
+    '/detailpage':(context)=> detailsPage(),
+    '/search':(context)=>SearchScreen() ,
+    '/perfil':(context) => ProfileScreen(),
+    '/addform':(context) =>formScreen(),
+    '/comunity':(context) => Comunitycreen()
     
 
   },

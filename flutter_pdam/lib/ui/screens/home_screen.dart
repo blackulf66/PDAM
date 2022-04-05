@@ -17,11 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
    PostProvider postProvider = new PostProvider();   
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
       drawer: Drawer(
         backgroundColor: Colors.black,
-        child: _comunityList()
+        child: InkWell(child: _comunityList() ,onTap: (){
+        Navigator.pushNamed(context, '/comunity');
+      },)
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -61,43 +63,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _comunityList(){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics() ,
-        itemCount: postProvider.getPosts().length,
-        itemBuilder: (context , i){
-          return _Post2( postProvider.getPosts()[i] ) ;                         
-        },
-      ),  
+    return  Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text('mis comunidades' ,style: TextStyle(color: Style.VKNGGron),),
+            ),
+            Divider(color: Colors.grey,),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics() ,
+              itemCount: postProvider.getPosts().length,
+              itemBuilder: (context , i){
+                return _Post2( postProvider.getPosts()[i] ) ;                         
+              },
+            ),
+          ],
+        ),  
+      
+      
     );
   }
 
   Widget _Post2(Post post ){
-
-    List<Widget> userLikes = [];
-    userLikes.add( Text('le gusta a') );
-
-    int count = 1;
-    int qtyUserLikes = post.topsLikes.length;
-
-    post.topsLikes.forEach(( user ) {
-      Widget _temp = Text( 
-        count != qtyUserLikes ? user + "," : user,
-        style: TextStyle( 
-          fontWeight:  FontWeight.bold
-        ),  
-      );
-      userLikes.add(_temp);
-      count == qtyUserLikes ? userLikes.add(Text(' y ')) : null ;
-      count == qtyUserLikes ? userLikes.add(Text('${post.likes} personas mas', style: TextStyle( fontWeight: FontWeight.bold , fontSize: 18.0))) : null ;
-      count++;
-    });
-
-
     return Row(
       children: [
+        
           ClipRRect(
                           borderRadius:BorderRadius.circular(50.0),
                           child: Image(
@@ -118,27 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
   Widget _Post(Post post ){
-
-    List<Widget> userLikes = [];
-    userLikes.add( Text('le gusta a') );
-
-    int count = 1;
-    int qtyUserLikes = post.topsLikes.length;
-
-    post.topsLikes.forEach(( user ) {
-      Widget _temp = Text( 
-        count != qtyUserLikes ? user + "," : user,
-        style: TextStyle( 
-          fontWeight:  FontWeight.bold
-        ),  
-      );
-      userLikes.add(_temp);
-      count == qtyUserLikes ? userLikes.add(Text(' y ')) : null ;
-      count == qtyUserLikes ? userLikes.add(Text('${post.likes} personas mas', style: TextStyle( fontWeight: FontWeight.bold , fontSize: 18.0))) : null ;
-      count++;
-    });
-
-
+    
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -187,8 +160,11 @@ class _HomeScreenState extends State<HomeScreen> {
         
                 InkWell(
           splashColor: Colors.purple,
-          onTap: (){
+          onTap: (
             
+            
+          ){
+            Navigator.pushNamed(context,'/detailpage');
           },
                   child: SizedBox(
                     width:  MediaQuery.of(context).size.width,
