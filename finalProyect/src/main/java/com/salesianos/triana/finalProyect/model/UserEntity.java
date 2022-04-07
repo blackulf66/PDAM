@@ -22,6 +22,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table(name="user")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue
@@ -41,10 +42,12 @@ public class UserEntity implements UserDetails {
 
     private LocalDateTime created;
 
-    @OneToMany(fetch = LAZY)
+    @OneToMany(fetch = LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "postid")
     private List<Post> posts;
 
-    @OneToMany(fetch = LAZY)
+    @OneToMany(fetch = EAGER ,cascade = CascadeType.ALL)
+    @JoinColumn(name = "subpostid")
     private List<SubPosts> Subposts;
 
     private UserRole userRole;
