@@ -20,7 +20,7 @@ class AuthRepositoryImpl extends AuthRepository {
     };
 
     final response = await _client.post(
-        Uri.parse('http://10.0.2.2:8080/auth/login'),
+        Uri.parse('https://pdam-prueba.herokuapp.com/auth/login'),
         headers: headers,
         body: jsonEncode(loginDto.toJson()));
     if (response.statusCode == 201) {

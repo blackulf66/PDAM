@@ -15,8 +15,10 @@ class PostApiRepositoryImpl extends PostApiRepository {
 @override
   Future<List<PostApiResponse>> fetchPosts(String type) async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+   //localhost:http://10.0.2.2:8080/
                 
-    final response = await _client.get(Uri.parse('http://10.0.2.2:8080/post/public'),headers: {
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/public'),headers: {
         'Authorization':
             /*'Bearer ${Constantes.token}',*/
              'Bearer ${prefs.getString('token')}'
