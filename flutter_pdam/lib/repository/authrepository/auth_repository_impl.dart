@@ -38,7 +38,7 @@ class AuthRepositoryImpl extends AuthRepository {
       // 'Authorization': 'Bearer $token'
     };
 
-    var uri = Uri.parse('http://10.0.2.2:8080/auth/register');
+    var uri = Uri.parse('https://pdam-prueba.herokuapp.com/auth/register');
                     var request = http.MultipartRequest('POST', uri);
                     request.fields['username'] = registerDto.username;
                     request.fields['email'] = registerDto.email;

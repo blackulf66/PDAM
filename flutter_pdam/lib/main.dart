@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0)
       ),
-      initialRoute: '/menu',
+      initialRoute: '/login',
   routes: {
     '/': (context) => const MenuScreen(),
     '/login' : (context)  => const LoginScreen(),

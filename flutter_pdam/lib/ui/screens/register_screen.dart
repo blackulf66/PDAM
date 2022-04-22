@@ -348,6 +348,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   errorStyle: TextStyle(color: Colors.redAccent),
                                   suffixIcon: Icon(Icons.calendar_today),
                                   labelText: 'fecha de nacimiento',
+
                                   labelStyle: TextStyle(color:Style.LetraColor)
                                 ),
                                 mode: DateTimeFieldPickerMode.date,
