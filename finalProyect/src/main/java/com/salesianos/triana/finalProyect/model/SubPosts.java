@@ -19,15 +19,13 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "SubPost")
 @Builder
 public class SubPosts {
 
     private String imagen;
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "subpostid")
-    private UUID id;
+    private Long id;
 
     @NotBlank(message = "el nombre del subpost es necesario")
     private String nombre;
@@ -38,8 +36,7 @@ public class SubPosts {
     private List<Post> posts;
 
     private LocalDateTime createdDate;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = LAZY)
     private UserEntity userEntity;
 
     //helpers

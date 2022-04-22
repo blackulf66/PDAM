@@ -6,7 +6,6 @@ import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +31,7 @@ import java.util.UUID;
 
 @Service("userDetailsService")
 @RequiredArgsConstructor
+@Transactional
 public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityRepository> implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;

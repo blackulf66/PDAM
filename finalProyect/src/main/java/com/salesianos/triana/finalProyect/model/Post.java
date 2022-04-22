@@ -27,7 +27,6 @@ public class Post {
     private String imagenportada;
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "post-id")
     private Long postId;
 
     @NotBlank(message = "el nombre de un post no puede ser nulo")
@@ -40,13 +39,13 @@ public class Post {
     private Integer voteCount = 0;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private UserEntity userEntity;
 
     private Instant createdDate;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "postid")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private SubPosts subposts;
 
     //helpers
