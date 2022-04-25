@@ -39,13 +39,11 @@ public class Post {
     private Integer voteCount = 0;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private UserEntity userEntity;
 
     private Instant createdDate;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "id")
     private SubPosts subposts;
 
     //helpers

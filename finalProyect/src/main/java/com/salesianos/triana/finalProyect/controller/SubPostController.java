@@ -1,15 +1,15 @@
 package com.salesianos.triana.finalProyect.controller;
 
 
-import com.salesianos.triana.finalProyect.dto.post.CreatePostDto;
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
-import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
-import com.salesianos.triana.finalProyect.model.Categoria;
-import com.salesianos.triana.finalProyect.model.Post;
+import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
+import com.salesianos.triana.finalProyect.exception.FileNotFoundException;
+import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
-import com.salesianos.triana.finalProyect.repository.PostRepository;
+import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import com.salesianos.triana.finalProyect.service.FileSystemStorageService;
-import com.salesianos.triana.finalProyect.service.PostService;
+import com.salesianos.triana.finalProyect.service.SubPostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,56 +18,58 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.management.Query;
 import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/subpost")
 @RequiredArgsConstructor
-public class PostController {
+public class SubPostController {
 
-    private final PostService Pservice;
-    private final PostRepository postRepository;
-    private final PostDtoConverter postDtoConverter;
+    private final SubPostsService SPservice;
+    private final SubPostsRepository postRepository;
+    private final SubPostDtoConverter postDtoConverter;
     private final FileSystemStorageService fileSystemStorageService;
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
-                                    @RequestParam("postname") String postName,
+                                    @RequestParam("nombre") String nombre,
                                     @RequestParam("descripcion") String description,
                                     @AuthenticationPrincipal UserEntity user) throws IOException {
-        CreatePostDto newPost = CreatePostDto.builder()
-                .postName(postName)
-                .description(description)
+
+        CreateSubPostDto newPost = CreateSubPostDto.builder()
+                .nombre(nombre)
+                .descripcion(description)
                 .build();
 
-        Post postCreated = Pservice.save(newPost, file , user);
+        SubPosts subPostCreated = SPservice.save(newPost, file , user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postDtoConverter.postToGetPostDto(postCreated));
+                .body(postDtoConverter.subPostToGetSubPostDto(subPostCreated));
     }
-
+/*
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<GetPostDto>> updatePublicacion(@PathVariable Long id, @RequestPart("post") CreatePostDto updatePost, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
+    public ResponseEntity<Optional<GetSubPostDto>> updatePublicacion(@PathVariable Long id, @RequestPart("post") CreateSubPostDto updatePost, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Pservice.updatePost(id, updatePost, file , user));
 
-    }
+    }*/
 
-   /* @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable Long id) throws Exception {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable Long id ,@AuthenticationPrincipal UserEntity user) throws Exception {
 
-        Optional<Post> pOptional = Pservice.findPostById(id);
+        Optional<SubPosts> pOptional = postRepository.findById(id) ;
 
         if (id.equals(null)){
             throw new FileNotFoundException("no se encuentra el archivo");
         }else{
-            fileSystemStorageService.deleteFile(pOptional.get().getImagenportada());
-            Pservice.deletePost(id);
+            SPservice.deleteSubPost(id , user);
+            fileSystemStorageService.deleteFile(pOptional.get().getImagen());
             return ResponseEntity.noContent().build();
         }
     }
-
+/*
     @GetMapping("/{id}")
     public ResponseEntity<GetPostDto> findpostbyID(@PathVariable Long id, @AuthenticationPrincipal UserEntity user){
         Optional<Post> postOptional = Pservice.findPostById(id);

@@ -3,6 +3,7 @@ package com.salesianos.triana.finalProyect.controller;
 
 import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
+import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
 import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 
@@ -35,7 +36,7 @@ public class UserController {
 
 
     @PostMapping("auth/register")
-    public ResponseEntity<GetUserDto> nuevoUsuario(@RequestParam("username") String username , @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role")UserRole role, @RequestPart MultipartFile file) throws IOException {
+    public ResponseEntity<GetUserDto2> nuevoUsuario(@RequestParam("username") String username , @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role")UserRole role, @RequestPart MultipartFile file) throws IOException {
 
         CreateUserDto createUserDto = CreateUserDto.builder()
                 .username(username)
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("user/{id}")
-    public ResponseEntity<GetUserDto> finduserById(@PathVariable UUID id, @AuthenticationPrincipal UserEntity user){
+    public ResponseEntity<GetUserDto2> finduserById(@PathVariable UUID id, @AuthenticationPrincipal UserEntity user){
         Optional<UserEntity> uOptional = userEntityService.findById(id);
 
         if(uOptional.isEmpty()){
@@ -64,14 +65,14 @@ public class UserController {
 
     }
     @PutMapping("user/{id}")
-    public ResponseEntity<Optional<GetUserDto>> updatePublicacion(@PathVariable UUID id, @RequestPart("user") CreateUserDto updateUser, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws EntityNotFoundException {
+    public ResponseEntity<Optional<GetUserDto2>> updatePublicacion(@PathVariable UUID id, @RequestPart("user") CreateUserDto updateUser, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws EntityNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userEntityService.updateUser(id, updateUser, file , user));
 
     }
 
     @PutMapping("profile/me")
-    public ResponseEntity<Optional<GetUserDto>> actualizarPerfil (@AuthenticationPrincipal UserEntity userEntity, @RequestPart("user") CreateUserDto createUserDto, @RequestPart("file")MultipartFile file) throws Exception {
+    public ResponseEntity<Optional<GetUserDto2>> actualizarPerfil (@AuthenticationPrincipal UserEntity userEntity, @RequestPart("user") CreateUserDto createUserDto, @RequestPart("file")MultipartFile file) throws Exception {
 
         return ResponseEntity.ok(userEntityService.actualizarPerfil(userEntity, createUserDto, file));
     }

@@ -2,10 +2,13 @@ package com.salesianos.triana.finalProyect.service;
 
 import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
+import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
 import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
 import com.salesianos.triana.finalProyect.model.UserRole;
+import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,13 +34,13 @@ import java.util.UUID;
 
 @Service("userDetailsService")
 @RequiredArgsConstructor
-@Transactional
 public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityRepository> implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final StorageService storageService;
     private final UserEntityRepository userEntityRepository;
     private final UserDtoConverter userDtoConverter;
+    private final SubPostsRepository subPostsRepository;
 
     public UserEntity saveuser(CreateUserDto newUser, MultipartFile file) throws IOException {
 
@@ -59,92 +62,97 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .toUriString();
 
         UserEntity user = UserEntity.builder()
-                    .password(passwordEncoder.encode(newUser.getPassword()))
-                    .avatar(uri)
-                    .username(newUser.getUsername())
-                    .email(newUser.getEmail())
-                    .Subposts(newUser.getSubpostList())
-                    .created(LocalDateTime.now())
-                    .userRole(newUser.getUserRole())
-                    .build();
-            return save(user);
+                .password(passwordEncoder.encode(newUser.getPassword()))
+                .avatar(uri)
+                .username(newUser.getUsername())
+                .email(newUser.getEmail())
+                .Subposts(newUser.getSubpostList())
+                .created(LocalDateTime.now())
+                .userRole(newUser.getUserRole())
+                .build();
+        return save(user);
     }
 
     public Optional<UserEntity> finduserById(UUID id) {
         return userEntityRepository.findById(id);
     }
 
+        public Optional<GetUserDto2> updateUser(UUID id, CreateUserDto p, MultipartFile file, UserEntity user) throws EntityNotFoundException {
 
+            Optional<UserEntity> data = userEntityRepository.findById(id);
+            String name = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download", "");
+            Path pa = storageService.load(name);
+            String filename = StringUtils.cleanPath(String.valueOf(pa)).replace("http://localhost:8080/download", "");
 
-    public Optional<GetUserDto> updateUser(UUID id, CreateUserDto p, MultipartFile file, UserEntity user) throws EntityNotFoundException {
+            storageService.deleteFile(filename);
 
-        Optional<UserEntity> data = userEntityRepository.findById(id);
-        String name = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download", "");
-        Path pa = storageService.load(name);
-        String filename = StringUtils.cleanPath(String.valueOf(pa)).replace("http://localhost:8080/download", "");
-
-        storageService.deleteFile(filename);
-
-        String or = storageService.storeOr(file);
-        String newFilename = storageService.storePost(file);
-
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(newFilename)
-                .toUriString();
-
-        return data.map(m -> {
-            m.setUsername(p.getUsername());
-            m.setAvatar(uri);
-            m.setEmail(p.getEmail());
-            m.setPassword(p.getPassword());
-            userEntityRepository.save(m);
-            return userDtoConverter.convertUserEntityToGetUserDto(m);
-        });
-    }
-
-    public Optional<GetUserDto> actualizarPerfil(UserEntity user, CreateUserDto u, MultipartFile file) throws Exception {
-        if (file.isEmpty()){
-            Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
-            return data.map(m -> {
-                m.setUsername(u.getUsername());
-                m.setEmail(u.getEmail());
-                m.setAvatar(u.getAvatar());
-                m.setAvatar(m.getAvatar());
-                m.setEmail(u.getEmail());
-                userEntityRepository.save(m);
-                return userDtoConverter.convertUserEntityToGetUserDto(m);
-            });
-        }else{
-
-            Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
-            String name = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download/", "");
-            Path p = storageService.load(name);
-            String filename = StringUtils.cleanPath(String.valueOf(p)).replace("http://localhost:8080/download/", "");
-            Path pa = Paths.get(filename);
-            storageService.deleteFile(pa.toString());
-            String avatar = storageService.storePost(file);
+            String or = storageService.storeOr(file);
+            String newFilename = storageService.storePost(file);
 
             String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/download/")
-                    .path(avatar)
+                    .path(newFilename)
                     .toUriString();
 
             return data.map(m -> {
-                m.setUsername(u.getUsername());
-                m.setAvatar(u.getAvatar());
+                m.setUsername(p.getUsername());
                 m.setAvatar(uri);
-                m.setEmail(u.getEmail());
+                m.setEmail(p.getEmail());
+                m.setPassword(p.getPassword());
                 userEntityRepository.save(m);
                 return userDtoConverter.convertUserEntityToGetUserDto(m);
             });
-
         }
+
+        public Optional<GetUserDto2> actualizarPerfil(UserEntity user, CreateUserDto u, MultipartFile file) throws Exception {
+            if (file.isEmpty()){
+                Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
+                return data.map(m -> {
+                    m.setUsername(u.getUsername());
+                    m.setEmail(u.getEmail());
+                    m.setAvatar(u.getAvatar());
+                    m.setAvatar(m.getAvatar());
+                    m.setEmail(u.getEmail());
+                    userEntityRepository.save(m);
+                    return userDtoConverter.convertUserEntityToGetUserDto(m);
+                });
+            }else{
+
+                Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
+                String name = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download/", "");
+                Path p = storageService.load(name);
+                String filename = StringUtils.cleanPath(String.valueOf(p)).replace("http://localhost:8080/download/", "");
+                Path pa = Paths.get(filename);
+                storageService.deleteFile(pa.toString());
+                String avatar = storageService.storePost(file);
+
+                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/download/")
+                        .path(avatar)
+                        .toUriString();
+
+                return data.map(m -> {
+                    m.setUsername(u.getUsername());
+                    m.setAvatar(u.getAvatar());
+                    m.setAvatar(uri);
+                    m.setEmail(u.getEmail());
+                    userEntityRepository.save(m);
+                    return userDtoConverter.convertUserEntityToGetUserDto(m);
+                });
+
+            }
+        }
+
+        @Override
+        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+            return this.repositorio.findFirstByEmail(email)
+                    .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
+        }
+    public GetUserDto visializarPerfif(UserEntity user) {
+
+        return userDtoConverter.convertUserEntityToGetUserDto2(user);
+
+
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return this.repositorio.findFirstByEmail(email)
-                .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
-    }
 }

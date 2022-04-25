@@ -1,8 +1,8 @@
 package com.salesianos.triana.finalProyect.service;
 
-import com.salesianos.triana.finalProyect.dto.post.CreatePostDto;
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
-import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
+import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.salesianos.triana.finalProyect.repository.PostRepository;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 
 import javax.imageio.ImageIO;
@@ -29,14 +28,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class SubPostsService {
 
-    private final PostRepository postRepository;
+    private final SubPostsRepository subPostsRepository;
     private final StorageService storageService;
-    private final PostDtoConverter postDtoConverter;
+    private final SubPostDtoConverter subPostDtoConverter;
     private final UserEntityRepository userEntityRepository;
-    @Transactional
-    public Post save(CreatePostDto createPostDto, MultipartFile file , UserEntity user) throws IOException {
+
+    public SubPosts save(CreateSubPostDto createSubPostDto, MultipartFile file , UserEntity user) throws IOException {
 
         String filenameOriginal = storageService.store(file);
 
@@ -59,29 +58,28 @@ public class PostService {
                 .path(filename)
                 .toUriString();
 
-        Post post3 = Post.builder()
-                .postName(createPostDto.getPostName())
-                .postId(createPostDto.getPostId())
-                .createdDate(createPostDto.getCreatedDate())
-                .description(createPostDto.getDescription())
-                .subposts(createPostDto.getSubposts())
-                .imagenportada(uri)
+        SubPosts post3 = SubPosts.builder()
+                .id(createSubPostDto.getId())
+                .createdDate(createSubPostDto.getCreatedDate())
                 .userEntity(user)
+                .nombre(createSubPostDto.getNombre())
+                .imagen(uri)
+                .descripcion(createSubPostDto.getDescripcion())
                 .build();
 
-        userEntityRepository.save(user);
-
-        return postRepository.save(post3);
+        return subPostsRepository.save(post3);
     }
 
-    public void deletePost(Long id, UserEntity usuario) throws FileNotFoundException {
 
-        usuario = userEntityRepository.findByUsername(usuario.getUsername()).get();
-        Optional<Post> postAEliminar = postRepository.findById(id);
+
+    public void deleteSubPost(Long id, UserEntity usuario) throws FileNotFoundException {
+
+        usuario = userEntityRepository.findById(usuario.getUserId()).get();
+        Optional<SubPosts> postAEliminar = subPostsRepository.findById(id);
 
         if(postAEliminar.isPresent()) {
-            storageService.deleteFile(postAEliminar.get().getImagenportada());
-            postRepository.deleteById(id);
+            storageService.deleteFile(postAEliminar.get().getImagen());
+            subPostsRepository.deleteById(id);
         }
 
         else if(!usuario.equals(postAEliminar.get().getUserEntity())){
@@ -92,7 +90,7 @@ public class PostService {
         }
 
     }
-
+/*
     public void deletePosts(Long id){
 
 
@@ -107,8 +105,10 @@ public class PostService {
             throw new EntityNotFoundException("NNONONONONONONONONNO");
         }
 
+            /*
+
     }
-    public Optional<GetPostDto> updatePost (Long id, CreatePostDto p, MultipartFile file , UserEntity user) throws EntityNotFoundException {
+    public Optional<GetSubPostDto> updatePost (Long id, CreateSubPostDto p, MultipartFile file , UserEntity user) throws EntityNotFoundException {
 
             Optional<Post> data = postRepository.findById(id);
             String name = StringUtils.cleanPath(String.valueOf(data.get().getImagenportada())).replace("http://localhost:8080/download", "");
@@ -133,14 +133,14 @@ public class PostService {
             });
         }
 
-    public List<GetPostDto> findByPostSubPost(SubPosts subreddit) {
+    public List<GetSubPostDto> findByPostSubPost(SubPosts subreddit) {
 
         List<Post> listaa = postRepository.findAllBySubposts(subreddit);
 
        return listaa.stream().map(postDtoConverter::postToGetPostDto).toList();
     }
 
-
+*/
 
     }
 

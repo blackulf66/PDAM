@@ -1,9 +1,11 @@
 package com.salesianos.triana.finalProyect.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -22,9 +24,20 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table(name="user")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator",
+            parameters = {
+                    @Parameter(
+                            name = "uuid_gen_strategy_class",
+                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+                    )
+            }
+    )
     private UUID userId;
 
     @NotBlank(message = "Username is required")
@@ -41,11 +54,13 @@ public class UserEntity implements UserDetails {
 
     private LocalDateTime created;
 
-    @OneToMany(fetch = LAZY)
-    private List<Post> posts;
+    @OneToMany(fetch = LAZY,cascade = CascadeType.ALL, mappedBy = "userEntity")
+    @Builder.Default
+    private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY)
-    private List<SubPosts> Subposts;
+    @OneToMany(fetch = EAGER ,cascade = CascadeType.ALL , mappedBy = "userEntity")
+    @Builder.Default
+    private List<SubPosts> Subposts= new ArrayList<>();
 
     private UserRole userRole;
 

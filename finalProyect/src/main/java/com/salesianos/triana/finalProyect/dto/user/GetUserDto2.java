@@ -5,8 +5,6 @@ import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.*;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GetUserDto {
+public class GetUserDto2 {
 
     private UUID userId;
 
@@ -28,7 +26,7 @@ public class GetUserDto {
 
     private LocalDateTime created;
 
-    private List<GetSubPostDto> subpostList;
+    private List<SubPosts> subpostList;
 
     private UserRole userRole;
 
