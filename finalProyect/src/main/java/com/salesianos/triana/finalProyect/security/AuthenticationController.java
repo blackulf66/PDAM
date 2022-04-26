@@ -1,6 +1,7 @@
 package com.salesianos.triana.finalProyect.security;
 
 
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
 import com.salesianos.triana.finalProyect.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class AuthenticationController {
                 .username(user.getUsername())
                 .userRole(user.getUserRole().name())
                 .fecha(user.getCreated())
-                .subPosts(user.getSubposts())
+                .subPosts(user.getSubposts().stream().map(p -> new GetSubPostDto(p.getImagen(), p.getId(), p.getNombre() , p.getDescripcion() ,p.getCreatedDate() , p.getUserEntity().getUserId())).toList())
                 .token(jwt)
                 .build();
     }

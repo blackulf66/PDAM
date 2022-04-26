@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.service;
 
+import io.github.techgnious.exception.VideoException;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,15 +11,9 @@ import java.util.stream.Stream;
 
 public interface StorageService {
 
-    BufferedImage simpleResizer(BufferedImage bufferedImage, int width) ;
-
     void init();
 
-    String storeOr(MultipartFile file);
-
-    String storePost(MultipartFile file);
-
-    String store(MultipartFile file);
+    String original(MultipartFile file);
 
     Stream<Path> loadAll();
 
@@ -26,11 +21,14 @@ public interface StorageService {
 
     Resource loadAsResource(String filename);
 
-    void deleteFile(String filename);
+    void deleteFile(Path filename) throws IOException;
 
     void deleteAll();
 
-    MultipartFile scaleImage(MultipartFile file , int size) throws IOException;
+    String escalado(MultipartFile file, int size) throws IOException;
+
+    String videoEscalado(MultipartFile file) throws IOException, VideoException;
+
 
 
 }

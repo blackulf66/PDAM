@@ -2,9 +2,11 @@ package com.salesianos.triana.finalProyect.dto.user;
 
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.model.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserDtoConverter {
     public GetUserDto2 convertUserEntityToGetUserDto(UserEntity user) {
         return GetUserDto2.builder()
@@ -18,7 +20,6 @@ public class UserDtoConverter {
                 .userRole(user.getUserRole())
                 .build();
     }
-
     public GetUserDto convertUserEntityToGetUserDto2(UserEntity user) {
         return GetUserDto.builder()
                 .userId(user.getUserId())

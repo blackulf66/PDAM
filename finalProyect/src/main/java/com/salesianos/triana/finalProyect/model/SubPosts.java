@@ -28,6 +28,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class SubPosts {
 
     private String imagen;
+
+    private String imagenEscalada;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "subpostid")

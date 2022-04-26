@@ -2,7 +2,6 @@ package com.salesianos.triana.finalProyect.controller;
 
 
 import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
-import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
 import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
 import com.salesianos.triana.finalProyect.model.UserEntity;
@@ -20,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -64,6 +64,9 @@ public class UserController {
         }
 
     }
+
+
+    /*
     @PutMapping("user/{id}")
     public ResponseEntity<Optional<GetUserDto2>> updatePublicacion(@PathVariable UUID id, @RequestPart("user") CreateUserDto updateUser, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws EntityNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -75,7 +78,7 @@ public class UserController {
     public ResponseEntity<Optional<GetUserDto2>> actualizarPerfil (@AuthenticationPrincipal UserEntity userEntity, @RequestPart("user") CreateUserDto createUserDto, @RequestPart("file")MultipartFile file) throws Exception {
 
         return ResponseEntity.ok(userEntityService.actualizarPerfil(userEntity, createUserDto, file));
-    }
+    }*/
 
     }
 

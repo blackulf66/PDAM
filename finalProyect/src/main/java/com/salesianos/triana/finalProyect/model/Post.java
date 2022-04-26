@@ -22,6 +22,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Post")
+
 public class Post {
 
     private String imagenportada;

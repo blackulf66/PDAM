@@ -62,13 +62,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/me").authenticated()
                 //file
                 .antMatchers(HttpMethod.GET, "/download/{filename:.+}").permitAll()
-                //post
+                //subpost
                 .antMatchers(HttpMethod.POST, "/subpost/").authenticated()
-                .antMatchers(HttpMethod.POST, "/post/public").authenticated()
-                .antMatchers(HttpMethod.DELETE , "/post/{id}").authenticated()
-                .antMatchers(HttpMethod.PUT , "/post/{id}").authenticated()
-                .antMatchers(HttpMethod.GET, "/post/{id}").authenticated()
-                .antMatchers(HttpMethod.GET,"/post/{nick}").authenticated()
+                .antMatchers(HttpMethod.DELETE , "/subpost/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT , "/subpost/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/subpost/{id}").authenticated()
+                //post
+                .antMatchers(HttpMethod.POST, "/post/").authenticated()
 
                 //user
                 .antMatchers(HttpMethod.GET, "/user/{id}").authenticated()

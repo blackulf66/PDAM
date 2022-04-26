@@ -22,27 +22,6 @@ public class FileController {
     private final StorageService storageService;
 
 
-    @PostMapping("/upload")
-    public ResponseEntity<?> upload(@RequestPart("file") MultipartFile file) {
-
-        String name = storageService.store(file);
-
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(name)
-                .toUriString();
-
-        FileResponse response = FileResponse.builder()
-                .name(name)
-                .size(file.getSize())
-                .type(file.getContentType())
-                .uri(uri)
-                .build();
-
-        return ResponseEntity.created(URI.create(uri)).body(response);
-
-    }
-
     @GetMapping("/download/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         MediaTypeUrlResource resource = (MediaTypeUrlResource) storageService.loadAsResource(filename);

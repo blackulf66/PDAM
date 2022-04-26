@@ -2,14 +2,13 @@ package com.salesianos.triana.finalProyect.controller;
 
 
 import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
-import com.salesianos.triana.finalProyect.exception.FileNotFoundException;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
-import com.salesianos.triana.finalProyect.service.FileSystemStorageService;
+import com.salesianos.triana.finalProyect.service.FileSystemStorageServiceimpl;
 import com.salesianos.triana.finalProyect.service.SubPostsService;
+import io.github.techgnious.exception.VideoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import javax.management.Query;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
+@CrossOrigin
+@Transactional
 @RequestMapping("/subpost")
 @RequiredArgsConstructor
 public class SubPostController {
@@ -30,13 +31,13 @@ public class SubPostController {
     private final SubPostsService SPservice;
     private final SubPostsRepository postRepository;
     private final SubPostDtoConverter postDtoConverter;
-    private final FileSystemStorageService fileSystemStorageService;
+    private final FileSystemStorageServiceimpl fileSystemStorageServiceimpl;
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
                                     @RequestParam("nombre") String nombre,
                                     @RequestParam("descripcion") String description,
-                                    @AuthenticationPrincipal UserEntity user) throws IOException {
+                                    @AuthenticationPrincipal UserEntity user) throws IOException, VideoException {
 
         CreateSubPostDto newPost = CreateSubPostDto.builder()
                 .nombre(nombre)
@@ -46,27 +47,32 @@ public class SubPostController {
         SubPosts subPostCreated = SPservice.save(newPost, file , user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postDtoConverter.subPostToGetSubPostDto(subPostCreated));
+                .body(postDtoConverter.subPostToGetSubPostDto2(subPostCreated));
     }
-/*
-    @PutMapping("/{id}")
-    public ResponseEntity<Optional<GetSubPostDto>> updatePublicacion(@PathVariable Long id, @RequestPart("post") CreateSubPostDto updatePost, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Pservice.updatePost(id, updatePost, file , user));
-
-    }*/
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable Long id ,@AuthenticationPrincipal UserEntity user) throws Exception {
+    public ResponseEntity<?> deletePost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id) throws IOException {
+        return SPservice.deleteSubPost(user ,id);
+    }
 
-        Optional<SubPosts> pOptional = postRepository.findById(id) ;
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editPost(@RequestPart("file") MultipartFile file, @Valid @RequestPart("subpost") CreateSubPostDto createsubPostDto, @AuthenticationPrincipal UserEntity userPrincipal, @PathVariable Long id) throws IOException, VideoException {
+        SubPosts saved = SPservice.editSubPost(createsubPostDto, file, userPrincipal, id);
 
-        if (id.equals(null)){
-            throw new FileNotFoundException("no se encuentra el archivo");
+        if (saved == null)
+            return ResponseEntity.badRequest().build();
+        else
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(postDtoConverter.subPostToGetSubPostDto(saved));
+    }
+
+/*
+    @GetMapping("all")
+    public ResponseEntity<List<GetSubPostDto>> getAllPostPublic(@PathVariable Long id) throws IOException {
+        if(SPservice.getAllSubpost(id).isEmpty()){
+            throw new ListEntityNotFoundException(SubPosts.class);
         }else{
-            SPservice.deleteSubPost(id , user);
-            fileSystemStorageService.deleteFile(pOptional.get().getImagen());
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().body(SPservice.getAllSubpost(id));
         }
     }
 /*

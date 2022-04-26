@@ -4,11 +4,14 @@ import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
 import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
+import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 
@@ -29,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,104 +50,45 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     public UserEntity saveuser(CreateUserDto newUser, MultipartFile file) throws IOException {
 
-        String filename = storageService.store(file);
+        String extension = StringUtils.getFilenameExtension(StringUtils.cleanPath(file.getOriginalFilename()));
+        List<String> imagenExtension = Arrays.asList("png", "gif", "jpg", "svg");
 
-        String extension = StringUtils.getFilenameExtension(filename);
+        if (imagenExtension.contains(extension)) {
+            String filename = storageService.escalado(file, 128);
 
-        BufferedImage originalImage = ImageIO.read(file.getInputStream());
+            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(filename)
+                    .toUriString()
+                    .replace("10.0.2.2", "localhost");
 
-        BufferedImage scaledImage = storageService.simpleResizer(originalImage, 128);
 
-        OutputStream outputStream = Files.newOutputStream(storageService.load(filename));
+            UserEntity user = UserEntity.builder()
+                    .password(passwordEncoder.encode(newUser.getPassword()))
+                    .avatar(uri)
+                    .username(newUser.getUsername())
+                    .email(newUser.getEmail())
+                    .Subposts(newUser.getSubpostList())
+                    .created(LocalDateTime.now())
+                    .userRole(newUser.getUserRole())
+                    .build();
+            try {
+                return save(user);
+            } catch (DataIntegrityViolationException ex) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de ese usuario ya existe");
+            }
 
-        ImageIO.write(scaledImage, extension, outputStream);
+        } else {
+            throw new UnsupportedMediaType(imagenExtension);
+        }
 
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(filename)
-                .toUriString();
-
-        UserEntity user = UserEntity.builder()
-                .password(passwordEncoder.encode(newUser.getPassword()))
-                .avatar(uri)
-                .username(newUser.getUsername())
-                .email(newUser.getEmail())
-                .Subposts(newUser.getSubpostList())
-                .created(LocalDateTime.now())
-                .userRole(newUser.getUserRole())
-                .build();
-        return save(user);
     }
+
 
     public Optional<UserEntity> finduserById(UUID id) {
         return userEntityRepository.findById(id);
     }
 
-        public Optional<GetUserDto2> updateUser(UUID id, CreateUserDto p, MultipartFile file, UserEntity user) throws EntityNotFoundException {
-
-            Optional<UserEntity> data = userEntityRepository.findById(id);
-            String name = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download", "");
-            Path pa = storageService.load(name);
-            String filename = StringUtils.cleanPath(String.valueOf(pa)).replace("http://localhost:8080/download", "");
-
-            storageService.deleteFile(filename);
-
-            String or = storageService.storeOr(file);
-            String newFilename = storageService.storePost(file);
-
-            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download/")
-                    .path(newFilename)
-                    .toUriString();
-
-            return data.map(m -> {
-                m.setUsername(p.getUsername());
-                m.setAvatar(uri);
-                m.setEmail(p.getEmail());
-                m.setPassword(p.getPassword());
-                userEntityRepository.save(m);
-                return userDtoConverter.convertUserEntityToGetUserDto(m);
-            });
-        }
-
-        public Optional<GetUserDto2> actualizarPerfil(UserEntity user, CreateUserDto u, MultipartFile file) throws Exception {
-            if (file.isEmpty()){
-                Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
-                return data.map(m -> {
-                    m.setUsername(u.getUsername());
-                    m.setEmail(u.getEmail());
-                    m.setAvatar(u.getAvatar());
-                    m.setAvatar(m.getAvatar());
-                    m.setEmail(u.getEmail());
-                    userEntityRepository.save(m);
-                    return userDtoConverter.convertUserEntityToGetUserDto(m);
-                });
-            }else{
-
-                Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
-                String name = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download/", "");
-                Path p = storageService.load(name);
-                String filename = StringUtils.cleanPath(String.valueOf(p)).replace("http://localhost:8080/download/", "");
-                Path pa = Paths.get(filename);
-                storageService.deleteFile(pa.toString());
-                String avatar = storageService.storePost(file);
-
-                String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/download/")
-                        .path(avatar)
-                        .toUriString();
-
-                return data.map(m -> {
-                    m.setUsername(u.getUsername());
-                    m.setAvatar(u.getAvatar());
-                    m.setAvatar(uri);
-                    m.setEmail(u.getEmail());
-                    userEntityRepository.save(m);
-                    return userDtoConverter.convertUserEntityToGetUserDto(m);
-                });
-
-            }
-        }
 
         @Override
         public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
