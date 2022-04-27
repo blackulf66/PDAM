@@ -2,7 +2,10 @@ package com.salesianos.triana.finalProyect.controller;
 
 
 import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
+import com.salesianos.triana.finalProyect.exception.ListEntityNotFoundException;
+import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
@@ -20,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -30,7 +36,7 @@ public class SubPostController {
 
     private final SubPostsService SPservice;
     private final SubPostsRepository postRepository;
-    private final SubPostDtoConverter postDtoConverter;
+    private final SubPostDtoConverter subpostDtoConverter;
     private final FileSystemStorageServiceimpl fileSystemStorageServiceimpl;
 
     @PostMapping("/")
@@ -47,24 +53,57 @@ public class SubPostController {
         SubPosts subPostCreated = SPservice.save(newPost, file , user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postDtoConverter.subPostToGetSubPostDto2(subPostCreated));
+                .body(subpostDtoConverter.subPostToGetSubPostDto2(subPostCreated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id) throws IOException {
-        return SPservice.deleteSubPost(user ,id);
+    public ResponseEntity<?> deleteSubPost(@PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws Exception {
+        if (id.equals(null)){
+            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+        }else{
+
+            SPservice.deleteSubpost(id, user);
+
+            return ResponseEntity.status(204).build();
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editPost(@RequestPart("file") MultipartFile file, @Valid @RequestPart("subpost") CreateSubPostDto createsubPostDto, @AuthenticationPrincipal UserEntity userPrincipal, @PathVariable Long id) throws IOException, VideoException {
-        SubPosts saved = SPservice.editSubPost(createsubPostDto, file, userPrincipal, id);
+    public ResponseEntity<Optional<GetSubPostDto>> updatesubPost(@PathVariable Long id, @RequestPart("publicacion") CreateSubPostDto createPublicacionDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
+        if (id.equals(null)){
+            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+        }else{
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(SPservice.updateSubPost(id, createPublicacionDto, file, user));
+        }
 
-        if (saved == null)
-            return ResponseEntity.badRequest().build();
-        else
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(postDtoConverter.subPostToGetSubPostDto(saved));
+
     }
+
+    @GetMapping("/{nombre}")
+    public ResponseEntity<GetSubPostDto> findOnesubPost (@PathVariable String nombre, @AuthenticationPrincipal UserEntity user){
+
+        GetSubPostDto publicacion = SPservice.findOneSubPost(nombre , user);
+
+        return ResponseEntity.ok().body(publicacion);
+
+    }
+/*
+    @GetMapping("/all")
+    public ResponseEntity<List<GetSubPostDto>> findAllSubpost(){
+
+        if (SPservice.findAllSubPost().isEmpty()){
+            throw new ListEntityNotFoundException(SubPosts.class);
+        }else{
+            List<GetSubPostDto> list = SPservice.findAllSubPost().stream()
+                    .map(subpostDtoConverter::createsubPostDtoTosubPost)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok().body(list);
+        }
+
+
+    }
+
 
 /*
     @GetMapping("all")

@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.dto.subpost;
 
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import lombok.AllArgsConstructor;

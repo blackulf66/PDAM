@@ -15,5 +15,9 @@ public interface SubPostsRepository extends JpaRepository<SubPosts, Long> {
 
     Optional<SubPosts> findById(Long id);
 
+    Optional<SubPosts>findByNombre(String nombre);
+
+
+
 
 }
