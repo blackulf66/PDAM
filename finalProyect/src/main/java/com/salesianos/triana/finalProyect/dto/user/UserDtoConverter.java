@@ -28,7 +28,7 @@ public class UserDtoConverter {
                 .avatar(user.getAvatar())
                 .created(user.getCreated())
                 .userId(user.getUserId())
-                .subpostList(user.getSubposts().stream().map(p -> new GetSubPostDto(p.getImagen(), p.getId(), p.getNombre() , p.getDescripcion() ,p.getCreatedDate() , p.getUserEntity().getUserId())).toList())
+                .subpostList(user.getSubposts().stream().map(p -> new GetSubPostDto(p.getImagen(), p.getId(), p.getNombre() , p.getDescripcion() ,p.getCreatedDate(),p.getPosts(), p.getUserEntity().getUserId())).toList())
                 .userRole(user.getUserRole())
                 .build();
     }

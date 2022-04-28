@@ -35,6 +35,7 @@ public class SubPostDtoConverter {
                 .userEntityId(c.getUserEntity().getUserId())
                 .createdDate(LocalDateTime.now())
                 .descripcion(c.getDescripcion())
+                .postList(c.getPosts())
                 .imagen(c.getImagen())
                 .build();
     }
@@ -48,10 +49,7 @@ public class SubPostDtoConverter {
                 .userEntityId(c.getUserEntity().getUserId())
                 .createdDate(LocalDateTime.now())
                 .descripcion(c.getDescripcion())
-                .postList(new ArrayList<GetPostDto>())
-                /*
                 .postList(c.getPosts().stream().map(p -> new GetPostDto(p.getImagenportada(), p.getPostId(), p.getPostName(),p.getDescription(),p.getUserEntity().getUserId(),p.getCreatedDate(),p.getSubposts().getId())).toList())
-                 */
                 .imagen(c.getImagen())
                 .build();
     }

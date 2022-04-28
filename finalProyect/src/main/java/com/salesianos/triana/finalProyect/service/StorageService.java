@@ -23,6 +23,8 @@ public interface StorageService {
 
     void deleteFile(Path filename) throws IOException;
 
+    void deleteFile2(String uri) throws IOException;
+
     void deleteAll();
 
     String escalado(MultipartFile file, int size) throws IOException;

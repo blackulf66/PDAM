@@ -30,6 +30,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -228,6 +230,25 @@ public class FileSystemStorageServiceimpl implements StorageService {
         } catch (MalformedURLException e) {
             throw new FileNotFoundException("Could not read file: " + filename, e);
         }
+
+    }
+
+    public void deleteFile2(String filename) throws IOException, FileNotFoundException {
+
+        String ext = StringUtils.getFilenameExtension(filename);
+        String name = Arrays.stream(filename.split("/")).filter(s -> s.contains(".")).collect(Collectors.toList()).get(0);
+        String nameWithoutExt = name.replace("."+ext,"");
+        String directoryFile = "uploads";
+
+        try{
+            Files.deleteIfExists(Paths.get(directoryFile, name));
+            Files.deleteIfExists(Paths.get(directoryFile, nameWithoutExt.concat("-resize." + ext)));
+
+
+        } catch (FileNotFoundException e){
+            throw new FileNotFoundException("No pudo encontrarse fichero para borrar");
+        }
+
 
     }
 

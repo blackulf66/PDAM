@@ -1,6 +1,7 @@
 package com.salesianos.triana.finalProyect.security;
 
 
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
 import com.salesianos.triana.finalProyect.service.UserEntityService;
@@ -63,7 +64,8 @@ public class AuthenticationController {
                 .username(user.getUsername())
                 .userRole(user.getUserRole().name())
                 .fecha(user.getCreated())
-                .subPosts(user.getSubposts().stream().map(p -> new GetSubPostDto(p.getImagen(), p.getId(), p.getNombre() , p.getDescripcion() ,p.getCreatedDate() , p.getUserEntity().getUserId())).toList())
+                .subPosts(user.getSubposts().stream().map(p -> new GetSubPostDto(p.getImagen(), p.getId(), p.getNombre() , p.getDescripcion() ,p.getCreatedDate() ,p.getPosts(), p.getUserEntity().getUserId())).toList())
+                .posts(user.getPosts().stream().map(p -> new GetPostDto(p.getImagenportada(),p.getPostId(),p.getPostName(),p.getDescription(),p.getUserEntity().getUserId(),p.getCreatedDate(),p.getSubposts().getId())).toList())
                 .token(jwt)
                 .build();
     }

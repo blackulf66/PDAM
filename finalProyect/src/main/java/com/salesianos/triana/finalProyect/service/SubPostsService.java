@@ -82,7 +82,7 @@ public class SubPostsService {
 
         SubPosts post3 = SubPosts.builder()
                 .id(createSubPostDto.getId())
-                .createdDate(createSubPostDto.getCreatedDate())
+                .createdDate(LocalDateTime.now())
                 .userEntity(user)
                 .nombre(createSubPostDto.getNombre())
                 .imagen(uri)
@@ -116,7 +116,7 @@ public class SubPostsService {
 
                 storageService.deleteFile(path);
 
-                subPostsRepository.deleteById(id);
+                subPostsRepository.delete(data.get());
             }
 
         } else {
@@ -124,6 +124,24 @@ public class SubPostsService {
         }
 
     }
+
+    public void deleteSubpost2(Long id) throws IOException {
+
+        try {
+            Optional<SubPosts> post = subPostsRepository.findById(id);
+            if (post.isPresent()) {
+
+                storageService.deleteFile2(post.get().getImagen());
+                subPostsRepository.delete(post.get());
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 /*
     public List<SubPosts> findAllSubPost() {
 
@@ -176,12 +194,12 @@ public class SubPostsService {
 
     public GetSubPostDto findOneSubPost(String nombre, UserEntity user) {
 
-        Optional<SubPosts> publicacion = subPostsRepository.findByNombre(nombre);
+        Optional<SubPosts> subpost = subPostsRepository.findByNombre(nombre);
 
-        if (publicacion.isEmpty()) {
+        if (subpost.isEmpty()) {
             throw new SingleEntityNotFoundException(nombre.toString(), SubPosts.class);
         } else {
-            return subPostDtoConverter.subPostToGetSubPostDto(publicacion.get());
+            return subPostDtoConverter.subPostToGetSubPostDto(subpost.get());
         }
     }
 

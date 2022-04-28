@@ -53,7 +53,7 @@ public class SubPostController {
         SubPosts subPostCreated = SPservice.save(newPost, file , user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(subpostDtoConverter.subPostToGetSubPostDto2(subPostCreated));
+                .body(subpostDtoConverter.subPostToGetSubPostDto(subPostCreated));
     }
 
     @DeleteMapping("/{id}")
@@ -62,7 +62,7 @@ public class SubPostController {
             throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
         }else{
 
-            SPservice.deleteSubpost(id, user);
+            SPservice.deleteSubpost2(id);
 
             return ResponseEntity.status(204).build();
         }

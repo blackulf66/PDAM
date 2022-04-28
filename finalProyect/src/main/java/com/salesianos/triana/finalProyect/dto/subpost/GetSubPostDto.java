@@ -31,6 +31,8 @@ public class GetSubPostDto {
 
     private LocalDateTime createdDate;
 
+    private List<Post> postList;
+
     private UUID userEntityId;
 
 }

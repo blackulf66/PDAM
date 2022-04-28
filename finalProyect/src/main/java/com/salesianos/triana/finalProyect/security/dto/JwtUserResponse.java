@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.security.dto;
 
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import lombok.*;
@@ -21,5 +22,6 @@ public class JwtUserResponse {
     private String userRole;
     private LocalDateTime fecha;
     private List<GetSubPostDto> subPosts;
+    private List<GetPostDto> posts;
 
 }
