@@ -1,9 +1,6 @@
 package com.salesianos.triana.finalProyect.service;
 
-import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
-import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
-import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
-import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
+import com.salesianos.triana.finalProyect.dto.user.*;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
@@ -68,7 +65,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                     .avatar(uri)
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
-                    .Subposts(newUser.getSubpostList())
+                    .posts(newUser.getPostList())
                     .created(LocalDateTime.now())
                     .userRole(newUser.getUserRole())
                     .build();
@@ -95,7 +92,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
             return this.repositorio.findFirstByEmail(email)
                     .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
         }
-    public GetUserDto visializarPerfif(UserEntity user) {
+    public GetUserDto verPerfil(UserEntity user) {
 
         return userDtoConverter.convertUserEntityToGetUserDto2(user);
 

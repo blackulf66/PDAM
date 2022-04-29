@@ -19,6 +19,7 @@ public class PostDtoConverter {
                 .imagenportada(c.getImagenportada())
                 .postName(c.getPostName())
                 .userEntity(c.getUserEntity())
+                .subPosts(c.getSubposts())
                 .build();
     }
 
@@ -31,7 +32,7 @@ public class PostDtoConverter {
                 .createdDate(Instant.now())
                 .description(c.getDescription())
                 .imagenportada(c.getImagenportada())
-                .subpostsId(c.getSubposts().getId())
+                .subpostsName(c.getSubposts().getNombre())
                 .build();
     }
 }

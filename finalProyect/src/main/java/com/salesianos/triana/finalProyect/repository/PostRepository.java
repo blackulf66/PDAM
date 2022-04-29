@@ -13,6 +13,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> findById(Long id);
 
+    Post findByPostName(String postName);
+/*
+    Optional<Post> findBySubPost(SubPosts subPosts);*/
+
 
 
 }

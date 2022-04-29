@@ -1,5 +1,7 @@
 package com.salesianos.triana.finalProyect.dto.user;
 
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ public class UserDtoConverter {
                 .avatar(user.getAvatar())
                 .created(user.getCreated())
                 .userId(user.getUserId())
-                .subpostList(user.getSubposts())
+                .postList(user.getPosts())
                 .userRole(user.getUserRole())
                 .build();
     }
@@ -28,7 +30,7 @@ public class UserDtoConverter {
                 .avatar(user.getAvatar())
                 .created(user.getCreated())
                 .userId(user.getUserId())
-                .subpostList(user.getSubposts().stream().map(p -> new GetSubPostDto(p.getImagen(), p.getId(), p.getNombre() , p.getDescripcion() ,p.getCreatedDate(),p.getPosts(), p.getUserEntity().getUserId())).toList())
+                .postList(user.getPosts().stream().map(p -> new GetPostDto(p.getImagenportada(), p.getPostId(),p.getDescription() , p.getPostName() ,p.getUserEntity().getUserId(), p.getCreatedDate() , p.getSubposts().getNombre())).toList())
                 .userRole(user.getUserRole())
                 .build();
     }

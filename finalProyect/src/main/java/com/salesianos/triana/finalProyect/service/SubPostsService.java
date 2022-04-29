@@ -194,12 +194,12 @@ public class SubPostsService {
 
     public GetSubPostDto findOneSubPost(String nombre, UserEntity user) {
 
-        Optional<SubPosts> subpost = subPostsRepository.findByNombre(nombre);
+       SubPosts subpost =subPostsRepository.findByNombre(nombre);
 
-        if (subpost.isEmpty()) {
+        if (subpost == null) {
             throw new SingleEntityNotFoundException(nombre.toString(), SubPosts.class);
         } else {
-            return subPostDtoConverter.subPostToGetSubPostDto(subpost.get());
+            return subPostDtoConverter.subPostToGetSubPostDto(subpost);
         }
     }
 

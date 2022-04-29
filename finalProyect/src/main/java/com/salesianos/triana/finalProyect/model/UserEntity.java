@@ -54,11 +54,11 @@ public class UserEntity implements UserDetails {
 
     private LocalDateTime created;
 
-    @OneToMany(fetch = LAZY,cascade = CascadeType.ALL, mappedBy = "userEntity")
+    @OneToMany(fetch = EAGER,cascade = CascadeType.ALL, mappedBy = "userEntity")
     @Builder.Default
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(fetch = EAGER ,cascade = CascadeType.ALL , mappedBy = "userEntity")
+    @OneToMany(fetch = LAZY ,cascade = CascadeType.ALL , mappedBy = "userEntity")
     @Builder.Default
     private List<SubPosts> Subposts= new ArrayList<>();
 

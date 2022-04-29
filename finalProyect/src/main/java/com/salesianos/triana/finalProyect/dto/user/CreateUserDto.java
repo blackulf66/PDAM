@@ -27,7 +27,7 @@ public class CreateUserDto {
 
     private LocalDateTime created;
 
-    private List<SubPosts> subpostList;
+    private List<Post> postList;
 
     private UserRole userRole;
 

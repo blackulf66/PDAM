@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.dto.post;
 
+import com.salesianos.triana.finalProyect.model.SubPosts;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GetPostDto {
+public class GetPostDto2 {
 
     private String imagenportada;
 
@@ -26,6 +27,6 @@ public class GetPostDto {
 
     private Instant createdDate;
 
-    private String subpostsName;
+    private SubPosts subPosts;
 
 }

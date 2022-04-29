@@ -1,6 +1,7 @@
 package com.salesianos.triana.finalProyect.dto.user;
 
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto2;
+import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GetUserDto {
+public class GetUserDto3 {
 
     private UUID userId;
 
@@ -25,7 +26,7 @@ public class GetUserDto {
 
     private LocalDateTime created;
 
-    private List<GetPostDto> postList;
+    private List<GetPostDto2> postList;
 
     private UserRole userRole;
 

@@ -2,8 +2,14 @@ package com.salesianos.triana.finalProyect.controller;
 
 
 import com.salesianos.triana.finalProyect.dto.post.CreatePostDto;
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
+import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
+import com.salesianos.triana.finalProyect.exception.SinComunidadException;
+import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
 import com.salesianos.triana.finalProyect.model.Post;
+import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.service.PostService;
 import io.github.techgnious.exception.VideoException;
@@ -17,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,18 +40,51 @@ public class PostController {
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
                                     @RequestParam("nombre") String nombre,
                                     @RequestParam("descripcion") String description,
-                                    @RequestParam("subpost") Long postid,
-                                    @AuthenticationPrincipal UserEntity user) throws IOException, VideoException {
+                                    @RequestParam("subpost") String SubPostName,
+                                    @AuthenticationPrincipal UserEntity user) throws IOException, VideoException, SinComunidadException {
 
         CreatePostDto newPost = CreatePostDto.builder()
                 .postName(nombre)
                 .description(description)
-                .postId(postid)
                 .build();
 
-        Post PostCreated = Pservice.save(newPost, file , user );
+        Post PostCreated = Pservice.save(newPost, file , user ,SubPostName);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(postDtoConverter.PostToGetPostDto(PostCreated));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws Exception {
+        if (id.equals(null)){
+            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+        }else{
+
+            Pservice.deletePost(id);
+
+            return ResponseEntity.status(204).build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Optional<GetPostDto>> updatePost(@PathVariable Long id, @RequestPart("publicacion") CreatePostDto createPublicacionDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
+        if (id.equals(null)){
+            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+        }else{
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(Pservice.updatePost(id, createPublicacionDto, file, user));
+        }
+
+
+    }
+
+    @GetMapping("/{nombre}")
+    public ResponseEntity<GetPostDto> findOnePostbyname (@PathVariable String nombre, @AuthenticationPrincipal UserEntity user){
+
+        GetPostDto publicacion = Pservice.findOnePost(nombre , user);
+
+        return ResponseEntity.ok().body(publicacion);
+
+    }
+
 }
