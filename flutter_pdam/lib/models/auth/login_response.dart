@@ -6,7 +6,8 @@ class LoginResponse {
     required this.token,
     required this.userRole,
     required this.fecha,
-    required this.subPosts,
+     this.subPosts,
+    required this.posts,
   });
   late final String email;
   late final String avatar;
@@ -14,7 +15,8 @@ class LoginResponse {
   late final String token;
   late final String userRole;
   late final String fecha;
-  late final List<dynamic> subPosts;
+  late final Null subPosts;
+  late final List<dynamic> posts;
   
   LoginResponse.fromJson(Map<String, dynamic> json){
     email = json['email'];
@@ -23,7 +25,8 @@ class LoginResponse {
     token = json['token'];
     userRole = json['userRole'];
     fecha = json['fecha'];
-    subPosts = List.castFrom<dynamic, dynamic>(json['subPosts']);
+    subPosts = null;
+    posts = List.castFrom<dynamic, dynamic>(json['posts']);
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +38,7 @@ class LoginResponse {
     _data['userRole'] = userRole;
     _data['fecha'] = fecha;
     _data['subPosts'] = subPosts;
+    _data['posts'] = posts;
     return _data;
   }
 }

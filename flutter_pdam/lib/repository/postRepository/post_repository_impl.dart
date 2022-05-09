@@ -18,7 +18,7 @@ class PostApiRepositoryImpl extends PostApiRepository {
 
    //localhost:http://10.0.2.2:8080/
                 
-    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/public'),headers: {
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/'),headers: {
         'Authorization':
             /*'Bearer ${Constantes.token}',*/
              'Bearer ${prefs.getString('token')}'
@@ -38,7 +38,7 @@ class PostApiRepositoryImpl extends PostApiRepository {
     Map<String, String> headers = {
       'Authorization': 'Bearer ${prefs.getString('token')}',
     };
-    var uri = Uri.parse('http://10.0.2.2:8080/post/');
+    var uri = Uri.parse('https://pdam-prueba.herokuapp.com/post/');
                     var request = http.MultipartRequest('POST', uri);
                     request.fields['titulo'] = postdto.titulo;
                     request.fields['texto'] = postdto.texto;
