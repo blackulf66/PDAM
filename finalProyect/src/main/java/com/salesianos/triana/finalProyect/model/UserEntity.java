@@ -66,6 +66,14 @@ public class UserEntity implements UserDetails {
 
     private UserRole userRole;
 
+    @ManyToMany
+    @JoinTable(
+            name="tabla_join",
+            joinColumns= @JoinColumn(name="userId"),
+            inverseJoinColumns=@JoinColumn(name="id")
+    )
+    private List<SubPosts> subPostsList = new ArrayList<>();
+
     //Helpers
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -2,7 +2,6 @@ package com.salesianos.triana.finalProyect.security.dto;
 
 import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
-import com.salesianos.triana.finalProyect.model.SubPosts;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,5 +22,6 @@ public class JwtUserResponse {
     private LocalDateTime fecha;
     private List<GetSubPostDto> subPosts;
     private List<GetPostDto> posts;
+    private List<GetSubPostDto> following;
 
 }

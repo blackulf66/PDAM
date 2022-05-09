@@ -20,6 +20,7 @@ public class UserDtoConverter {
                 .userId(user.getUserId())
                 .postList(user.getPosts())
                 .userRole(user.getUserRole())
+                .following(user.getSubPostsList())
                 .build();
     }
     public GetUserDto convertUserEntityToGetUserDto2(UserEntity user) {
@@ -32,6 +33,7 @@ public class UserDtoConverter {
                 .userId(user.getUserId())
                 .postList(user.getPosts().stream().map(p -> new GetPostDto(p.getImagenportada(), p.getPostId(),p.getDescription() , p.getPostName() ,p.getUserEntity().getUserId(), p.getCreatedDate() , p.getSubposts().getNombre())).toList())
                 .userRole(user.getUserRole())
+                .following(user.getSubPostsList())
                 .build();
     }
 

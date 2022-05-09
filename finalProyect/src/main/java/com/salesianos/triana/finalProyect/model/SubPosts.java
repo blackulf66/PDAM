@@ -50,6 +50,11 @@ public class SubPosts {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity userEntity;
 
+    @ManyToMany
+    @JoinTable(name = "user_subscriptions",
+            joinColumns = @JoinColumn(name = "userId"))
+    private List<SubPosts> followers;
+
     //helpers
     public void addToUser(UserEntity u){
         this.userEntity = u;
