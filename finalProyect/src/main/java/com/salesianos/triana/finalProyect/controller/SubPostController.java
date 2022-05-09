@@ -1,10 +1,13 @@
 package com.salesianos.triana.finalProyect.controller;
 
 
+import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
+import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.exception.ListEntityNotFoundException;
+import com.salesianos.triana.finalProyect.exception.NotAdminException;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
@@ -27,6 +30,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @RestController
 @CrossOrigin
 @Transactional
@@ -43,7 +48,7 @@ public class SubPostController {
     public ResponseEntity<?> create(@RequestPart("file") MultipartFile file,
                                     @RequestParam("nombre") String nombre,
                                     @RequestParam("descripcion") String description,
-                                    @AuthenticationPrincipal UserEntity user) throws IOException, VideoException {
+                                    @AuthenticationPrincipal UserEntity user) throws IOException, VideoException, NotAdminException {
 
         CreateSubPostDto newPost = CreateSubPostDto.builder()
                 .nombre(nombre)
@@ -54,6 +59,11 @@ public class SubPostController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subpostDtoConverter.subPostToGetSubPostDto(subPostCreated));
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<List<GetSubPostDto2>> getAllPosts() {
+        return status(HttpStatus.OK).body(SPservice.getAllSubPosts());
     }
 
     @DeleteMapping("/{id}")

@@ -33,5 +33,7 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
     )*/
 
     Optional<UserEntity> findFirstByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
 

@@ -13,6 +13,7 @@ import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.repository.PostRepository;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
+import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 import io.github.techgnious.exception.VideoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,6 +32,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -38,6 +42,7 @@ public class PostService {
     private final StorageService storageService;
     private final SubPostsRepository subPostsRepository;
     private final PostDtoConverter postDtoConverter;
+    private final UserEntityRepository userEntityRepository;
 
     public Post save(CreatePostDto createPostDto, MultipartFile file, UserEntity user, String postName) throws IOException, VideoException, SinComunidadException {
 
@@ -123,6 +128,22 @@ public class PostService {
         } else {
             return postDtoConverter.PostToGetPostDto(post);
         }
+    }
+
+
+    @Transactional()
+    public List<GetPostDto> getAllPosts() {
+        return postRepository.findAll()
+                .stream()
+                .map(postDtoConverter::PostToGetPostDto)
+                .collect(toList());
+    }
+    @Transactional()
+    public List<GetPostDto> getPostsBySubreddit(Long subpostid) {
+        SubPosts subposts = subPostsRepository.findById(subpostid)
+                .orElseThrow(() -> new com.salesianos.triana.finalProyect.exception.FileNotFoundException(subpostid.toString()));
+        List<Post> posts = postRepository.findAllBySubposts(subposts);
+        return posts.stream().map(postDtoConverter::PostToGetPostDto).collect(toList());
     }
 
     public Optional<GetPostDto> updatePost(Long id, CreatePostDto p, MultipartFile file, UserEntity user) throws Exception {

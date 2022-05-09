@@ -23,7 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,7 +53,7 @@ public class PostController {
 
         Post PostCreated = Pservice.save(newPost, file , user ,SubPostName);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return status(HttpStatus.CREATED)
                 .body(postDtoConverter.PostToGetPostDto(PostCreated));
     }
 
@@ -62,7 +65,7 @@ public class PostController {
 
             Pservice.deletePost(id);
 
-            return ResponseEntity.status(204).build();
+            return status(204).build();
         }
     }
 
@@ -71,7 +74,7 @@ public class PostController {
         if (id.equals(null)){
             throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
         }else{
-            return ResponseEntity.status(HttpStatus.OK)
+            return status(HttpStatus.OK)
                     .body(Pservice.updatePost(id, createPublicacionDto, file, user));
         }
 
@@ -86,5 +89,17 @@ public class PostController {
         return ResponseEntity.ok().body(publicacion);
 
     }
+
+    @GetMapping("all")
+    public ResponseEntity<List<GetPostDto>> getAllPosts() {
+        return status(HttpStatus.OK).body(Pservice.getAllPosts());
+    }
+
+
+    @GetMapping("subpost/{id}")
+    public ResponseEntity<List<GetPostDto>> getPostsBySubreddit(@PathVariable Long id) {
+        return status(HttpStatus.OK).body(Pservice.getPostsBySubreddit(id));
+    }
+
 
 }

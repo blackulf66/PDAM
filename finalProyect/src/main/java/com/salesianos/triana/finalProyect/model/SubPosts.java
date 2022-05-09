@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.model;
 
+import com.salesianos.triana.finalProyect.validadores.UniqueName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class SubPosts {
     private Long id;
 
     @NotBlank(message = "el nombre del subpost es necesario")
+    @UniqueName(message = "{Subpost.nombre.unico}")
     private String nombre;
 
     private String descripcion;

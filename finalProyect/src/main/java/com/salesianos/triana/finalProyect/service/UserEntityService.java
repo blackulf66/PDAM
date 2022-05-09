@@ -4,11 +4,13 @@ import com.salesianos.triana.finalProyect.dto.user.*;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
+import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -92,11 +94,21 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
             return this.repositorio.findFirstByEmail(email)
                     .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
         }
+
     public GetUserDto verPerfil(UserEntity user) {
 
         return userDtoConverter.convertUserEntityToGetUserDto2(user);
 
 
     }
+
+    @Transactional
+    public UserEntity getCurrentUser() {
+        Jwt principal = (Jwt) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userEntityRepository.findByUsername(getCurrentUser().getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("nombre de usuario no encontrado"));
+    }
+
 
 }

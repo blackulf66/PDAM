@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.model;
 
+import com.salesianos.triana.finalProyect.validadores.UniqueEmail;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -48,6 +49,7 @@ public class UserEntity implements UserDetails {
 
     @Email
     @NotEmpty(message = "Email is required")
+    @UniqueEmail(message ="{email.nombre.unico}")
     private String email;
 
     private String avatar;

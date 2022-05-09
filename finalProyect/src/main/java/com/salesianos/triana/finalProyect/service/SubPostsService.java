@@ -6,36 +6,29 @@ import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.exception.*;
-import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.UserRole;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 import io.github.techgnious.exception.VideoException;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 
-import javax.imageio.ImageIO;
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -46,51 +39,63 @@ public class SubPostsService {
     private final SubPostDtoConverter subPostDtoConverter;
     private final UserEntityRepository userEntityRepository;
 
-    public SubPosts save(CreateSubPostDto createSubPostDto, MultipartFile file, UserEntity user) throws IOException, VideoException {
+    public SubPosts save(CreateSubPostDto createSubPostDto, MultipartFile file, UserEntity user) throws IOException, VideoException,NotAdminException{
+        if (user.getUserRole() == UserRole.ADMIN) {
 
-        String filenameOriginal = storageService.original(file);
+            String filenameOriginal = storageService.original(file);
 
-        String videoExtension = "mp4";
+            String videoExtension = "mp4";
 
-        String extension = StringUtils.getFilenameExtension(StringUtils.cleanPath(file.getOriginalFilename()));
-        List<String> imagenExtension = Arrays.asList("png", "gif", "jpg", "svg");
-        String filenamePublicacion;
-        List<String> allExtension = Arrays.asList("png", "gif", "jpg", "svg", "mp4");
+            String extension = StringUtils.getFilenameExtension(StringUtils.cleanPath(file.getOriginalFilename()));
+            List<String> imagenExtension = Arrays.asList("png", "gif", "jpg", "svg");
+            String filenamePublicacion;
+            List<String> allExtension = Arrays.asList("png", "gif", "jpg", "svg", "mp4");
 
-        if (imagenExtension.contains(extension)) {
-            filenamePublicacion = storageService.escalado(file, 1024);
+            if (imagenExtension.contains(extension)) {
+                filenamePublicacion = storageService.escalado(file, 1024);
 
-        } else if (videoExtension.equals(extension)) {
-            filenamePublicacion = storageService.videoEscalado(file);
+            } else if (videoExtension.equals(extension)) {
+                filenamePublicacion = storageService.videoEscalado(file);
+            } else {
+
+                throw new UnsupportedMediaType(allExtension);
+            }
+
+
+            String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(filenamePublicacion)
+                    .toUriString()
+                    .replace("10.0.2.2", "localhost");
+
+            String uriOriginal = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(filenameOriginal)
+                    .toUriString()
+                    .replace("10.0.2.2", "localhost");
+
+            SubPosts post3 = SubPosts.builder()
+                    .id(createSubPostDto.getId())
+                    .createdDate(LocalDateTime.now())
+                    .userEntity(user)
+                    .nombre(createSubPostDto.getNombre())
+                    .imagen(uri)
+                    .descripcion(createSubPostDto.getDescripcion())
+                    .posts(createSubPostDto.getPosts())
+                    .build();
+
+            return subPostsRepository.save(post3);
         } else {
-
-            throw new UnsupportedMediaType(allExtension);
+            throw new NotAdminException("no eres admin");
         }
 
-
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(filenamePublicacion)
-                .toUriString()
-                .replace("10.0.2.2", "localhost");
-
-        String uriOriginal = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(filenameOriginal)
-                .toUriString()
-                .replace("10.0.2.2", "localhost");
-
-        SubPosts post3 = SubPosts.builder()
-                .id(createSubPostDto.getId())
-                .createdDate(LocalDateTime.now())
-                .userEntity(user)
-                .nombre(createSubPostDto.getNombre())
-                .imagen(uri)
-                .descripcion(createSubPostDto.getDescripcion())
-                .posts(createSubPostDto.getPosts())
-                .build();
-
-        return subPostsRepository.save(post3);
+    }
+    @Transactional()
+    public List<GetSubPostDto2> getAllSubPosts() {
+        return subPostsRepository.findAll()
+                .stream()
+                .map(subPostDtoConverter::subPostToGetSubPostDto2)
+                .collect(toList());
     }
 
     public void deleteSubpost(Long id, UserEntity user) throws IOException {
