@@ -29,4 +29,7 @@ public class GetPostDto2 {
 
     private SubPosts subPosts;
 
+    private int VoteCount;
+
+
 }

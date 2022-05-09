@@ -24,10 +24,10 @@ public class VoteService {
     private final UserEntityService authService;
 
     @Transactional
-    public void vote(GetVoteDto voteDto) {
+    public void vote(GetVoteDto voteDto , UserEntity user) {
         Post post = postRepository.findById(voteDto.getPostId())
                 .orElseThrow(() -> new FileNotFoundException("Post no encontrado con ID - " + voteDto.getPostId()));
-        Optional<Vote> voteByPostAndUser = voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post, authService.getCurrentUser());
+        Optional<Vote> voteByPostAndUser = voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post, user);
         if (voteByPostAndUser.isPresent() &&
                 voteByPostAndUser.get().getVoteType()
                         .equals(voteDto.getVoteType())) {
@@ -39,15 +39,15 @@ public class VoteService {
         } else {
             post.setVoteCount(post.getVoteCount() - 1);
         }
-        voteRepository.save(mapToVote(voteDto, post));
+        voteRepository.save(mapToVote(voteDto, post , user));
         postRepository.save(post);
     }
 
-    private Vote mapToVote(GetVoteDto voteDto, Post post) {
+    private Vote mapToVote(GetVoteDto voteDto, Post post, UserEntity user) {
         return Vote.builder()
                 .voteType(voteDto.getVoteType())
                 .post(post)
-                .user(authService.getCurrentUser())
+                .user(user)
                 .build();
     }
 }

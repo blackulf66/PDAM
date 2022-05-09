@@ -28,4 +28,7 @@ public class GetPostDto {
 
     private String subpostsName;
 
+    private int VoteCount;
+
+
 }

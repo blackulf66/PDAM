@@ -65,6 +65,12 @@ public class UserController {
 
     }
 
+    @GetMapping("follow/{id}")
+    public ResponseEntity<?> followsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id){
+        userEntityService.addfollow(id , user);
+        return ResponseEntity.ok().build();
+    }
+
 
     /*
     @PutMapping("user/{id}")
@@ -72,7 +78,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userEntityService.updateUser(id, updateUser, file , user));
 
-    }
+
 
     @PutMapping("profile/me")
     public ResponseEntity<Optional<GetUserDto2>> actualizarPerfil (@AuthenticationPrincipal UserEntity userEntity, @RequestPart("user") CreateUserDto createUserDto, @RequestPart("file")MultipartFile file) throws Exception {

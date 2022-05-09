@@ -12,7 +12,6 @@ public enum VoteType {
 
     VoteType(int direction) {
 
-
     }
 
     public static VoteType lookup(Integer direction) {

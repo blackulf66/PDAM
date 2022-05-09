@@ -2,13 +2,12 @@ package com.salesianos.triana.finalProyect.service;
 
 import com.salesianos.triana.finalProyect.dto.user.*;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
-import com.salesianos.triana.finalProyect.model.UserRole;
+import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,15 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 
-import javax.imageio.ImageIO;
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -102,12 +93,25 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     }
 
-    @Transactional
+
     public UserEntity getCurrentUser() {
         Jwt principal = (Jwt) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
         return userEntityRepository.findByUsername(getCurrentUser().getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("nombre de usuario no encontrado"));
+    }
+
+
+    public void addfollow(Long SubpostId , UserEntity user){
+
+        Optional<SubPosts> idSubpost = subPostsRepository.findById(SubpostId);
+
+        List<SubPosts> subpostList = repositorio.findAllSubpost(user.getUserId());
+
+        subpostList.add(idSubpost.get());
+
+
+
     }
 
 

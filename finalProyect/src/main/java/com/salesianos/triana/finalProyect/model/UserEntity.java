@@ -70,7 +70,7 @@ public class UserEntity implements UserDetails {
     @JoinTable(
             name="tabla_join",
             joinColumns= @JoinColumn(name="userId"),
-            inverseJoinColumns=@JoinColumn(name="id")
+            inverseJoinColumns=@JoinColumn(name="subpostid")
     )
     private List<SubPosts> subPostsList = new ArrayList<>();
 

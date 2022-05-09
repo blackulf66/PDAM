@@ -65,7 +65,7 @@ public class AuthenticationController {
                 .username(user.getUsername())
                 .userRole(user.getUserRole().name())
                 .fecha(user.getCreated())
-                .posts(user.getPosts().stream().map(p -> new GetPostDto(p.getImagenportada(),p.getPostId(),p.getPostName(),p.getDescription(),p.getUserEntity().getUserId(),p.getCreatedDate(),p.getSubposts().getNombre())).toList())
+                .posts(user.getPosts().stream().map(p -> new GetPostDto(p.getImagenportada(),p.getPostId(),p.getPostName(),p.getDescription(),p.getUserEntity().getUserId(),p.getCreatedDate(),p.getSubposts().getNombre(),p.getVoteCount())).toList())
                 .subPosts(user.getSubPostsList().stream().map(p -> new GetSubPostDto(p.getImagen(),p.getId(),p.getNombre(),p.getDescripcion(),p.getCreatedDate(),p.getPosts(),p.getUserEntity().getUserId())).toList())
                 .token(jwt)
                 .build();

@@ -29,7 +29,4 @@ public class CreatePostDto {
     private Instant createdDate;
 
     private SubPosts subPosts;
-
-
-
 }
