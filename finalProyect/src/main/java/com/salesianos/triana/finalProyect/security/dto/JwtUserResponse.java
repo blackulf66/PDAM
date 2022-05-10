@@ -22,6 +22,5 @@ public class JwtUserResponse {
     private LocalDateTime fecha;
     private List<GetSubPostDto> subPosts;
     private List<GetPostDto> posts;
-    private List<GetSubPostDto> following;
 
 }

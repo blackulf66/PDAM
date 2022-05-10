@@ -28,12 +28,7 @@ public class VoteService {
         Post post = postRepository.findById(voteDto.getPostId())
                 .orElseThrow(() -> new FileNotFoundException("Post no encontrado con ID - " + voteDto.getPostId()));
         Optional<Vote> voteByPostAndUser = voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post, user);
-        if (voteByPostAndUser.isPresent() &&
-                voteByPostAndUser.get().getVoteType()
-                        .equals(voteDto.getVoteType())) {
-            throw new FileNotFoundException("a"
-                    + voteDto.getVoteType() + "aa");
-        }
+
         if (LIKE.equals(voteDto.getVoteType())) {
             post.setVoteCount(post.getVoteCount() + 1);
         } else {

@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.model;
 
+
 import com.salesianos.triana.finalProyect.validadores.UniqueName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

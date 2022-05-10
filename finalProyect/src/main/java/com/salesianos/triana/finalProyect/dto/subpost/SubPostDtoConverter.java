@@ -40,6 +40,19 @@ public class SubPostDtoConverter {
                 .build();
     }
 
+    public GetSubPostDto3 subPostToGetSubPostDto1(SubPosts c){
+        return GetSubPostDto3
+                .builder()
+                .id(c.getId())
+                .nombre(c.getNombre())
+                .userEntityId(c.getUserEntity().getUserId())
+                .createdDate(LocalDateTime.now())
+                .descripcion(c.getDescripcion())
+                .imagen(c.getImagen())
+                .build();
+    }
+
+
 
     public GetSubPostDto2 subPostToGetSubPostDto2(SubPosts c){
         return GetSubPostDto2

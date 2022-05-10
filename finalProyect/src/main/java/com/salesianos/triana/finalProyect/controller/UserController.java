@@ -1,6 +1,7 @@
 package com.salesianos.triana.finalProyect.controller;
 
 
+import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
 import com.salesianos.triana.finalProyect.dto.user.CreateUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
 import com.salesianos.triana.finalProyect.dto.user.UserDtoConverter;
@@ -33,6 +34,7 @@ public class UserController {
 
     private final UserEntityService userEntityService;
     private final UserDtoConverter userDtoConverter;
+    private final PostDtoConverter postDtoConverter;
 
 
     @PostMapping("auth/register")

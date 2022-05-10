@@ -15,12 +15,12 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/api/comments/")
+@RequestMapping("/api/comments")
 @AllArgsConstructor
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Void> createComment(@RequestBody CreateCommentDto commentsDto, @AuthenticationPrincipal UserEntity user , @RequestBody Post post) {
         commentService.save(commentsDto , user, post);
         return new ResponseEntity<>(CREATED);

@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.service;
 
+import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.dto.user.*;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
 import com.salesianos.triana.finalProyect.model.SubPosts;
@@ -37,6 +38,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
     private final UserEntityRepository userEntityRepository;
     private final UserDtoConverter userDtoConverter;
     private final SubPostsRepository subPostsRepository;
+    private final SubPostDtoConverter subPostDtoConverter;
 
     public UserEntity saveuser(CreateUserDto newUser, MultipartFile file) throws IOException {
 
@@ -93,7 +95,6 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     }
 
-
     public UserEntity getCurrentUser() {
         Jwt principal = (Jwt) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
@@ -101,16 +102,13 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .orElseThrow(() -> new UsernameNotFoundException("nombre de usuario no encontrado"));
     }
 
-
     public void addfollow(Long SubpostId , UserEntity user){
 
-        Optional<SubPosts> idSubpost = subPostsRepository.findById(SubpostId);
+        SubPosts idSubpost = subPostsRepository.findById(SubpostId).get();
 
-        List<SubPosts> subpostList = repositorio.findAllSubpost(user.getUserId());
+        UserEntity usuario = repositorio.findByUsername(user.getUsername()).get();
 
-        subpostList.add(idSubpost.get());
-
-
+        usuario.getSubPostsList().add(idSubpost);
 
     }
 
