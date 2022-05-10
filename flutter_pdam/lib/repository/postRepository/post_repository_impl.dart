@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../models/auth/post_dto.dart';
 import '../../models/auth/post_response.dart';
+import '../../models/post/post_dto.dart';
 import 'post_repository.dart';
 
 class PostApiRepositoryImpl extends PostApiRepository {

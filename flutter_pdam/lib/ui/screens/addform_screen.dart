@@ -10,10 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../bloc/image_pick_bloc/bloc/image_pick_bloc.dart';
 import '../../bloc/post_bloc/post_bloc.dart';
 import '../../constants.dart';
-import '../../models/auth/post_dto.dart';
+import '../../models/post/post_dto.dart';
 import '../../models/auth/post_response.dart';
 import '../../repository/postRepository/post_repository.dart';
-import '../../repository/postRepository/post_repository_impl.dart';
 import 'menu_screen.dart';
 class formScreen extends StatefulWidget {
     
@@ -48,7 +47,6 @@ String imageSelect = "no tienes imagen ";
 
   @override
   void initState() {
-    _postRepository = PostApiRepositoryImpl();
     _prefs = SharedPreferences.getInstance();
     _passwordVisible = false;
     super.initState();

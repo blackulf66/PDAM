@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
+import '../../bloc/subpost/bloc/subpost_bloc.dart';
 import '../../constants.dart';
+import '../../models/subpost/Subpost_response.dart';
 import 'post_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'posts_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
       drawer: Drawer(
         backgroundColor: Colors.black,
-        child: InkWell(child: _comunityList() ,onTap: (){
+        child: InkWell(
+          child: _createComunityList(context) ,onTap: (){
         Navigator.pushNamed(context, '/comunity');
       },)
       ),
@@ -56,13 +61,34 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: NeverScrollableScrollPhysics() ,
         itemCount: postProvider.getPosts().length,
         itemBuilder: (context , i){
-          return _Post( postProvider.getPosts()[i] ) ;                         
+          return _SubPost(postProvider.getPosts()[i] ) ;                         
         },
       ),  
     );
   }
 
-  Widget _comunityList(){
+  Widget _createComunityList(BuildContext context) {
+    return BlocBuilder<SubPostBloc, SubPostState>(
+      builder: (context, state) {
+        if (state is BlocSubPostInitial) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is SubPostFetchError) {
+          return ErrorPage(
+            message: state.message,
+            retry: () {
+              context.watch<SubPostBloc>().add(FetchSubPost());
+            },
+          );
+        } else if (state is SubPostFetched) {
+          return _comunityList(context, state.post);
+        } else {
+          return const Text('Not support');
+        }
+      },
+    );
+  }
+
+  Widget _comunityList(BuildContext context, List<SubPostApiResponse> post){
     return  Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -75,9 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics() ,
-              itemCount: postProvider.getPosts().length,
-              itemBuilder: (context , i){
-                return _Post2( postProvider.getPosts()[i] ) ;                         
+              itemBuilder: (BuildContext context, int index){
+                return _subPostItem(context , post[index] ) ;                         
               },
             ),
           ],
@@ -87,21 +112,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _Post2(Post post ){
+  Widget _subPostItem(BuildContext context, SubPostApiResponse subpost){
     return Row(
       children: [
         
           ClipRRect(
                           borderRadius:BorderRadius.circular(50.0),
                           child: Image(
-                            image: NetworkImage( post.userPhoto ),
+                            image: NetworkImage(subpost.imagen ),
                             height: 45.0,
                             width: 45.0,
                           ),
                         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Text(post.userName , style: TextStyle(color: Style.LetraColor
+          child: Text(subpost.nombre , style: TextStyle(color: Style.LetraColor
 ),),
         ),
       
@@ -110,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 }
 
-  Widget _Post(Post post ){
+  Widget _SubPost(Post post ){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -133,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ClipRRect(
                           borderRadius:BorderRadius.circular(50.0),
                           child: Image(
-                            image: NetworkImage( post.userPhoto ),
+                            image: NetworkImage(post.userPhoto ),
                             height: 45.0,
                             width: 45.0,
                           ),

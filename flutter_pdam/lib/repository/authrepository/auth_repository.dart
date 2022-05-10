@@ -5,6 +5,7 @@ import '../../models/auth/register_response.dart';
 
 abstract class AuthRepository {
   Future<LoginResponse> login(LoginDto loginDto);
+  
   Future<RegisterResponse> register(RegisterDto registerDto, String ImagePath);
 
 }
