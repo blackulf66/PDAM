@@ -12,6 +12,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListTwitsComponent } from './components/list-twits/list-twits.component';
 import { TwitItemComponent } from './components/twit-item/twit-item.component';
+import { SidemenuComponent } from './components/sidemenu/sidemenu.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { TwitItemComponent } from './components/twit-item/twit-item.component';
     LoginComponent,
     RegisterComponent,
     ListTwitsComponent,
-    TwitItemComponent
+    TwitItemComponent,
+    SidemenuComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

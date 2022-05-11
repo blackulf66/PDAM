@@ -1,0 +1,45 @@
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color:white;
+
+}
+  .navav{
+      background-color:rgb(63, 0, 78);
+      color:white;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+    color:white;
+  }
+
+  .sidenav-menu {
+      width: 300px;
+      background-color:rgb(63, 0, 78);
+      color:white;
+  }
+
+  .sidenav-title {
+      text-align: center;
+      padding-top: 20px;
+      text-transform: uppercase;
+      width: 100%;
+      font-weight: bold;
+      color:white;
+  }
+
+  .sidenav-icon {
+      margin-right: 20px;
+      color:white;
+  }
+
+  a, a:active, a:hover, a:visited {
+      text-decoration: none;
+      color:black;
+      line-height: 20px;
+      color:white;
+  }

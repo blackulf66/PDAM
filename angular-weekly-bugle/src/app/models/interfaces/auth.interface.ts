@@ -1,8 +1,10 @@
 export interface AuthLoginResponse {
-    token: string;
-    username: string;
     email: string;
-    photoUrl: string;
-    created: Date;
-    active: boolean;
+    avatar: string;
+    username: string;
+    token: string;
+    userRole: string;
+    fecha: Date;
+    subPosts: any[];
+    posts: any[];
 }

@@ -10,7 +10,9 @@ import { RegisterResponse } from '../models/interfaces/register.interface';
 const AUTH_BASE_URL = 'auth';
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
   })
 };
 
@@ -28,11 +30,8 @@ export class AuthService {
   }
 
   register(registerDto: AuthRegisterDto): Observable<RegisterResponse> {
-    let requestUrl = `${this.authBaseUrl}/signup`;
+    let requestUrl = `${this.authBaseUrl}/register`;
     return this.http.post<RegisterResponse>(requestUrl, registerDto, DEFAULT_HEADERS);
   }
 
-  forgot() {
-    let requestUrl = `${this.authBaseUrl}/forgot`;    
-  }
 }

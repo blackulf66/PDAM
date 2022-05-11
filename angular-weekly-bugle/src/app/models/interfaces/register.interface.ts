@@ -1,9 +1,10 @@
 export interface RegisterResponse {
-    token: string;
+    userId: string;
     username: string;
     email: string;
-    role: string;
-    photoUrl: string;
+    avatar: string;
     created: Date;
-    active: boolean;
+    postList?: any;
+    userRole: string;
+    following?: any;
 }

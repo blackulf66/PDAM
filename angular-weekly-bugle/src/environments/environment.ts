@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://www.minitwitter.com:3001/apiv1'
+  apiBaseUrl: 'https://pdam-prueba.herokuapp.com/'
 };
 
 /*

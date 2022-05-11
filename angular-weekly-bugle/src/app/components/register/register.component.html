@@ -1,7 +1,7 @@
 <form [formGroup]="registerForm">
 
     <label for="username">username: </label>
-    <input id="username" type="text" required  minlength="4" appForbiddenName="vicente calvo" [(ngModel)]="registerDto.username" formControlName="username">
+    <input id="username" type="text" required  minlength="4" appForbiddenName="joker" [(ngModel)]="registerDto.username" formControlName="username">
   
     <label for="email">email: </label>
     <input id="email" type="text" [(ngModel)]="registerDto.email" formControlName="email">
@@ -11,17 +11,7 @@
          
     <button mat-raised-button color="primary" (click)="doregister()"  >registrar</button>
 
-    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert">
-        <div *ngIf="username.errors?.['required']">
-          Name is required.
-        </div>
-        <div *ngIf="username.errors?.['minlength']">
-          Name must be at least 4 characters long.
-        </div>
-        <div *ngIf="username.errors?.['forbiddenName']">
-          Name cannot be Bob.
-        </div>
-
-</div>
   
   </form>
+
+  <router-outlet></router-outlet>
