@@ -27,9 +27,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/")
-@CrossOrigin
+@CrossOrigin("*")
 public class AuthenticationController {
-
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final UserEntityService userEntityService;

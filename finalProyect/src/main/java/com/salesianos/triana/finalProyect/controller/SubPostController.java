@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @Transactional
 @RequestMapping("/subpost")
 @RequiredArgsConstructor

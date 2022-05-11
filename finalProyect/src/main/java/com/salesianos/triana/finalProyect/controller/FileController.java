@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("*")
 public class FileController {
 
     private final StorageService storageService;

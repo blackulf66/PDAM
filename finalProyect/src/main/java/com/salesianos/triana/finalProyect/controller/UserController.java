@@ -26,10 +26,9 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @RequestMapping("/")
 @Transactional
-
+@CrossOrigin("*")
 public class UserController {
 
     private final UserEntityService userEntityService;

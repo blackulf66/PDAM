@@ -30,7 +30,7 @@ import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("/post")
 @Transactional
 public class PostController {
