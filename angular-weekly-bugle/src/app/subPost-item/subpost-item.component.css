@@ -1,0 +1,32 @@
+.example-card {
+    display: inline-block;
+    max-width: 400px;
+    border: 1px solid grey;
+}
+
+img {
+    border: 1px solid black;
+}
+
+.example-header-image {
+    background-size: cover;
+}
+
+.juntos {
+    display: flex;
+    text-align: center;
+}
+
+.juntos mat-card-title {
+    font-size: 12pt;
+    padding-left: 10px;
+}
+
+.juntos mat-icon {
+    font-size: 12pt;
+    padding-left: 10px;
+}
+
+button {
+    float: right;
+}

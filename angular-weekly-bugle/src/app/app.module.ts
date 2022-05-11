@@ -1,38 +1,42 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './modules/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MaterialImportsModule } from './modules/material-imports.module';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialImportsModule } from './module/material-imports.module';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ListTwitsComponent } from './components/list-twits/list-twits.component';
-import { TwitItemComponent } from './components/twit-item/twit-item.component';
-import { SidemenuComponent } from './components/sidemenu/sidemenu.component';
-import { HomeComponent } from './components/home/home.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { SideMenuComponent } from './share/side-menu/side-menu.component';
+import { SubpostItemComponent } from './subPost-item/subpost-item.component';
+import { SubpostListComponent } from './subpost-list/subpost-list.component';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RegisterComponent,
-    ListTwitsComponent,
-    TwitItemComponent,
-    SidemenuComponent,
-    HomeComponent
+    LoginComponent,
+    SideMenuComponent,
+    SubpostItemComponent,
+    SubpostListComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MaterialImportsModule,
-    FormsModule,
     BrowserAnimationsModule,
+    MaterialImportsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    FormsModule,
+    MatIconModule,
+    RouterModule,
+    MatDialogModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://pdam-prueba.herokuapp.com/'
+  apiBaseUrl: 'https://pdam-prueba.herokuapp.com'
 };
 
 /*
