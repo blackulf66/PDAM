@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:pdamfinal/models/post/post_response.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
+import '../../bloc/postbloc/bloc/post_bloc.dart';
 import '../../bloc/subpost/bloc/subpost_bloc.dart';
 import '../../constants.dart';
 import '../../models/subpost/Subpost_response.dart';
+import '../../repository/postRepository/post_repository.dart';
+import '../../repository/postRepository/post_repository_impl.dart';
 import 'post_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'posts_provider.dart';
@@ -18,10 +22,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  late PostApiRepository postApiRepository;
+
    PostProvider postProvider = new PostProvider();   
+
+  @override
+    void initState() {
+    super.initState();
+    postApiRepository = PostApiRepositoryImpl();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(create: (context) { return PostBloc(postApiRepository)..add(FetchPost()); },
+    child: Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
       drawer: Drawer(
         backgroundColor: Colors.black,
@@ -35,11 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             _parteabajo(),                
             Divider(color: Colors.grey, thickness: 0.5 , height: 0.0),
-            _postsList(),
-          ],
-        ),          
-      ),       
-    );
+            _createPostList(context),
+          ]))));
   }
 
   Widget _parteabajo() {
@@ -52,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _postsList(){
+  
+
+  /*Widget _postsList(){
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -61,9 +77,31 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: NeverScrollableScrollPhysics() ,
         itemCount: postProvider.getPosts().length,
         itemBuilder: (context , i){
-          return _SubPost(postProvider.getPosts()[i] ) ;                         
+          return _SubPost(postProvider.getPosts()![i] ) ;                         
         },
       ),  
+    );
+  }*/
+
+
+    Widget _createPostList(BuildContext context) {
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (context, state) {
+        if (state is BlocPostInitial) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is PostFetchError) {
+          return ErrorPage(
+            message: state.message,
+            retry: () {
+              context.watch<PostBloc>().add(FetchPost());
+            },
+          );
+        } else if (state is PostFetched) {
+          return _PostList(context, state.post);
+        } else {
+          return const Text('Not support');
+        }
+      },
     );
   }
 
@@ -112,6 +150,25 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+   Widget _PostList(BuildContext context, List<PostApiResponse> post){
+    return  Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics() ,
+              itemBuilder: (BuildContext context, int index){
+                return _SubPost(context , post[index] ) ;                         
+              },
+            ),
+          ],
+        ),  
+      
+      
+    );
+  }
+
   Widget _subPostItem(BuildContext context, SubPostApiResponse subpost){
     return Row(
       children: [
@@ -135,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 }
 
-  Widget _SubPost(Post post ){
+  Widget _SubPost(BuildContext context,PostApiResponse post){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -158,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ClipRRect(
                           borderRadius:BorderRadius.circular(50.0),
                           child: Image(
-                            image: NetworkImage(post.userPhoto ),
+                            image: NetworkImage(post.imagenportada ),
                             height: 45.0,
                             width: 45.0,
                           ),
@@ -169,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
         
                       Text( 
-                        post.userName,
+                        post.postName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
@@ -195,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width:  MediaQuery.of(context).size.width,
                     height:300,
                     child: Image(
-                      image: NetworkImage( post.postPhoto ),
+                      image: NetworkImage( post.imagenportada ),
                           
                     ),
                   ),

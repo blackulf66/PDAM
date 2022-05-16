@@ -8,10 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/image_pick_bloc/bloc/image_pick_bloc.dart';
-import '../../bloc/post_bloc/post_bloc.dart';
+import '../../bloc/postbloc/bloc/post_bloc.dart';
 import '../../constants.dart';
 import '../../models/post/post_dto.dart';
-import '../../models/auth/post_response.dart';
+import '../../models/post/post_response.dart';
 import '../../repository/postRepository/post_repository.dart';
 import 'menu_screen.dart';
 class formScreen extends StatefulWidget {
@@ -78,7 +78,7 @@ String imageSelect = "no tienes imagen ";
       body: Center(
         child: Container(
             padding: const EdgeInsets.all(20),
-            child: BlocConsumer<PostBloc, BlocPostState>(
+            child: BlocConsumer<PostBloc, PostState>(
                 listenWhen: (context, state) {
               return state is PostSuccessState || state is PostErrorState;
             }, listener: (context, state) async {
@@ -334,9 +334,9 @@ String imageSelect = "no tienes imagen ";
                           await SharedPreferences.getInstance();
                       if (_formKey.currentState!.validate()) {
                         final loginDto = PostDto(
-                            titulo: titulo.text,
-                            texto: texto.text,
-                            postEnum: dropdownvalue);
+                            nombre: titulo.text,
+                            descripcion: texto.text,
+                            subpost: dropdownvalue);
                         BlocProvider.of<PostBloc>(context)
                             .add(DoPostEvent(loginDto, path));
                       }

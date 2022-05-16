@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/post/post_dto.dart';
-import '../../models/auth/post_response.dart';
 import '../../models/subpost/Subpost_response.dart';
 import 'subpost_repository.dart';
 

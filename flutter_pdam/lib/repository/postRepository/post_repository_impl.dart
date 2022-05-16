@@ -5,20 +5,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../models/auth/post_response.dart';
 import '../../models/post/post_dto.dart';
+import '../../models/post/post_response.dart';
 import 'post_repository.dart';
 
 class PostApiRepositoryImpl extends PostApiRepository {
   final Client _client = Client();
 
 @override
-  Future<List<PostApiResponse>> fetchPosts(String type) async {
+  Future<List<PostApiResponse>> fetchPosts() async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
 
    //localhost:http://10.0.2.2:8080/
                 
-    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/'),headers: {
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/all'),headers: {
         'Authorization':
             /*'Bearer ${Constantes.token}',*/
              'Bearer ${prefs.getString('token')}'
@@ -40,9 +40,9 @@ class PostApiRepositoryImpl extends PostApiRepository {
     };
     var uri = Uri.parse('https://pdam-prueba.herokuapp.com/post/');
                     var request = http.MultipartRequest('POST', uri);
-                    request.fields['titulo'] = postdto.titulo;
-                    request.fields['texto'] = postdto.texto;
-                    request.fields['postEnum'] = postdto.postEnum;
+                    request.fields['nombre'] = postdto.nombre;
+                    request.fields['descripcion'] = postdto.descripcion;
+                    request.fields['subpost'] = postdto.subpost;
                     request.files.add(await http.MultipartFile.fromPath('file', imagePath));
                     request.headers.addAll(headers);
                     var response = await request.send();
