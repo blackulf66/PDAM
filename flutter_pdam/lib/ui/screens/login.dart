@@ -100,7 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
+               
                 Padding(
                     padding: const EdgeInsets.only(bottom: 80),
                     child: Center(
@@ -109,14 +111,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 120.0,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
+                            image: DecorationImage(image: AssetImage('../assets/images/daily.png' ),
+                            ),
+                            
                               color: Style.VKNGGron,
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(10.0),
                                   bottomLeft: Radius.circular(10.0))),
+                            
                         ),
+                        
                       ),
                     )),
-                SizedBox()
+                
               ],
             ),
             Center(

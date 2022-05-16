@@ -152,6 +152,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 120.0,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
+                            image: DecorationImage(image: AssetImage('../assets/images/daily.png' ),
+                            ),
                           color: Style.VKNGGron,
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(10.0),

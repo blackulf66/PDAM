@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdamfinal/repository/postRepository/post_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/image_pick_bloc/bloc/image_pick_bloc.dart';
@@ -49,6 +50,7 @@ String imageSelect = "no tienes imagen ";
   void initState() {
     _prefs = SharedPreferences.getInstance();
     _passwordVisible = false;
+    _postRepository = PostApiRepositoryImpl();
     super.initState();
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
+import 'package:pdamfinal/repository/subpostRepository/subpost_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
 import '../../bloc/postbloc/bloc/post_bloc.dart';
@@ -9,6 +10,7 @@ import '../../constants.dart';
 import '../../models/subpost/Subpost_response.dart';
 import '../../repository/postRepository/post_repository.dart';
 import '../../repository/postRepository/post_repository_impl.dart';
+import '../../repository/subpostRepository/subpost_repository.dart';
 import 'post_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'posts_provider.dart';
@@ -23,6 +25,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   late PostApiRepository postApiRepository;
+  late SubPostApiRepository subPostApiRepository;
+
 
    PostProvider postProvider = new PostProvider();   
 
@@ -30,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     void initState() {
     super.initState();
     postApiRepository = PostApiRepositoryImpl();
+    subPostApiRepository = SubPostApiRepositoryImpl();
   }
   @override
   void dispose() {
@@ -37,7 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (context) { return PostBloc(postApiRepository)..add(FetchPost()); },
+    return
+     //BlocProvider(create: (context) { return PostBloc(postApiRepository)..add(FetchPost()); },
+    MultiBlocProvider(
+  providers: [
+    BlocProvider<PostBloc>(
+      create: (BuildContext context) => PostBloc(postApiRepository),
+    ),
+    BlocProvider<SubPostBloc>(
+      create: (BuildContext context) => SubPostBloc(subPostApiRepository),
+    ),
+  ],
     child: Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
       drawer: Drawer(
@@ -159,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics() ,
               itemBuilder: (BuildContext context, int index){
-                return _SubPost(context , post[index] ) ;                         
+                return _Post(context , post[index] ) ;                         
               },
             ),
           ],
@@ -192,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 }
 
-  Widget _SubPost(BuildContext context,PostApiResponse post){
+  Widget _Post(BuildContext context,PostApiResponse post){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -210,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(              
                     children: <Widget>[
         
-                      Container(
+                     /* Container(
                         padding: EdgeInsets.only(top: 12.0 , left: 18.0, bottom: 12.0, right: 12.0 ),
                         child: ClipRRect(
                           borderRadius:BorderRadius.circular(50.0),
@@ -220,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 45.0,
                           ),
                         ),
-                      ),
+                      ),*/
                       SizedBox(
                         width:130,
                       ),
