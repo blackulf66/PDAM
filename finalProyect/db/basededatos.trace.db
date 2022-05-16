@@ -21009,3 +21009,84 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/lob
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 143 more
+2022-05-16 12:31:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE USER (
+       USER_ID BINARY NOT NULL,
+        AVATAR VARCHAR(255),
+        CREATED TIMESTAMP,
+        EMAIL,
+        UNIQUE =[*] TRUE VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        USER_ROLE INTEGER,
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (USER_ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE USER (
+       USER_ID BINARY NOT NULL,
+        AVATAR VARCHAR(255),
+        CREATED TIMESTAMP,
+        EMAIL,
+        UNIQUE =[*] TRUE VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        USER_ROLE INTEGER,
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (USER_ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table user (
+       user_id binary not null,
+        avatar varchar(255),
+        created timestamp,
+        email,
+        unique = true varchar(255),
+        password varchar(255),
+        user_role integer,
+        username varchar(255),
+        primary key (user_id)
+    ) [42001-200]
+2022-05-16 12:31:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+
+    alter table comment 
+       add constraint FK8kcum44fvpupyw6f5baccx25c 
+       foreign key (user_id) 
+       references user [42102-200]
+2022-05-16 12:31:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+
+    alter table post 
+       add constraint FKfwfabt4v7hh7aqy383wu9ukm4 
+       foreign key (user_entity_user_id) 
+       references user [42102-200]
+2022-05-16 12:31:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+
+    alter table sub_post 
+       add constraint FK2rk39bmy2dah03nmsmonj7o12 
+       foreign key (user_entity_user_id) 
+       references user [42102-200]
+2022-05-16 12:31:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+
+    alter table tabla_join 
+       add constraint FK329abryc9jr19y4mvr8hqjpwx 
+       foreign key (user_id) 
+       references user [42102-200]
+2022-05-16 12:31:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+
+    alter table vote 
+       add constraint FKcsaksoe2iepaj8birrmithwve 
+       foreign key (user_id) 
+       references user [42102-200]
+2022-05-16 12:32:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+insert into user (avatar, created, email, unique = true, password, user_role, username, user_id) values (?, ?, ?, ?, ?, ?, ?) [42102-200]

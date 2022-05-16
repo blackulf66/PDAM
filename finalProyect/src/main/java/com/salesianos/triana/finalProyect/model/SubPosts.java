@@ -38,7 +38,7 @@ public class SubPosts {
     private Long id;
 
     @NotBlank(message = "el nombre del subpost es necesario")
-    @UniqueName(message = "{Subpost.nombre.unico}")
+    @Column(unique = true)
     private String nombre;
 
     private String descripcion;

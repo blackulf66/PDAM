@@ -21,13 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 @Service("userDetailsService")
 @RequiredArgsConstructor
@@ -69,7 +69,6 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
             } catch (DataIntegrityViolationException ex) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de ese usuario ya existe");
             }
-
         } else {
             throw new UnsupportedMediaType(imagenExtension);
         }

@@ -50,6 +50,7 @@ public class UserEntity implements UserDetails {
     @Email
     @NotEmpty(message = "Email is required")
     @UniqueEmail(message ="{email.nombre.unico}")
+    @Column(unique = true)
     private String email;
 
     private String avatar;
