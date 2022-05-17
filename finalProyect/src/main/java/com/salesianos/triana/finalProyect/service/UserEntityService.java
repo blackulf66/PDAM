@@ -111,5 +111,15 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     }
 
+    public void removefollow(Long SubpostId , UserEntity user){
+
+        SubPosts idSubpost = subPostsRepository.findById(SubpostId).get();
+
+        UserEntity usuario = repositorio.findByUsername(user.getUsername()).get();
+
+        usuario.getSubPostsList().remove(idSubpost);
+
+    }
+
 
 }

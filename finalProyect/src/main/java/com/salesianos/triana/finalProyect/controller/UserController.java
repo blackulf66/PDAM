@@ -72,6 +72,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("unfollow/{id}")
+    public ResponseEntity<?> unfollowsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id){
+        userEntityService.removefollow(id , user);
+        return ResponseEntity.ok().build();
+    }
+
+
 
     /*
     @PutMapping("user/{id}")

@@ -43,7 +43,7 @@ public class SubPosts {
 
     private String descripcion;
 
-    @OneToMany(fetch = EAGER, mappedBy = "subposts")
+    @OneToMany(fetch = EAGER, mappedBy = "subposts" ,cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<Post> posts = new ArrayList<>();
 
@@ -51,10 +51,10 @@ public class SubPosts {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity userEntity;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "userId"))
-    private List<SubPosts> followers;
+    private List<UserEntity> followers;
 
     //helpers
     public void addToUser(UserEntity u){
