@@ -6,6 +6,11 @@ import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto;
 import com.salesianos.triana.finalProyect.dto.user.GetUserDto2;
 import com.salesianos.triana.finalProyect.service.UserEntityService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import org.springframework.data.jpa.repository.Query;
@@ -34,6 +39,15 @@ public class AuthenticationController {
     private final UserEntityService userEntityService;
 
     String jwt="";
+
+    @Operation(summary = "loguear un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "logueas a un usuario",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+
+    })
 
     @PostMapping("auth/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
@@ -69,7 +83,13 @@ public class AuthenticationController {
                 .token(jwt)
                 .build();
     }
-
+    @Operation(summary = "obtener datos de usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "obienes todo del usuario logueado",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserEntity.class))})
+    })
     @GetMapping("/me")
     public ResponseEntity<?> me(@AuthenticationPrincipal UserEntity userPrincipal) {
 

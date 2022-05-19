@@ -34,6 +34,13 @@ public class UserDtoConverter {
                 .following(user.getSubPostsList())
                 .build();
     }
+
+    public GetFollowsDto convertUserEntityFToGetUserDtoF(UserEntity user) {
+        return GetFollowsDto.builder()
+                .username(user.getUsername())
+                .following(userEntityRepository.findAllSubpost(user.getUserId()).stream().map(subPostDtoConverter::subPostToGetSubPostDto1).collect(Collectors.toList()))
+                .build();
+    }
     public GetUserDto convertUserEntityToGetUserDto2(UserEntity user) {
         return GetUserDto.builder()
                 .userId(user.getUserId())

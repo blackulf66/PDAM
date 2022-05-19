@@ -5,6 +5,7 @@ import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
+import com.salesianos.triana.finalProyect.dto.user.GetFollowsDto;
 import com.salesianos.triana.finalProyect.exception.*;
 import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.model.UserRole;
@@ -98,6 +99,8 @@ public class SubPostsService {
                 .collect(toList());
     }
 
+
+
     public void deleteSubpost(Long id, UserEntity user) throws IOException {
 
         Optional<SubPosts> data = subPostsRepository.findById(id);
@@ -147,51 +150,6 @@ public class SubPostsService {
 
     }
 
-/*
-    public List<SubPosts> findAllSubPost() {
-
-        List<SubPosts> data = subPostsRepository.findByidPostList();
-
-        if (data.isEmpty()) {
-            throw new ListEntityNotFoundException(SubPosts.class);
-        } else {
-            return data;
-        }
-    }
-
-
-   /* public ResponseEntity deleteSubPost(UserEntity user, Long id) throws IOException {
-        Optional<SubPosts> subpost = subPostsRepository.findById(id);
-        if (subpost.isEmpty()) {
-            throw new SingleEntityNotFoundException(id.toString(), Post.class);
-        } else {
-            if (subpost.get().getUserEntity().getUsername().equals(user.getUsername())) {
-                String scale = StringUtils.cleanPath(String.valueOf(subpost.get().getImagenEscalada())).replace("http://localhost:8080/download/", "")
-                        .replace("%20", " ");
-                Path path = storageService.load(scale);
-                String filename = StringUtils.cleanPath(String.valueOf(path)).replace("http://localhost:8080/download/", "")
-                        .replace("%20", " ");
-                Path pathScalse = Paths.get(filename);
-                storageService.deleteFile(pathScalse);
-
-                String original = StringUtils.cleanPath(String.valueOf(subpost.get().getImagen())).replace("http://localhost:8080/download/", "")
-                        .replace("%20", " ");
-                Path path2 = storageService.load(original);
-                String filename2 = StringUtils.cleanPath(String.valueOf(path2)).replace("http://localhost:8080/download/", "")
-                        .replace("%20", " ");
-                Path pathOriginal = Paths.get(filename2);
-                storageService.deleteFile(pathOriginal);
-
-                subPostsRepository.deleteById(id);
-
-                return ResponseEntity.noContent().build();
-            } else {
-                throw new DynamicException("No eres propietario de este subpost");
-            }
-
-
-        }
-    }*/
 
     public Optional<SubPosts> findById(Long id) {
         return subPostsRepository.findById(id);
@@ -313,105 +271,5 @@ public class SubPostsService {
 }
 
 
-    /*public SubPosts editSubPost(CreateSubPostDto newPost, MultipartFile file, UserEntity user, Long id) throws IOException, VideoException {
-
-        Optional<SubPosts> subpost = subPostsRepository.findById(id);
-
-        if (subpost.isEmpty()) {
-            throw new SingleEntityNotFoundException(id.toString(), Post.class);
-        } else {
-            if (subpost.get().getUserEntity().getUsername().equals(user.getUsername())) {
-                subpost.get().setDescripcion(newPost.getDescripcion());
-                subpost.get().setNombre(newPost.getNombre());
-                subpost.get().setImagenEscalada(newPost.getImagenEscalada());
-
-
-                String videoExtension = "mp4";
-                String extension = StringUtils.getFilenameExtension(StringUtils.cleanPath(file.getOriginalFilename()));
-                List<String> allExtension = Arrays.asList("png", "gif", "jpg", "svg", "mp4");
-
-                if (!allExtension.contains(extension)) {
-                    throw new UnsupportedMediaType(allExtension);
-                } else {
-                    String scale = StringUtils.cleanPath(String.valueOf(subpost.get().getImagenEscalada())).replace("http://localhost:8080/download/", "")
-                            .replace("%20", " ");
-                    Path path = storageService.load(scale);
-                    String filename = StringUtils.cleanPath(String.valueOf(path)).replace("http://localhost:8080/download/", "")
-                            .replace("%20", " ");
-                    Path pathScalse = Paths.get(filename);
-                    storageService.deleteFile(pathScalse);
-
-
-                    String original = StringUtils.cleanPath(String.valueOf(subpost.get().getImagen())).replace("http://localhost:8080/download/", "")
-                            .replace("%20", " ");
-                    Path path2 = storageService.load(original);
-                    String filename2 = StringUtils.cleanPath(String.valueOf(path2)).replace("http://localhost:8080/download/", "")
-                            .replace("%20", " ");
-                    Path pathOriginal = Paths.get(filename2);
-                    storageService.deleteFile(pathOriginal);
-
-
-                    String filenameOriginal = storageService.original(file);
-                    String filenamePublicacion;
-                    if (!videoExtension.contains(extension)) {
-                        filenamePublicacion = storageService.escalado(file, 1024);
-
-                    } else {
-                        filenamePublicacion = storageService.videoEscalado(file);
-                    }
-
-                    String urinew = ServletUriComponentsBuilder.fromCurrentContextPath()
-                            .path("/download/")
-                            .path(filenamePublicacion)
-                            .toUriString();
-
-                    String uriOld = ServletUriComponentsBuilder.fromCurrentContextPath()
-                            .path("/download/")
-                            .path(filenameOriginal)
-                            .toUriString();
-
-                    subpost.get().setImagen(uriOld);
-                    subpost.get().setImagenEscalada(urinew);
-
-                }
-            } else {
-                throw new DynamicException("No eres propietario de este post");
-            }
-
-            return subPostsRepository.save(subpost.get());
-        }
-    }
-}
-/*
-    public List<GetSubPostDto> getAllSubpost(UserEntity user) throws IOException {
-        Optional<SubPosts> subPostsList = userEntityRepository.getById(user.getUserId());
-        if (subPostsList.isEmpty()) {
-            throw new ListEntityNotFoundException(SubPosts.class);
-        } else {
-            List<GetSubPostDto> getSubPostDto = subPostsList.stream().map(p -> new GetSubPostDto(
-                    p.getImagen(),
-                    p.getId(),
-                    p.getNombre(),
-                    p.getDescripcion(),
-                    p.getCreatedDate(),
-                    p.getUserEntity().getUserId()
-            )).toList();
-            return getSubPostDto;
-        }
-
-    }
-    }
-
-    public List<GetSubPostDto> findByPostSubPost(SubPosts subreddit) {
-
-        List<SubPosts> listaa = subPostsRepository.findAllBySubposts(subreddit);
-
-       return listaa.stream().map(subPostDtoConverter::subPostToGetSubPostDto).toList();
-    }
-
-
-
-    }
-*/
 
 
