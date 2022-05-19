@@ -1,12 +1,10 @@
 package com.salesianos.triana.finalProyect.controller;
 
 
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
-import com.salesianos.triana.finalProyect.exception.ListEntityNotFoundException;
 import com.salesianos.triana.finalProyect.exception.NotAdminException;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
 import com.salesianos.triana.finalProyect.model.SubPosts;
@@ -30,11 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.status;
 
