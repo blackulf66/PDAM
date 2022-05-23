@@ -35,10 +35,9 @@ String imageSelect = "no tienes imagen ";
 
   late PostApiRepository _postRepository;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController titulo = TextEditingController();
-  TextEditingController subtitulo = TextEditingController();
-  TextEditingController texto = TextEditingController();
-  TextEditingController postEnum = TextEditingController();
+  TextEditingController nombre = TextEditingController();
+  TextEditingController descripcion = TextEditingController();
+  TextEditingController subpost = TextEditingController();
   late Future<SharedPreferences> _prefs;
   final String uploadUrl = 'http://10.0.2.2:8080/auth/register';
   String path = "";
@@ -158,9 +157,9 @@ String imageSelect = "no tienes imagen ";
                         ),
                         child: TextFormField(
                           
-                          controller: titulo,
+                          controller: nombre,
                           decoration: InputDecoration(
-                            hintText: 'titulo',
+                            hintText: 'nombre',
                             hintStyle: TextStyle(color: Colors.grey),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -186,9 +185,9 @@ String imageSelect = "no tienes imagen ";
                           ),
                           child: TextFormField(
                             
-                            controller: titulo,
+                            controller: descripcion,
                             decoration: InputDecoration(
-                              hintText: 'subtitulo',
+                              hintText: 'descripcion',
                               hintStyle: TextStyle(color: Colors.grey),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -200,34 +199,6 @@ String imageSelect = "no tienes imagen ";
                         ),
                       ),
                      
-                      Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                                                      width: MediaQuery.of(context).size.width,
-
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(14.0),
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 1,
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: texto,
-                            decoration: InputDecoration(
-                              hintText: 'noticia',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -251,35 +222,44 @@ String imageSelect = "no tienes imagen ";
                                     ),
                                   ]);
                                 }
-                                return Center(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: ElevatedButton(
-                                              onPressed: () {
-                                                BlocProvider.of<ImagePickBlocBloc>(context)
-                                                    .add(const SelectImageEvent(
-                                                        ImageSource.gallery));
-                                              },
-                                             
-                                                  child: Center(child: Icon(Icons.arrow_circle_up)),
-                                                
-                                        
-                                              )),
-                                           Padding(
-                                             padding: const EdgeInsets.only(left:15.0),
-                                             child: Text('Seleccionar Imagen' ,style: TextStyle(color: Colors.white),),
-                                           )
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Center(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: ElevatedButton(
+                                            
 
-                                      ],
-                                    ),
-                                    );
+                                              
+                                                onPressed: () {
+                                                  BlocProvider.of<ImagePickBlocBloc>(context)
+                                                      .add(const SelectImageEvent(
+                                                          ImageSource.gallery));
+                                                },
+                                                  style: ElevatedButton.styleFrom(
+                                                  primary: Style.VKNGGron,
+                                                       ),
+                                               
+                                                    child: Center(child: Icon(Icons.arrow_circle_up)),
+                                                  
+                                          
+                                                )),
+                                             Padding(
+                                               padding: const EdgeInsets.only(left:15.0),
+                                               child: Text('Seleccionar Imagen' ,style: TextStyle(color: Colors.white),),
+                                             )
+
+                                        ],
+                                      ),
+                                      ),
+                                );
                               }),
                         ],
                       ),
-                      Padding(
+                      /*Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
                       alignment: Alignment.topLeft,
@@ -310,8 +290,31 @@ String imageSelect = "no tienes imagen ";
                         style: TextStyle(color: Colors.grey[700], fontSize: 16),
                       ),
                     ),
-                  ),
-                  
+                  ),*/
+                   Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: Container(
+                           width: MediaQuery.of(context).size.width,
+
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14.0),
+                            border: Border.all(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                          ),
+                          child: TextFormField(
+                            
+                            controller: subpost,
+                            decoration: InputDecoration(
+                              hintText: 'nombre subpost',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),)),
                       
                     ],
                   ),
@@ -336,15 +339,15 @@ String imageSelect = "no tienes imagen ";
                           await SharedPreferences.getInstance();
                       if (_formKey.currentState!.validate()) {
                         final loginDto = PostDto(
-                            nombre: titulo.text,
-                            descripcion: texto.text,
+                            nombre: nombre.text,
+                            descripcion: descripcion.text,
                             subpost: dropdownvalue);
                         BlocProvider.of<PostBloc>(context)
                             .add(DoPostEvent(loginDto, path));
                       }
-                      prefs.setString('titulo', titulo.text);
-                      prefs.setString('texto', texto.text);
-                      prefs.setString('postEnum', dropdownvalue);
+                      prefs.setString('nombre', nombre.text);
+                      prefs.setString('descripcion', descripcion.text);
+                      prefs.setString('subpost', subpost.text);
                     },
                     child: const Text('subir'),
                   ),
