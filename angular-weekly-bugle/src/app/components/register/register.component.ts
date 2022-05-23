@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
     username: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
+    file:new FormControl(''),
   });
 
   registerDto = new AuthRegisterDto();

@@ -8,6 +8,9 @@
 
     <label for="password">password: </label>
     <input id="password" type="text" [(ngModel)]="registerDto.password" formControlName="password">
+
+    <label for="file">file: </label>
+    <input id="file" type="text" [(ngModel)]="registerDto.file" formControlName="file">
          
     <button mat-raised-button color="primary" (click)="doregister()"  >registrar</button>
 

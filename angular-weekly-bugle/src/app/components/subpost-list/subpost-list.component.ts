@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SubPostResponse } from '../model/interfaces/subpost.interface';
-import { SubPostService } from '../service/subpost.service';
+import { SubPostResponse } from '../../model/interfaces/subpost.interface';
+import { SubPostService } from '../../service/subpost.service';
 
 @Component({
   selector: 'app-subpost-list',

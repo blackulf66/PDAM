@@ -7,5 +7,5 @@
         <mat-label>Password</mat-label>
         <input matInput placeholder="Write your password" type="password" [(ngModel)]="loginDto.password" name="password">
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="doLogin()">Login</button>
+      <a href="/principal"><button type="submit" mat-raised-button color="primary" (click)="doLogin()">Login</button></a>
   </form>

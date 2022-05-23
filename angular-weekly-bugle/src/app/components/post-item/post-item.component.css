@@ -1,0 +1,15 @@
+.example-card {
+    display: inline-block;
+    max-width: 400px;
+    border: 1px solid grey;
+    background-color: rgb(66, 0, 66);
+}
+
+.imagen mat-icon {
+    font-size: 12pt;
+    padding-left: 10px;
+}
+
+.unica{
+    display: inline-block;
+}

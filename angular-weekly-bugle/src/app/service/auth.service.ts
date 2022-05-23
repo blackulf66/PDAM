@@ -50,6 +50,6 @@ export class AuthService {
     return this.http.post<AuthLoginResponse>(requestUrl, loginDto, DEFAULT_HEADERS);
   }
 
-  
+
 
 }

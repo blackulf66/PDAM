@@ -3,14 +3,19 @@
         <h3 class="sidenav-title">Menú</h3>
         <mat-list role="list">
 
+            <mat-list-item role="listitem"><a [routerLink]="['/subposts']" (click)="sidenav.toggle()"
+                routerLinkActive="router-link-active">
+                <mat-icon class="sidenav-icon">subpost</mat-icon> subposts
+            </a></mat-list-item>
+
             <mat-list-item role="listitem"><a [routerLink]="['/posts']" (click)="sidenav.toggle()"
                 routerLinkActive="router-link-active">
-                <mat-icon class="sidenav-icon">home</mat-icon> subpostes
+                <mat-icon class="sidenav-icon">post</mat-icon> posts
             </a></mat-list-item>
 
             <mat-list-item role="listitem">
-                <a [routerLink]="['/login']" (click)="sidenav.toggle()" routerLinkActive="router-link-active">
-                    <mat-icon class="sidenav-icon">person</mat-icon> Login
+                <a [routerLink]="['/user']" (click)="sidenav.toggle()" routerLinkActive="router-link-active">
+                    <mat-icon class="sidenav-icon">users</mat-icon> users
                 </a>
             </mat-list-item>
             
