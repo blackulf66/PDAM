@@ -155,14 +155,14 @@ public class SubPostsService {
         return subPostsRepository.findById(id);
     }
 
-    public GetSubPostDto findOneSubPost(String nombre, UserEntity user) {
+    public GetSubPostDto2 findOneSubPost(String nombre, UserEntity user) {
 
        SubPosts subpost =subPostsRepository.findByNombre(nombre);
 
         if (subpost == null) {
             throw new SingleEntityNotFoundException(nombre.toString(), SubPosts.class);
         } else {
-            return subPostDtoConverter.subPostToGetSubPostDto(subpost);
+            return subPostDtoConverter.subPostToGetSubPostDto2(subpost);
         }
     }
 

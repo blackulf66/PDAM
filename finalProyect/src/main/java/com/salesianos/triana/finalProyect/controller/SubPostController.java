@@ -143,9 +143,9 @@ public class SubPostController {
     })
 
     @GetMapping("/{nombre}")
-    public ResponseEntity<GetSubPostDto> findOnesubPost (@PathVariable String nombre, @AuthenticationPrincipal UserEntity user){
+    public ResponseEntity<GetSubPostDto2> findOnesubPost (@PathVariable String nombre, @AuthenticationPrincipal UserEntity user){
 
-        GetSubPostDto publicacion = SPservice.findOneSubPost(nombre , user);
+        GetSubPostDto2 publicacion = SPservice.findOneSubPost(nombre , user);
 
         return ResponseEntity.ok().body(publicacion);
 

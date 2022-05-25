@@ -140,7 +140,7 @@ public class PostService {
                 .collect(toList());
     }
     @Transactional()
-    public List<GetPostDto> getPostsBySubreddit(Long subpostid) {
+    public List<GetPostDto> getPostsBysubpost(Long subpostid) {
         SubPosts subposts = subPostsRepository.findById(subpostid)
                 .orElseThrow(() -> new com.salesianos.triana.finalProyect.exception.FileNotFoundException(subpostid.toString()));
         List<Post> posts = postRepository.findAllBySubposts(subposts);

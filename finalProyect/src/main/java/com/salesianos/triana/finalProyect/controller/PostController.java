@@ -158,7 +158,7 @@ public class PostController {
     })
     @GetMapping("subpost/{id}")
     public ResponseEntity<List<GetPostDto>> getPostsBySubpost(@PathVariable Long id) {
-        return status(HttpStatus.OK).body(Pservice.getPostsBySubreddit(id));
+        return status(HttpStatus.OK).body(Pservice.getPostsBysubpost(id));
     }
 
 
