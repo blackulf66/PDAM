@@ -47,10 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
     MultiBlocProvider(
   providers: [
     BlocProvider<PostBloc>(
-      create: (BuildContext context) => PostBloc(postApiRepository),
+      create: (context) => PostBloc(postApiRepository)..add(FetchPost()),
     ),
     BlocProvider<SubPostBloc>(
-      create: (BuildContext context) => SubPostBloc(subPostApiRepository),
+      create: (context) => SubPostBloc(subPostApiRepository)..add(FetchSubPost()),
     ),
   ],
     child: Scaffold(
@@ -157,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (BuildContext context, int index){
                 return _subPostItem(context , post[index] ) ;                         
               },
+              itemCount: post.length
             ),
           ],
         ),  
@@ -176,6 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (BuildContext context, int index){
                 return _Post(context , post[index] ) ;                         
               },
+              itemCount: post.length,
             ),
           ],
         ),  

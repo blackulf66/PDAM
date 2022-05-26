@@ -13,9 +13,9 @@ class SubPostBloc extends Bloc<SubpostEvent, SubPostState> {
   final SubPostApiRepository public;
 
   SubPostBloc(this.public) : super(BlocSubPostInitial()) {
-    on<FetchSubPost>(_PostFetched);
+    on<FetchSubPost>(_subPostFetched);
 }
-void _PostFetched(FetchSubPost event, Emitter<SubPostState> emit) async {
+void _subPostFetched(FetchSubPost event, Emitter<SubPostState> emit) async {
     try {
       final post = await public.fetchSubPosts();
 
