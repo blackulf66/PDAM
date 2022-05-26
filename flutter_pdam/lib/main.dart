@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdamfinal/ui/screens/comunity_screen.dart';
-import 'package:pdamfinal/ui/screens/profile_screen.dart';
+import 'package:pdamfinal/ui/screens/profile_screens.dart';
 import 'ui/screens/addform_screen.dart';
 import 'ui/screens/detail_screen.dart';
 import 'ui/screens/login.dart';

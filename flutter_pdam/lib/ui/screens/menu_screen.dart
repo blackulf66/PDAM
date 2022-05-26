@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdamfinal/constants.dart';
 import 'package:pdamfinal/ui/screens/addform_screen.dart';
-import 'package:pdamfinal/ui/screens/profile_screen.dart';
 import 'package:pdamfinal/ui/screens/profile_screens.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +33,7 @@ class _MenuScreenState extends State<MenuScreen> {
     const HomeScreen(),
      SearchScreen(),
      formScreen(),//postScreen
-     MyApp(),//ProfileScreen
+     ProfileScreen(),//ProfileScreen
     
   ];
 

@@ -11,9 +11,7 @@ import '../../models/subpost/Subpost_response.dart';
 import '../../repository/postRepository/post_repository.dart';
 import '../../repository/postRepository/post_repository_impl.dart';
 import '../../repository/subpostRepository/subpost_repository.dart';
-import 'post_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'posts_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -26,9 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late PostApiRepository postApiRepository;
   late SubPostApiRepository subPostApiRepository;
-
-
-   PostProvider postProvider = new PostProvider();   
 
   @override
     void initState() {
@@ -167,22 +162,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
    Widget _PostList(BuildContext context, List<PostApiResponse> post){
-    return  Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics() ,
-              itemBuilder: (BuildContext context, int index){
-                return _Post(context , post[index] ) ;                         
-              },
-              itemCount: post.length,
-            ),
-          ],
-        ),  
-      
-      
+    return  SingleChildScrollView(
+      child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics() ,
+                itemBuilder: (BuildContext context, int index){
+                  return _Post(context , post[index] ) ;                         
+                },
+                itemCount: post.length,
+              ),
+            ],
+          ),  
+        
+        
+      ),
     );
   }
 
