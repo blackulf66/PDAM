@@ -108,7 +108,7 @@ public class UserController {
     })
     @GetMapping("follow/{id}")
     public ResponseEntity<?> followsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id){
-        userEntityService.addfollow(id , user);
+        userEntityService.addfollow(user , id);
         return ResponseEntity.ok().build();
     }
 

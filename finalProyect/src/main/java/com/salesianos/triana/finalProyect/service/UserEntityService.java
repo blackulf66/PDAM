@@ -109,11 +109,11 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .orElseThrow(() -> new UsernameNotFoundException("nombre de usuario no encontrado"));
     }
 
-    public void addfollow(Long SubpostId , UserEntity user){
+    public void addfollow(UserEntity user,Long SubpostId){
 
         SubPosts idSubpost = subPostsRepository.findById(SubpostId).get();
 
-        UserEntity usuario = repositorio.findByUsername(user.getUsername()).get();
+        UserEntity usuario = repositorio.findByEmail(user.getEmail()).get();
 
         usuario.getSubPostsList().add(idSubpost);
 
