@@ -220,6 +220,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
             child: Column(
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 400),
+                  child: Container(
+                    child:  Text( 
+                          post.subpostsName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            color: Style.LetraColor
+                          ),
+                        ),
+                  ),
+                ),
                 Container(
                   child: Row(              
                     children: <Widget>[
@@ -235,16 +248,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),*/
-                      SizedBox(
-                        width:130,
-                      ),
-        
-                      Text( 
-                        post.postName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                          color: Style.LetraColor
+                   
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text( 
+                          post.postName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            color: Color.fromARGB(255, 255, 255, 255)
+                          ),
                         ),
                       ),
                       Expanded(child: SizedBox()),
@@ -287,13 +300,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
               
-                           InkWell(
-                              onTap: (){},
-                             child: Padding(
+                           
+                             
+                              Padding(
                                padding: const EdgeInsets.all(8.0),
-                               child: Icon(Typicons.comment, color: Style.LetraColor,),
+                               child: Text(post.voteCount.toString(), style: TextStyle(color:Colors.white),),
                              ),
-                           ),
+                           
                            
                            InkWell(
                               onTap: (){},
@@ -318,6 +331,5 @@ class _HomeScreenState extends State<HomeScreen> {
     
 
   }
-
 
 }

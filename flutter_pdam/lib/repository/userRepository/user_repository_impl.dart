@@ -15,7 +15,7 @@ class UserRepositoryImpl extends UserRepository {
   final Client _client = Client();
 
 @override
-  Future<List<MeResponse>> fetchUser() async {
+  Future<MeResponse> fetchUser() async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
 
    //localhost:http://10.0.2.2:8080/
@@ -26,11 +26,9 @@ class UserRepositoryImpl extends UserRepository {
              'Bearer ${prefs.getString('token')}'
     },);
     if (response.statusCode == 200) {
-      return (json.decode(response.body) as List).map((i) =>
-              MeResponse.fromJson(i)).toList();
+      return MeResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Fail to load you user');
     }
   }
-
 }

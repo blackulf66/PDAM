@@ -34,8 +34,6 @@ class MyApp extends StatelessWidget {
     '/perfil':(context) => ProfileScreen(),
     '/addform':(context) =>formScreen(),
     '/comunity':(context) => Comunitycreen()
-    
-
   },
     );
   }

@@ -16,7 +16,7 @@ class MeResponse {
   late final String created;
   late final List<PostList> postList;
   late final String userRole;
-  late final List<SubPostList> following;
+  late final List<Following> following;
   
   MeResponse.fromJson(Map<String, dynamic> json){
     userId = json['userId'];
@@ -26,7 +26,8 @@ class MeResponse {
     created = json['created'];
     postList = List.from(json['postList']).map((e)=>PostList.fromJson(e)).toList();
     userRole = json['userRole'];
-    following = List.from(json['subpostList']).map((e)=>SubPostList.fromJson(e)).toList();
+    following = List.from(json['following']).map((e)=>Following.fromJson(e)).toList();
+  }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -37,10 +38,9 @@ class MeResponse {
     _data['created'] = created;
     _data['postList'] = postList.map((e)=>e.toJson()).toList();
     _data['userRole'] = userRole;
-    _data['following'] = following.map((e) => e.toJson()).toList();
+    _data['following'] = following.map((e)=>e.toJson()).toList();
     return _data;
   }
-}
 }
 
 class PostList {
@@ -87,14 +87,15 @@ class PostList {
     return _data;
   }
 }
-class SubPostList {
-  SubPostList({
+
+class Following {
+  Following({
     required this.imagen,
     required this.id,
     required this.nombre,
     required this.descripcion,
     required this.createdDate,
-    required this.postList,
+     this.postList,
     required this.userEntityId,
   });
   late final String imagen;
@@ -102,16 +103,16 @@ class SubPostList {
   late final String nombre;
   late final String descripcion;
   late final String createdDate;
-  late final List<PostList> postList;
+  late final Null postList;
   late final String userEntityId;
   
-  SubPostList.fromJson(Map<String, dynamic> json){
+  Following.fromJson(Map<String, dynamic> json){
     imagen = json['imagen'];
     id = json['id'];
     nombre = json['nombre'];
     descripcion = json['descripcion'];
     createdDate = json['createdDate'];
-    postList = List.from(json['postList']).map((e)=>PostList.fromJson(e)).toList();
+    postList = null;
     userEntityId = json['userEntityId'];
   }
 
@@ -122,7 +123,7 @@ class SubPostList {
     _data['nombre'] = nombre;
     _data['descripcion'] = descripcion;
     _data['createdDate'] = createdDate;
-    _data['postList'] = postList.map((e)=>e.toJson()).toList();
+    _data['postList'] = postList;
     _data['userEntityId'] = userEntityId;
     return _data;
   }

@@ -5,7 +5,7 @@ import '../../models/auth/register_dto.dart';
 import '../../models/auth/register_response.dart';
 
 abstract class UserRepository {
-  Future<List<MeResponse>> fetchUser();
+  Future<MeResponse> fetchUser();
   
 
 }

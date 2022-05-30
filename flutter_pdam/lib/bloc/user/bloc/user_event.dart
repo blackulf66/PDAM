@@ -15,3 +15,10 @@ class FetchUser extends UserEvent{
   List<Object> get props => [];
 }
 
+class FetchUserList extends UserEvent{
+
+  const FetchUserList();
+
+  @override
+  List<Object> get props => [];
+}

@@ -30,7 +30,7 @@ class UserErrorState extends UserState {
 }
 
 class UserFetched extends UserState {
-  final List<MeResponse> user;
+  final MeResponse user;
 
   const UserFetched(this.user);
 
@@ -38,6 +38,14 @@ class UserFetched extends UserState {
   List<Object> get props => [user];
 }
 
+class UserFetchedList extends UserState {
+  final List<MeResponse> user;
+
+  const UserFetchedList(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
 class UserFetchError extends UserState {
   final String message;
   const UserFetchError(this.message);

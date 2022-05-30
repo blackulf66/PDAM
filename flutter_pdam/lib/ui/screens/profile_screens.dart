@@ -55,8 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             backgroundColor: Style.VKNGGron,
             bottom: const TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Typicons.user)),
+                Tab(icon: Icon(Typicons.th_list)),
               ],
             ),
             title: const Text(''),
@@ -105,6 +105,34 @@ Widget Perfil(BuildContext context, MeResponse me){
                       backgroundImage: NetworkImage(
                           me.avatar),
                     ),
+                  ),
+                ),
+
+                Center(
+                  child: Padding(padding: EdgeInsets.all(9),
+                  child:ElevatedButton(
+                  
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.black),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+
+                  side: BorderSide(
+                      color: Style.VKNGGron, 
+                      
+                      width: 2.0,
+                  ),
+              ),
+          ),
+      ),
+    
+      child: Text('editar perfil'),
+      onPressed: () {},
+),
+
+                  
+                  
                   ),
                 ),
           ],
@@ -177,7 +205,7 @@ Widget _createPostList(BuildContext context) {
               context.watch<UserBloc>().add(FetchUser());
             },
           );
-        } else if (state is UserFetched) {
+        } else if (state is UserFetchedList) {
           return _followsList(context, state.user);
         } else {
           return const Text('Not support');
@@ -198,8 +226,8 @@ Widget _createPostList(BuildContext context) {
               context.watch<UserBloc>().add(FetchUser());
             },
           );
-        } else if (state is UserSuccessState) {
-          return Perfil(context , state.meResponse);
+        } else if (state is UserFetched) {
+          return Perfil(context , state.user);
         } else {
           return const Text('Not support');
         }
@@ -236,21 +264,34 @@ Widget _createPostList(BuildContext context) {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics() ,
               itemBuilder: (BuildContext context, int index){
-                return _follow(context , me[index] ) ;                         
+                return _followItem(context , me[index] ) ;                         
               },
               itemCount: me.length,
             ),
           ],
         ),  
-      
-      
+
     );
   }
 
-  Widget _follow(BuildContext context,MeResponse me){
-    return Container(
-      child:Text(me.email)
+  Widget _followItem(BuildContext context, MeResponse me){
+    return ListView.builder(
+       shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics() ,
+              itemBuilder: (BuildContext context, int index){
+      return Container(
+        child:Row(
+          children: [
+            Image(image: NetworkImage(me.following.elementAt(index).imagen),),
+            Text(me.following.elementAt(index).nombre),
+          ],
+        )
+      );
+              },
+              itemCount: me.following.length,
+    
     );
+    
   }
 
  Widget _Post(BuildContext context,PostApiResponse post){
@@ -308,6 +349,14 @@ Widget _createPostList(BuildContext context) {
                         ),
                       ),
                       Expanded(child: SizedBox()),
+
+                     InkWell(
+                            onTap: (){},
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Icon(Icons.edit , color: Colors.white,),
+                            ),
+                          ),
         
                           
                     ],
