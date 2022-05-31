@@ -52,10 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
       drawer: Drawer(
         backgroundColor: Colors.black,
-        child: InkWell(
-          child: _createComunityList(context) ,onTap: (){
-        Navigator.pushNamed(context, '/comunity');
-      },)
+          child: _createComunityList(context)
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -184,25 +181,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _subPostItem(BuildContext context, SubPostApiResponse subpost){
-    return Row(
-      children: [
-        
-          ClipRRect(
-                          borderRadius:BorderRadius.circular(50.0),
-                          child: Image(
-                            image: NetworkImage(subpost.imagen ),
-                            height: 45.0,
-                            width: 45.0,
+    return InkWell(
+      child: Row(
+        children: [
+          
+            ClipRRect(
+                            borderRadius:BorderRadius.circular(50.0),
+                            child: Image(
+                              image: NetworkImage(subpost.imagen ),
+                              height: 45.0,
+                              width: 45.0,
+                            ),
                           ),
-                        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(subpost.nombre , style: TextStyle(color: Style.LetraColor
-),),
-        ),
-      
-
-      ],
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(subpost.nombre , style: TextStyle(color: Style.LetraColor
+    ),),
+          ),
+        
+    
+        ],
+      ),
+       onTap: (){
+         Navigator.pushNamed(context, '/comunity');
+       },
     );
 }
 

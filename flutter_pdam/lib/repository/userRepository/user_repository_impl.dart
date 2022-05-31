@@ -31,4 +31,23 @@ class UserRepositoryImpl extends UserRepository {
       throw Exception('Fail to load you user');
     }
   }
+
+  @override
+Future<List<PostList>> fetchUserPostList() async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+
+   //localhost:http://10.0.2.2:8080/
+                
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/me'),headers: {
+        'Authorization':
+            /*'Bearer ${Constantes.token}',*/
+             'Bearer ${prefs.getString('token')}'
+    },);
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List).map((i) =>
+              PostList.fromJson(i)).toList();
+    } else {
+      throw Exception('Fail to load you posts');
+    }
+  }
 }

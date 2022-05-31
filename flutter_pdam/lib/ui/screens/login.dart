@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 120.0,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage('../assets/images/daily.png' ),
+                            image: DecorationImage(image: AssetImage('/images/daily.png' ),
                             ),
                             
                               color: Style.VKNGGron,

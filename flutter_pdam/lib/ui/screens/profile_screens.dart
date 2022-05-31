@@ -82,6 +82,23 @@ Widget Perfil(BuildContext context, MeResponse me){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                                  alignment: Alignment.center,
+
+                child: Text(
+                  me.email,
+                  style: TextStyle(
+                    color: Style.LetraColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    letterSpacing: 0.4,
+                  ),
+                ),
+              ),
+            ),
             Container(
                                 alignment: Alignment.center,
 
@@ -173,19 +190,19 @@ Widget listadefollows(){
 
 }
 Widget _createPostList(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        if (state is BlocPostInitial) {
+        if (state is BlocUserInitial) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is PostFetchError) {
+        } else if (state is UserFetchError) {
           return ErrorPage(
             message: state.message,
             retry: () {
-              context.watch<PostBloc>().add(FetchPost());
+              context.watch<UserBloc>().add(FetchUserList());
             },
           );
-        } else if (state is PostFetched) {
-          return _PostList(context, state.post);
+        } else if (state is UserFetchedListPost) {
+          return _PostList(context, state.user);
         } else {
           return const Text('Not support');
         }
@@ -235,7 +252,7 @@ Widget _createPostList(BuildContext context) {
     );
   }
 
-  Widget _PostList(BuildContext context, List<PostApiResponse> post){
+  Widget _PostList(BuildContext context, List<PostList> post){
     return  Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -255,7 +272,7 @@ Widget _createPostList(BuildContext context) {
     );
   }
 
-   Widget _followsList(BuildContext context, List<MeResponse> me){
+   Widget _followsList(BuildContext context, List<Following> me){
     return  Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -274,27 +291,20 @@ Widget _createPostList(BuildContext context) {
     );
   }
 
-  Widget _followItem(BuildContext context, MeResponse me){
-    return ListView.builder(
-       shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics() ,
-              itemBuilder: (BuildContext context, int index){
+  Widget _followItem(BuildContext context, Following me){
       return Container(
         child:Row(
           children: [
-            Image(image: NetworkImage(me.following.elementAt(index).imagen),),
-            Text(me.following.elementAt(index).nombre),
+            Image(image: NetworkImage(me.imagen),),
+            Text(me.nombre),
           ],
         )
       );
-              },
-              itemCount: me.following.length,
-    
-    );
+              }
     
   }
 
- Widget _Post(BuildContext context,PostApiResponse post){
+ Widget _Post(BuildContext context,PostList post){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -428,6 +438,4 @@ Widget _createPostList(BuildContext context) {
 
   }
 
-
-}
  

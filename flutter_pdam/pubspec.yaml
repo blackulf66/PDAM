@@ -75,8 +75,8 @@ flutter:
 
   
   assets:
-    - "assets/images/images.jpg"
-    - "assets/images/daily.png"
+    - assets/images/images.jpg
+    - assets/images/daily.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,5 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:pdamfinal/models/post/post_response.dart';
 
 import '../../constants.dart';
 class detailsPage extends StatefulWidget {
@@ -12,12 +13,12 @@ class detailsPage extends StatefulWidget {
 
 class _detailsPageState extends State<detailsPage> {
     
-
     @override
     Widget build(BuildContext context) {
-        return Scaffold(
+      final post = ModalRoute.of(context)!.settings.arguments as PostApiResponse;     
+         return Scaffold(
             appBar: AppBar(
-                title: Text("Detalle de noticia"),
+                title: Text(post.postName),
                 iconTheme: IconThemeData(color: Colors.white),
                 backgroundColor: Colors.transparent
             ),            
@@ -26,10 +27,8 @@ class _detailsPageState extends State<detailsPage> {
                 children: [
                   Container(
                     child:Image(
-                            image: NetworkImage('https://estaticos-cdn.prensaiberica.es/clip/7583e1dd-e048-4687-84cd-383a484e6b27_16-9-discover-aspect-ratio_default_0.jpg'),
-                                
+                            image: NetworkImage(post.imagenportada),   
                           ),
-                     
                       ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
