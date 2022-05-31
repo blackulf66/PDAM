@@ -38,23 +38,6 @@ class UserFetched extends UserState {
   List<Object> get props => [user];
 }
 
-class UserFetchedList extends UserState {
-  final List<Following> user;
-
-  const UserFetchedList(this.user);
-
-  @override
-  List<Object> get props => [user];
-}
-
-class UserFetchedListPost extends UserState {
-  final List<PostList>  user;
-
-  const UserFetchedListPost(this.user);
-
-  @override
-  List<Object> get props => [user];
-}
 class UserFetchError extends UserState {
   final String message;
   const UserFetchError(this.message);

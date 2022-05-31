@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:pdamfinal/bloc/user/bloc2/user_bloc.dart';
+import 'package:pdamfinal/bloc/user/bloc3/user_bloc.dart';
+import 'package:pdamfinal/bloc/user/bloc/user_bloc.dart';
 import 'package:pdamfinal/models/auth/me_response.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
 import 'package:pdamfinal/repository/subpostRepository/subpost_repository_impl.dart';
@@ -25,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   late UserRepository userRepository;
   late PostApiRepository postApiRepository;
+  
 
   @override
     void initState() {
@@ -41,11 +45,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return
     MultiBlocProvider(
   providers: [
-    BlocProvider<PostBloc>(
-      create: (context) => PostBloc(postApiRepository)..add(FetchPost()),
-    ),
+   
     BlocProvider<UserBloc>(
       create: (context) => UserBloc(userRepository)..add(FetchUser()),
+    ),
+    BlocProvider<UserBloc3>(
+      create: (context) => UserBloc3(userRepository)..add(FetchUserListFollow()),
+    ),
+     BlocProvider<UserBlocPost>(
+      create: (context) => UserBlocPost(userRepository)..add(FetchUserListPost()),
     ),
   ],
     child: DefaultTabController(
@@ -65,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children:<Widget>[
               listadepost(),
               listadefollows(),
+              
             ],
           ),
         ),
@@ -72,6 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 Widget Perfil(BuildContext context, MeResponse me){
+  final date = DateTime.parse(me.created); 
   return Center(
     child: Container(
       width: double.infinity,
@@ -124,6 +134,8 @@ Widget Perfil(BuildContext context, MeResponse me){
                     ),
                   ),
                 ),
+                Center(child:
+                 Text("registrado desde: "+date.day.toString()+"/"+date.month.toString()+"/"+date.year.toString(), style: TextStyle(color: Style.LetraColor),)),
 
                 Center(
                   child: Padding(padding: EdgeInsets.all(9),
@@ -190,15 +202,15 @@ Widget listadefollows(){
 
 }
 Widget _createPostList(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
+    return BlocBuilder<UserBlocPost, UserStatePost>(
       builder: (context, state) {
         if (state is BlocUserInitial) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is UserFetchError) {
+        } else if (state is UserFetchErrorPost) {
           return ErrorPage(
             message: state.message,
             retry: () {
-              context.watch<UserBloc>().add(FetchUserList());
+              context.watch<UserBlocPost>().add(FetchUserListPost());
             },
           );
         } else if (state is UserFetchedListPost) {
@@ -211,18 +223,18 @@ Widget _createPostList(BuildContext context) {
   }
 
   Widget _createFollowsList(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
+    return BlocBuilder<UserBloc3, UserStateFollow>(
       builder: (context, state) {
         if (state is BlocUserInitial) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is UserFetchError) {
+        } else if (state is UserFetchErrorFollow) {
           return ErrorPage(
             message: state.message,
             retry: () {
-              context.watch<UserBloc>().add(FetchUser());
+              context.watch<UserBloc3>().add(FetchUserListFollow());
             },
           );
-        } else if (state is UserFetchedList) {
+        } else if (state is UserFetchedListFollow) {
           return _followsList(context, state.user);
         } else {
           return const Text('Not support');
@@ -294,9 +306,26 @@ Widget _createPostList(BuildContext context) {
   Widget _followItem(BuildContext context, Following me){
       return Container(
         child:Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image(image: NetworkImage(me.imagen),),
-            Text(me.nombre),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Image(image: NetworkImage(me.imagen), width: 80,),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(me.nombre , style: TextStyle(color: Style.LetraColor),),
+            ),
+
+            SizedBox(
+              width: 90,
+            ),
+
+            InkWell(
+              child: Icon(Icons.minimize_rounded, color: Colors.white,),
+              onTap: (){},
+            )
+
           ],
         )
       );
@@ -335,18 +364,6 @@ Widget _createPostList(BuildContext context) {
                   child: Row(              
                     children: <Widget>[
         
-                     /* Container(
-                        padding: EdgeInsets.only(top: 12.0 , left: 18.0, bottom: 12.0, right: 12.0 ),
-                        child: ClipRRect(
-                          borderRadius:BorderRadius.circular(50.0),
-                          child: Image(
-                            image: NetworkImage(post.imagenportada ),
-                            height: 45.0,
-                            width: 45.0,
-                          ),
-                        ),
-                      ),*/
-                   
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Text( 
@@ -398,27 +415,17 @@ Widget _createPostList(BuildContext context) {
                         mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          InkWell(
-                            onTap: (){},
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(Icons.check , color: Style.LetraColor,),
-                            ),
-                          ),
-              
-                           
-                             
+                        
                               Padding(
                                padding: const EdgeInsets.all(8.0),
-                               child: Text(post.voteCount.toString(), style: TextStyle(color:Colors.white),),
+                               child: Text("votos : " + post.voteCount.toString(), style: TextStyle(color:Colors.white),),
                              ),
-                           
-                           
+
                            InkWell(
                               onTap: (){},
                              child: Padding(
                                padding: const EdgeInsets.all(8.0),
-                               child: Icon(Typicons.cancel, color: Style.LetraColor,),
+                               child: Icon(Typicons.cancel_circled, color: Colors.red),
                              ),
                            ),
                         ],

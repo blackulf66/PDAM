@@ -8,5 +8,7 @@ abstract class UserRepository {
   Future<MeResponse> fetchUser();
 
   Future<List<PostList>> fetchUserPostList();
+
+  Future<List<Following>> fetchUserfollowList();
   
 }

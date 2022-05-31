@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
-import 'package:pdamfinal/repository/subpostRepository/subpost_repository_impl.dart';
+import 'package:pdamfinal/repository/userRepository/user_repository.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
+import 'package:pdamfinal/bloc/user/bloc3/user_bloc.dart';
+
 
 import '../../bloc/postbloc/bloc/post_bloc.dart';
-import '../../bloc/subpost/bloc/subpost_bloc.dart';
+import '../../bloc/user/bloc/user_bloc.dart';
+import '../../bloc/user/bloc3/user_bloc.dart';
 import '../../constants.dart';
+import '../../models/auth/me_response.dart';
 import '../../models/subpost/Subpost_response.dart';
 import '../../repository/postRepository/post_repository.dart';
 import '../../repository/postRepository/post_repository_impl.dart';
-import '../../repository/subpostRepository/subpost_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../repository/userRepository/user_repository_impl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -23,13 +28,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   late PostApiRepository postApiRepository;
-  late SubPostApiRepository subPostApiRepository;
+  late UserRepository userRepository;
 
   @override
     void initState() {
     super.initState();
     postApiRepository = PostApiRepositoryImpl();
-    subPostApiRepository = SubPostApiRepositoryImpl();
+    userRepository = UserRepositoryImpl();
   }
   @override
   void dispose() {
@@ -44,15 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider<PostBloc>(
       create: (context) => PostBloc(postApiRepository)..add(FetchPost()),
     ),
-    BlocProvider<SubPostBloc>(
-      create: (context) => SubPostBloc(subPostApiRepository)..add(FetchSubPost()),
+     BlocProvider<UserBloc3>(
+      create: (context) => UserBloc3(userRepository)..add(FetchUserListFollow()),
     ),
   ],
     child: Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
       drawer: Drawer(
         backgroundColor: Colors.black,
-          child: _createComunityList(context)
+          child: _createFollowsList(context)
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -112,49 +117,57 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _createComunityList(BuildContext context) {
-    return BlocBuilder<SubPostBloc, SubPostState>(
+  Widget _createFollowsList(BuildContext context) {
+    return BlocBuilder<UserBloc3, UserStateFollow>(
       builder: (context, state) {
-        if (state is BlocSubPostInitial) {
+        if (state is BlocUserInitialFollow) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is SubPostFetchError) {
+        } else if (state is UserFetchErrorFollow) {
           return ErrorPage(
             message: state.message,
             retry: () {
-              context.watch<SubPostBloc>().add(FetchSubPost());
+              context.watch<UserBloc3>().add(FetchUserListFollow());
             },
           );
-        } else if (state is SubPostFetched) {
-          return _comunityList(context, state.post);
+        } else if (state is UserFetchedListFollow) {
+          return _followsList(context, state.user);
         } else {
           return const Text('Not support');
         }
       },
     );
   }
+   Widget _followsList(BuildContext context, List<Following> me){
+    return  Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Tus Comunidades", style: TextStyle(color: Style.VKNGGron),),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Divider(color: Style.LetraColor,),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics() ,
+                    itemBuilder: (BuildContext context, int index){
+                      return _followItem(context , me[index] ) ;                         
+                    },
+                    itemCount: me.length,
+                  ),
+                ],
+              ),  
 
-  Widget _comunityList(BuildContext context, List<SubPostApiResponse> post){
-    return  Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text('mis comunidades' ,style: TextStyle(color: Style.VKNGGron),),
-            ),
-            Divider(color: Colors.grey,),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics() ,
-              itemBuilder: (BuildContext context, int index){
-                return _subPostItem(context , post[index] ) ;                         
-              },
-              itemCount: post.length
-            ),
-          ],
-        ),  
-      
-      
+          ),
+        ),
+      ],
     );
   }
 
@@ -180,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _subPostItem(BuildContext context, SubPostApiResponse subpost){
+  Widget _followItem(BuildContext context, Following subpost){
     return InkWell(
       child: Row(
         children: [

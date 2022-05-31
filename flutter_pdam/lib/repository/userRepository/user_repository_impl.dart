@@ -40,14 +40,32 @@ Future<List<PostList>> fetchUserPostList() async {
                 
     final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/me'),headers: {
         'Authorization':
+             'Bearer ${prefs.getString('token')}'
+    },);
+    if (response.statusCode == 200) {
+      final v1 = MeResponse.fromJson(json.decode(response.body));
+
+      return v1.postList;
+    } else {
+      throw Exception('Fail to load you posts');
+    }
+  }
+
+  @override
+  Future<List<Following>> fetchUserfollowList() async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+                
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/me'),headers: {
+        'Authorization':
             /*'Bearer ${Constantes.token}',*/
              'Bearer ${prefs.getString('token')}'
     },);
     if (response.statusCode == 200) {
-      return (json.decode(response.body) as List).map((i) =>
-              PostList.fromJson(i)).toList();
+            final v2 = MeResponse.fromJson(json.decode(response.body));
+
+      return v2.following;
     } else {
-      throw Exception('Fail to load you posts');
+      throw Exception('Fail to load you follows');
     }
   }
 }

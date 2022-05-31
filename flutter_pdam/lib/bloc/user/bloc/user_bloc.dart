@@ -13,24 +13,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this.public) : super(BlocUserInitial()) {
     on<FetchUser>(_userFetched);
-    on<FetchUserList>(_userFetchedList);
 }
 void _userFetched(FetchUser event, Emitter<UserState> emit) async {
     try {
       final user = await public.fetchUser();
 
       emit(UserFetched(user));
-      return;
-    } on Exception catch (e) {
-      emit(UserFetchError(e.toString()));
-    }
-  }
-
- void _userFetchedList(FetchUserList event, Emitter<UserState> emit) async {
-    try {
-      final user = await public.fetchUserPostList();
-
-      emit(UserFetchedListPost(user));
       return;
     } on Exception catch (e) {
       emit(UserFetchError(e.toString()));
