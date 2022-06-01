@@ -9,4 +9,5 @@ public class FileNotFoundException extends StorageException {
     public FileNotFoundException(String message, Exception cause) {
         super(message, cause);
     }
+
 }
