@@ -24,6 +24,7 @@ import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -128,9 +129,9 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     }
 
-    public Optional<GetUserDto2> updateUser (CreateUserDto p, MultipartFile file , UserEntity user) throws EntityNotFoundException, IOException {
+    public Optional<GetUserDto2> updateUser (String nombre,CreateUserDto p, MultipartFile file , UserEntity user) throws EntityNotFoundException, IOException {
 
-        Optional<UserEntity> data = userEntityRepository.findById(user.getUserId());
+        Optional<UserEntity> data = userEntityRepository.findByUsername(nombre);
 
         String name2 = StringUtils.cleanPath(String.valueOf(data.get().getAvatar())).replace("http://localhost:8080/download/", "")
                 .replace("%20", " ");
@@ -151,14 +152,17 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .path("/download/")
                 .path(newFilename)
                 .toUriString();
-
-        return data.map(m -> {
-            m.setUsername(p.getUsername());
-            m.setAvatar(uri);
-            m.setPassword(p.getPassword());
-            userEntityRepository.save(m);
-            return userDtoConverter.convertUserEntityToGetUserDto(m);
-        });
+        if (data.get().getUsername().equals(user.getUsername())) {
+            return data.map(m -> {
+                m.setUsername(p.getUsername());
+                m.setAvatar(uri);
+                m.setPassword(p.getPassword());
+                userEntityRepository.save(m);
+                return userDtoConverter.convertUserEntityToGetUserDto(m);
+            });
+        } else {
+            throw new FileNotFoundException("No eres el propietario de esta publicación");
+        }
     }
 
     @Transactional()

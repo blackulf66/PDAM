@@ -100,7 +100,7 @@ public class UserController {
                     description = "no se encuentra esa comunidad",
                     content = @Content),
     })
-    @GetMapping("follow/{id}")
+    @PostMapping("follow/{id}")
     public ResponseEntity<?> followsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id){
         userEntityService.addfollow(user , id);
         return ResponseEntity.ok().build();
@@ -117,7 +117,7 @@ public class UserController {
                     content = @Content),
     })
 
-    @GetMapping("unfollow/{id}")
+    @PostMapping("unfollow/{id}")
     public ResponseEntity<?> unfollowsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id){
         userEntityService.removefollow(id , user);
         return ResponseEntity.ok().build();
@@ -132,13 +132,13 @@ public class UserController {
                     description = "no se encuentra el usuario",
                     content = @Content),
     })
-    @PutMapping("/{id}")
-    public ResponseEntity<Optional<GetUserDto2>> updateuser(@RequestPart("publicacion") CreateUserDto createUserDtoDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
+    @PutMapping("user/{nombre}")
+    public ResponseEntity<Optional<GetUserDto2>> updateuser(@PathVariable String nombre,@RequestPart("usuario") CreateUserDto createUserDtoDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
         if (user.getUserId().equals(null)){
             throw new SingleEntityNotFoundException(user.getUserId().toString(), SubPost.class);
         }else{
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(userEntityService.updateUser(createUserDtoDto, file, user));
+                    .body(userEntityService.updateUser(nombre ,createUserDtoDto, file, user));
         }
 
     }
