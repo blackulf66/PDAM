@@ -3,13 +3,13 @@ package com.salesianos.triana.finalProyect.model;
 import com.salesianos.triana.finalProyect.validadores.UniqueEmail;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -25,9 +25,8 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name="user")
+@Table(name="userEntity")
 public class UserEntity implements UserDetails {
-    @Id
     @GeneratedValue
     @GenericGenerator(
             name = "UUID",
@@ -39,6 +38,8 @@ public class UserEntity implements UserDetails {
                     )
             }
     )
+    @Type(type="uuid-char")
+    @Id
     private UUID userId;
 
     @NotBlank(message = "Username is required")
@@ -63,7 +64,7 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(fetch = LAZY ,cascade = CascadeType.ALL , mappedBy = "userEntity")
     @Builder.Default
-    private List<SubPosts> Subposts= new ArrayList<>();
+    private List<SubPost> Subposts= new ArrayList<>();
 
     private UserRole userRole;
 
@@ -73,7 +74,7 @@ public class UserEntity implements UserDetails {
             joinColumns= @JoinColumn(name="userId"),
             inverseJoinColumns=@JoinColumn(name="subpostid")
     )
-    private List<SubPosts> subPostsList = new ArrayList<>();
+    private List<SubPost> subPostsList = new ArrayList<>();
 
     //Helpers
 
@@ -101,7 +102,7 @@ public class UserEntity implements UserDetails {
         return true;
     }
 
-    public Collection<SubPosts> getSubPost() {
+    public Collection<SubPost> getSubPost() {
         return Subposts;
     }
 

@@ -1,7 +1,7 @@
 package com.salesianos.triana.finalProyect.dto.post;
 
 
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +28,5 @@ public class CreatePostDto {
 
     private Instant createdDate;
 
-    private SubPosts subPosts;
+    private SubPost subPosts;
 }

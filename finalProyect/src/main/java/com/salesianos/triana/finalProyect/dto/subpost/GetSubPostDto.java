@@ -1,15 +1,11 @@
 package com.salesianos.triana.finalProyect.dto.subpost;
 
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.model.Post;
-import com.salesianos.triana.finalProyect.model.SubPosts;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.salesianos.triana.finalProyect.model.UserEntity;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;

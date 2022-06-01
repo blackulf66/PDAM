@@ -3,13 +3,11 @@ package com.salesianos.triana.finalProyect.service;
 import com.salesianos.triana.finalProyect.dto.post.CreatePostDto;
 import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
-import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.exception.SinComunidadException;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
 import com.salesianos.triana.finalProyect.model.Post;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.repository.PostRepository;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
@@ -27,7 +25,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +45,7 @@ public class PostService {
 
         String filenameOriginal = storageService.original(file);
 
-        SubPosts data = subPostsRepository.findByNombre(postName);
+        SubPost data = subPostsRepository.findByNombre(postName);
 
         String videoExtension = "mp4";
 
@@ -125,7 +122,7 @@ public class PostService {
         Post post =postRepository.findByPostName(postName);
 
         if (post == null) {
-            throw new SingleEntityNotFoundException(postName, SubPosts.class);
+            throw new SingleEntityNotFoundException(postName, SubPost.class);
         } else {
             return postDtoConverter.PostToGetPostDto(post);
         }
@@ -141,7 +138,7 @@ public class PostService {
     }
     @Transactional()
     public List<GetPostDto> getPostsBysubpost(Long subpostid) {
-        SubPosts subposts = subPostsRepository.findById(subpostid)
+        SubPost subposts = subPostsRepository.findById(subpostid)
                 .orElseThrow(() -> new com.salesianos.triana.finalProyect.exception.FileNotFoundException(subpostid.toString()));
         List<Post> posts = postRepository.findAllBySubposts(subposts);
         return posts.stream().map(postDtoConverter::PostToGetPostDto).collect(toList());
@@ -246,7 +243,7 @@ public class PostService {
             }
 
         } else {
-            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
         }
     }
 

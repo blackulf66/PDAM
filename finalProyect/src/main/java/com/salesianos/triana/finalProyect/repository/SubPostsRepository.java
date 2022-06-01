@@ -1,17 +1,17 @@
 package com.salesianos.triana.finalProyect.repository;
 
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface SubPostsRepository extends JpaRepository<SubPosts, Long> {
+public interface SubPostsRepository extends JpaRepository<SubPost, Long> {
 
-    Optional<SubPosts> findById(Long id);
+    Optional<SubPost> findById(Long id);
 
-    SubPosts findByNombre(String nombre);
+    SubPost findByNombre(String nombre);
 
     boolean existsByNombre(String nombre);
 

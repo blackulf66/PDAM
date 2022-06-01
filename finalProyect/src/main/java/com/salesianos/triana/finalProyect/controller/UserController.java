@@ -2,16 +2,12 @@ package com.salesianos.triana.finalProyect.controller;
 
 
 import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
-import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.user.*;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 
 import com.salesianos.triana.finalProyect.model.UserRole;
-import com.salesianos.triana.finalProyect.model.Vote;
 import com.salesianos.triana.finalProyect.service.UserEntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,12 +23,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -141,7 +135,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<Optional<GetUserDto2>> updateuser(@RequestPart("publicacion") CreateUserDto createUserDtoDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
         if (user.getUserId().equals(null)){
-            throw new SingleEntityNotFoundException(user.getUserId().toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(user.getUserId().toString(), SubPost.class);
         }else{
             return ResponseEntity.status(HttpStatus.OK)
                     .body(userEntityService.updateUser(createUserDtoDto, file, user));

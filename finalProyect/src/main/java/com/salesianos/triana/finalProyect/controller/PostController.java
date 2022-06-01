@@ -4,12 +4,10 @@ package com.salesianos.triana.finalProyect.controller;
 import com.salesianos.triana.finalProyect.dto.post.CreatePostDto;
 import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
-import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.exception.SinComunidadException;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
 import com.salesianos.triana.finalProyect.model.Post;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.service.PostService;
 import io.github.techgnious.exception.VideoException;
@@ -51,7 +49,7 @@ public class PostController {
             @ApiResponse(responseCode = "200",
                     description = "crea un nuevo post",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
 
     })
 
@@ -77,7 +75,7 @@ public class PostController {
             @ApiResponse(responseCode = "200",
                     description = "borrar un post pasandole un id",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el post",
                     content = @Content),
@@ -86,7 +84,7 @@ public class PostController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws Exception {
         if (id.equals(null)){
-            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
         }else{
 
             Pservice.deletePost(id);
@@ -99,7 +97,7 @@ public class PostController {
             @ApiResponse(responseCode = "200",
                     description = "actualizar un post pasandole un id",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el post",
                     content = @Content),
@@ -108,7 +106,7 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<Optional<GetPostDto>> updatePost(@PathVariable Long id, @RequestPart("publicacion") CreatePostDto createPublicacionDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
         if (id.equals(null)){
-            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
         }else{
             return status(HttpStatus.OK)
                     .body(Pservice.updatePost(id, createPublicacionDto, file, user));
@@ -122,7 +120,7 @@ public class PostController {
             @ApiResponse(responseCode = "200",
                     description = "obtener un post pasandole un nombre",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el post",
                     content = @Content),
@@ -142,7 +140,7 @@ public class PostController {
             @ApiResponse(responseCode = "200",
                     description = "obtienes todos los post de todas las comunidades",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
     })
     @GetMapping("all")
     public ResponseEntity<List<GetPostDto>> getAllPosts() {
@@ -154,7 +152,7 @@ public class PostController {
             @ApiResponse(responseCode = "200",
                     description = "obtener un post pasandole la id de la comunidad",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
     })
     @GetMapping("subpost/{id}")
     public ResponseEntity<List<GetPostDto>> getPostsBySubpost(@PathVariable Long id) {

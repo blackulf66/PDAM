@@ -1,7 +1,7 @@
 package com.salesianos.triana.finalProyect.repository;
 
 import com.salesianos.triana.finalProyect.model.Post;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -49,7 +49,7 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
             where u.id = :id
             """
     )
-    List<SubPosts> findAllSubpost(@Param("id") UUID id);
+    List<SubPost> findAllSubpost(@Param("id") UUID id);
 
 
     @Query(

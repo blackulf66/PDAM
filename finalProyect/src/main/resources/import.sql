@@ -1,0 +1,10 @@
+INSERT INTO USER_ENTITY (USER_ID,AVATAR,CREATED,EMAIL,PASSWORD,USER_ROLE,USERNAME) VALUES('42937a69-5f50-4f70-b095-1efcf7633c02','https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Batman_cosplay_-_Masked_Mateo_-_Photo_Jonin.jpg/1200px-Batman_cosplay_-_Masked_Mateo_-_Photo_Jonin.jpg','2022-06-01 10:14:53.793199','admin@gmail.com','$2a$10$FWzQ0Pq3XSiAJcvFH7RsieUW3o/tRu0sD6kvkaibnxdlQiXy.Mhfq',1,'THEADMIN')
+
+INSERT INTO SUB_POST (SUBPOSTID,CREATED_DATE,DESCRIPCION,IMAGEN,IMAGEN_ESCALADA,NOMBRE,USER_ENTITY_USER_ID) VALUES (1,'2022-06-01 10:15:02.717883','Esto es DC' ,'https://gcdn.lanetaneta.com/wp-content/uploads/2020/09/DC-Comics-contrata-a-Daniel-Cherry-de-Activision-Blizzard-780x470.jpg','https://gcdn.lanetaneta.com/wp-content/uploads/2020/09/DC-Comics-contrata-a-Daniel-Cherry-de-Activision-Blizzard-780x470.jpg','DC','42937a69-5f50-4f70-b095-1efcf7633c02')
+INSERT INTO SUB_POST (SUBPOSTID,CREATED_DATE,DESCRIPCION,IMAGEN,IMAGEN_ESCALADA,NOMBRE,USER_ENTITY_USER_ID) VALUES (2,'2022-06-01 10:15:02.717883','Esto es Marvel' ,'https://www.cinemascomics.com/wp-content/uploads/2020/09/logo-marvel-960x720.jpg.webp','https://www.cinemascomics.com/wp-content/uploads/2020/09/logo-marvel-960x720.jpg.webp','MARVEL','42937a69-5f50-4f70-b095-1efcf7633c02')
+
+
+
+
+INSERT INTO POST (POST_ID,CREATED_DATE,DESCRIPTION,IMAGENPORTADA ,POST_NAME,VOTE_COUNT,SUBPOSTS_SUBPOSTID,USER_ENTITY_USER_ID) VALUES(3,'2022-06-01 10:15:02.717883' , 'Post de prueba de Detectives comics y como no podia ser un post de batman' , 'https://www.quever.news/u/fotografias/m/2022/2/25/f848x477-24647_82450_5119.jpg','DC',0,1,'42937a69-5f50-4f70-b095-1efcf7633c02')
+INSERT INTO POST (POST_ID,CREATED_DATE,DESCRIPTION,IMAGENPORTADA ,POST_NAME,VOTE_COUNT,SUBPOSTS_SUBPOSTID,USER_ENTITY_USER_ID) VALUES(4,'2022-06-01 10:15:02.717883' , 'Post de prueba de Marvel y como dc tiene a batman , marvel tiene a spider-man' , 'https://www.muycomputer.com/wp-content/uploads/2021/08/Spider-Man.jpg','MARVEL',0,1,'42937a69-5f50-4f70-b095-1efcf7633c02')

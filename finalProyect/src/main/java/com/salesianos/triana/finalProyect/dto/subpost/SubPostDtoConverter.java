@@ -1,14 +1,12 @@
 package com.salesianos.triana.finalProyect.dto.subpost;
 
 import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
-import com.salesianos.triana.finalProyect.model.Post;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
@@ -27,7 +25,7 @@ public class SubPostDtoConverter {
                 .build();
     }
 
-    public GetSubPostDto subPostToGetSubPostDto(SubPosts c){
+    public GetSubPostDto subPostToGetSubPostDto(SubPost c){
         return GetSubPostDto
                 .builder()
                 .id(c.getId())
@@ -40,7 +38,7 @@ public class SubPostDtoConverter {
                 .build();
     }
 
-    public GetSubPostDto3 subPostToGetSubPostDto1(SubPosts c){
+    public GetSubPostDto3 subPostToGetSubPostDto1(SubPost c){
         return GetSubPostDto3
                 .builder()
                 .id(c.getId())
@@ -54,7 +52,7 @@ public class SubPostDtoConverter {
 
 
 
-    public GetSubPostDto2 subPostToGetSubPostDto2(SubPosts c){
+    public GetSubPostDto2 subPostToGetSubPostDto2(SubPost c){
         return GetSubPostDto2
                 .builder()
                 .id(c.getId())

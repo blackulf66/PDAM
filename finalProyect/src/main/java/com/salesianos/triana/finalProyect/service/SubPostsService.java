@@ -1,13 +1,11 @@
 package com.salesianos.triana.finalProyect.service;
 
-import com.salesianos.triana.finalProyect.dto.post.GetPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.CreateSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
-import com.salesianos.triana.finalProyect.dto.user.GetFollowsDto;
 import com.salesianos.triana.finalProyect.exception.*;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import com.salesianos.triana.finalProyect.repository.UserEntityRepository;
 import io.github.techgnious.exception.VideoException;
@@ -40,7 +38,7 @@ public class SubPostsService {
     private final SubPostDtoConverter subPostDtoConverter;
     private final UserEntityRepository userEntityRepository;
 
-    public SubPosts save(CreateSubPostDto createSubPostDto, MultipartFile file, UserEntity user) throws IOException, VideoException,NotAdminException{
+    public SubPost save(CreateSubPostDto createSubPostDto, MultipartFile file, UserEntity user) throws IOException, VideoException,NotAdminException{
         if (user.getUserRole() == UserRole.ADMIN) {
 
             String filenameOriginal = storageService.original(file);
@@ -75,7 +73,7 @@ public class SubPostsService {
                     .toUriString()
                     .replace("10.0.2.2", "localhost");
 
-            SubPosts post3 = SubPosts.builder()
+            SubPost post3 = SubPost.builder()
                     .id(createSubPostDto.getId())
                     .createdDate(LocalDateTime.now())
                     .userEntity(user)
@@ -103,12 +101,12 @@ public class SubPostsService {
 
     public void deleteSubpost(Long id, UserEntity user) throws IOException {
 
-        Optional<SubPosts> data = subPostsRepository.findById(id);
+        Optional<SubPost> data = subPostsRepository.findById(id);
 
         if (data.get().getUserEntity().getUsername().equals(user.getUsername())) {
 
             if (data.isEmpty()) {
-                throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+                throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
             } else {
 
 
@@ -136,7 +134,7 @@ public class SubPostsService {
     public void deleteSubpost2(Long id) throws IOException {
 
         try {
-            Optional<SubPosts> post = subPostsRepository.findById(id);
+            Optional<SubPost> post = subPostsRepository.findById(id);
             if (post.isPresent()) {
 
                 storageService.deleteFile2(post.get().getImagen());
@@ -151,16 +149,16 @@ public class SubPostsService {
     }
 
 
-    public Optional<SubPosts> findById(Long id) {
+    public Optional<SubPost> findById(Long id) {
         return subPostsRepository.findById(id);
     }
 
     public GetSubPostDto2 findOneSubPost(String nombre, UserEntity user) {
 
-       SubPosts subpost =subPostsRepository.findByNombre(nombre);
+       SubPost subpost =subPostsRepository.findByNombre(nombre);
 
         if (subpost == null) {
-            throw new SingleEntityNotFoundException(nombre.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(nombre.toString(), SubPost.class);
         } else {
             return subPostDtoConverter.subPostToGetSubPostDto2(subpost);
         }
@@ -168,7 +166,7 @@ public class SubPostsService {
 
     public Optional<GetSubPostDto> updateSubPost(Long id, CreateSubPostDto p, MultipartFile file, UserEntity user) throws Exception {
 
-        Optional<SubPosts> data = subPostsRepository.findById(id);
+        Optional<SubPost> data = subPostsRepository.findById(id);
 
         if (data.isPresent()) {
 
@@ -265,7 +263,7 @@ public class SubPostsService {
             }
 
         } else {
-            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
         }
     }
 }

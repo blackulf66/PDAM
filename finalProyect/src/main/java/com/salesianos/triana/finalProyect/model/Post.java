@@ -44,7 +44,7 @@ public class Post {
     private Instant createdDate;
 
     @ManyToOne(fetch = LAZY)
-    private SubPosts subposts;
+    private SubPost subposts;
 
     //helpers
 

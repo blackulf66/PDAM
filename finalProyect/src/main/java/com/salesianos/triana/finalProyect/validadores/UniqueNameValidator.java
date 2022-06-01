@@ -1,7 +1,6 @@
 package com.salesianos.triana.finalProyect.validadores;
 
 
-import com.salesianos.triana.finalProyect.model.SubPosts;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;

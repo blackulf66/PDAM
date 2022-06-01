@@ -7,7 +7,7 @@ import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.exception.NotAdminException;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import com.salesianos.triana.finalProyect.service.FileSystemStorageServiceimpl;
@@ -52,7 +52,7 @@ public class SubPostController {
             @ApiResponse(responseCode = "200",
                     description = "crea un subport nuevo",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el usuario",
                     content = @Content),
@@ -69,7 +69,7 @@ public class SubPostController {
                 .descripcion(description)
                 .build();
 
-        SubPosts subPostCreated = SPservice.save(newPost, file , user);
+        SubPost subPostCreated = SPservice.save(newPost, file , user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subpostDtoConverter.subPostToGetSubPostDto(subPostCreated));
@@ -80,7 +80,7 @@ public class SubPostController {
             @ApiResponse(responseCode = "200",
                     description = "obtiene todos los subpost",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
     })
     @GetMapping("all")
     public ResponseEntity<List<GetSubPostDto2>> getAllPosts() {
@@ -92,7 +92,7 @@ public class SubPostController {
             @ApiResponse(responseCode = "200",
                     description = "borra todos los subpost y post vinculados a este",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el subpost",
                     content = @Content),
@@ -101,7 +101,7 @@ public class SubPostController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSubPost(@PathVariable Long id, @AuthenticationPrincipal UserEntity user) throws Exception {
         if (id.equals(null)){
-            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
         }else{
 
             SPservice.deleteSubpost2(id);
@@ -114,7 +114,7 @@ public class SubPostController {
             @ApiResponse(responseCode = "200",
                     description = "actualiza el subpost ",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el subpost",
                     content = @Content),
@@ -123,7 +123,7 @@ public class SubPostController {
     @PutMapping("/{id}")
     public ResponseEntity<Optional<GetSubPostDto>> updatesubPost(@PathVariable Long id, @RequestPart("publicacion") CreateSubPostDto createPublicacionDto, @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserEntity user) throws Exception {
         if (id.equals(null)){
-            throw new SingleEntityNotFoundException(id.toString(), SubPosts.class);
+            throw new SingleEntityNotFoundException(id.toString(), SubPost.class);
         }else{
             return ResponseEntity.status(HttpStatus.OK)
                     .body(SPservice.updateSubPost(id, createPublicacionDto, file, user));
@@ -136,7 +136,7 @@ public class SubPostController {
             @ApiResponse(responseCode = "200",
                     description = "busca el subpost por su nombre",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SubPosts.class))}),
+                            schema = @Schema(implementation = SubPost.class))}),
             @ApiResponse(responseCode = "400",
                     description = "no se encuentra el subpost",
                     content = @Content),

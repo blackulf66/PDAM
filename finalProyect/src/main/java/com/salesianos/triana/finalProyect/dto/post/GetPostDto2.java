@@ -1,6 +1,6 @@
 package com.salesianos.triana.finalProyect.dto.post;
 
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class GetPostDto2 {
 
     private Instant createdDate;
 
-    private SubPosts subPosts;
+    private SubPost subPosts;
 
     private int VoteCount;
 

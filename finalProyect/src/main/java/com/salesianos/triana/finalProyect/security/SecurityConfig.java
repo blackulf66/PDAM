@@ -67,8 +67,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE , "/subpost/{id}").authenticated()
                 .antMatchers(HttpMethod.PUT , "/subpost/{id}").authenticated()
                 .antMatchers(HttpMethod.GET, "/subpost/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/subpost/{name}").authenticated()
+                .antMatchers(HttpMethod.GET, "/subpost/all").authenticated()
+
+
                 //post
                 .antMatchers(HttpMethod.POST, "/post/").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/post/").authenticated()
+                .antMatchers(HttpMethod.PUT, "/post/").authenticated()
+                .antMatchers(HttpMethod.GET, "/post/").authenticated()
+                .antMatchers(HttpMethod.GET, "/post/{name}").authenticated()
+                .antMatchers(HttpMethod.GET, "/post/all").authenticated()
+                .antMatchers(HttpMethod.GET, "/post/subpost/{id}").authenticated()
+
+                //vote&Follow
+                .antMatchers(HttpMethod.GET, "/follow/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/unfollow/{id}").authenticated()
+                .antMatchers(HttpMethod.POST, "/votes/").authenticated()
+
+
+
+
+
+
+
 
                 //user
                 .antMatchers(HttpMethod.GET, "/user/{id}").authenticated()

@@ -1,10 +1,9 @@
 package com.salesianos.triana.finalProyect.service;
 
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto2;
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.dto.user.*;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
-import com.salesianos.triana.finalProyect.model.SubPosts;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
@@ -111,7 +110,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     public void addfollow(UserEntity user,Long SubpostId){
 
-        SubPosts idSubpost = subPostsRepository.findById(SubpostId).get();
+        SubPost idSubpost = subPostsRepository.findById(SubpostId).get();
 
         UserEntity usuario = repositorio.findByEmail(user.getEmail()).get();
 
@@ -121,7 +120,7 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
 
     public void removefollow(Long SubpostId , UserEntity user){
 
-        SubPosts idSubpost = subPostsRepository.findById(SubpostId).get();
+        SubPost idSubpost = subPostsRepository.findById(SubpostId).get();
 
         UserEntity usuario = repositorio.findByUsername(user.getUsername()).get();
 

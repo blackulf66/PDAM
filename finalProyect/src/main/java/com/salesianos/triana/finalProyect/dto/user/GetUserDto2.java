@@ -1,9 +1,7 @@
 package com.salesianos.triana.finalProyect.dto.user;
 
-import com.salesianos.triana.finalProyect.dto.subpost.GetSubPostDto;
 import com.salesianos.triana.finalProyect.model.Post;
-import com.salesianos.triana.finalProyect.model.SubPosts;
-import com.salesianos.triana.finalProyect.model.UserEntity;
+import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserRole;
 import lombok.*;
 
@@ -32,7 +30,7 @@ public class GetUserDto2 {
 
     private UserRole userRole;
 
-    private List<SubPosts> following;
+    private List<SubPost> following;
 
 
 }
