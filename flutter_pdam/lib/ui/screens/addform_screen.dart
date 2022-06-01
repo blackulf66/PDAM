@@ -40,8 +40,6 @@ String imageSelect = "no tienes imagen ";
   late Future<SharedPreferences> _prefs;
   final String uploadUrl = 'http://10.0.2.2:8080/auth/register';
   String path = "";
-  List<String> comunidadesSeguidas = ['MARVEL', 'DC'];
-  String dropdownvalue = 'MARVEL';
   bool _passwordVisible = false;
 
   @override
@@ -135,6 +133,32 @@ String imageSelect = "no tienes imagen ";
                     style: TextStyle(color: Colors.grey),
                   ),
                 ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top:80.0),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(240, 50), primary: Colors.grey),
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      if (_formKey.currentState!.validate()) {
+                        final loginDto = PostDto(
+                            nombre: nombre.text,
+                            descripcion: descripcion.text,
+                            subpost: subpost.text);
+                        BlocProvider.of<PostBloc>(context)
+                            .add(DoPostEvent(loginDto, path));
+                      }
+                      prefs.setString('nombre', nombre.text);
+                      prefs.setString('descripcion', descripcion.text);
+                      prefs.setString('subpost', subpost.text);
+                    },
+                    child: const Text('subir'),
+                  ),
+                ),
               ),
          
               Padding(
@@ -327,31 +351,7 @@ String imageSelect = "no tienes imagen ";
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top:80.0),
-                child: Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(240, 50), primary: Colors.grey),
-                    onPressed: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      if (_formKey.currentState!.validate()) {
-                        final loginDto = PostDto(
-                            nombre: nombre.text,
-                            descripcion: descripcion.text,
-                            subpost: dropdownvalue);
-                        BlocProvider.of<PostBloc>(context)
-                            .add(DoPostEvent(loginDto, path));
-                      }
-                      prefs.setString('nombre', nombre.text);
-                      prefs.setString('descripcion', descripcion.text);
-                      prefs.setString('subpost', subpost.text);
-                    },
-                    child: const Text('subir'),
-                  ),
-                ),
-              ),
+              
               
             ],
           ),

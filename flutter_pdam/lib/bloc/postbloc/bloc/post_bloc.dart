@@ -14,6 +14,7 @@ class PostBloc extends Bloc<postEvent, PostState> {
 
   PostBloc(this.public) : super(BlocPostInitial()) {
     on<FetchPost>(_PostFetched);
+    on<DoPostEvent>(_doPostEvent);
 }
 void _PostFetched(FetchPost event, Emitter<PostState> emit) async {
     try {
@@ -23,6 +24,16 @@ void _PostFetched(FetchPost event, Emitter<PostState> emit) async {
       return;
     } on Exception catch (e) {
       emit(PostFetchError(e.toString()));
+    }
+  }
+
+  void _doPostEvent(DoPostEvent event, Emitter<PostState> emit) async {
+    try {
+      final postResponse = await public.createPost(event.postDto, event.imagePath);
+      emit(PostSuccessState(postResponse));
+      return;
+    } on Exception catch (e) {
+      emit(PostErrorState(e.toString()));
     }
   }
 }
