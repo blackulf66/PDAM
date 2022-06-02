@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PostResponse } from 'src/app/models/interfaces/post.interface';
-import { PostService } from 'src/app/services/post.service';
+import { PostResponse } from 'src/app/model/interfaces/post.interface';
+import { PostService } from 'src/app/service/post.service';
 
 @Component({
   selector: 'app-post-list',
@@ -10,15 +10,22 @@ import { PostService } from 'src/app/services/post.service';
 export class PostListComponent implements OnInit {
 
 
-  postList!: PostResponse[];
-  allpostList!: PostResponse[];
-
+  post: PostResponse[] = [];
 
   constructor(private postService: PostService) { }
 
-  ngOnInit(): void {
-    this.postService.getAllPosts().subscribe(data => {this.postList = data})
-      console.log(this.postList)
+  getAvatar(avatar: string) {
+    return `background-image: url('${avatar}'); background-size: cover;`
   }
 
+  getAvatar2(post: PostResponse) {
+    return `${post.imagenportada}`;
+  }
+
+  ngOnInit(): void {
+    this.postService.getAllPosts().subscribe(results =>{
+      this.post = results;
+      console.log(this.post)
+    })
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PostResponse } from 'src/app/models/interfaces/post.interface';
-import { PostService } from 'src/app/services/post.service';
+import { PostResponse } from 'src/app/model/interfaces/post.interface';
+import { PostService } from 'src/app/service/post.service';
 
 @Component({
   selector: 'app-post-item',
@@ -9,7 +9,8 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class PostItemComponent implements OnInit {
 
-  @Input() postInput!: PostResponse;
+  @Input() postInput: any;
+  
   postsList: PostResponse[] | undefined;
 
   constructor(private postService: PostService) { }
@@ -18,7 +19,7 @@ export class PostItemComponent implements OnInit {
   }
 
   deletePost() {
-    this.postService.deletePost(this.postInput.id).subscribe(resp => {
+    this.postService.deletePost(this.postInput.postId).subscribe(resp => {
       this.postsList = resp;
       })
       alert("Se ha eliminado correctamente")
