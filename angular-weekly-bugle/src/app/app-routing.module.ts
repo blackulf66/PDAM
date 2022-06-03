@@ -5,16 +5,15 @@ import { SubpostListComponent } from './components/subpost-list/subpost-list.com
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { AuthService } from './service/auth.service';
 import { LoginGuardService } from './service/loginGuardService';
 
 const routes: Routes = [
-  // {path: '',pathMatch: 'full', redirectTo: '/menu'},
+  {path: '',pathMatch: 'full', redirectTo: 'login'},
+  {path: 'login',component:LoginComponent },
   {path: 'subpost',component:SubpostListComponent},
   {path: 'post',component:PostListComponent},
   {path: 'user',component:UserListComponent},
   {path: 'menu', component:SideMenuComponent, canActivate:[LoginGuardService]},
-  {path: 'login',component:LoginComponent},
 ];
 
 @NgModule({
