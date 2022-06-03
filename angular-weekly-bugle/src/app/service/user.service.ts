@@ -21,4 +21,8 @@ export class UserService {
     return this.http.get<UserResponse[]>(`${environment.apiBaseUrl}/user/all`, {headers: headers});
   }
 
+  getToken():any{
+    return localStorage.getItem('token')
+  }
+
 }

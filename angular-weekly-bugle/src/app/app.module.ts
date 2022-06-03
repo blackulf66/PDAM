@@ -18,6 +18,7 @@ import { PostItemComponent } from './components/post-item/post-item.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { LoginGuardService } from './service/loginGuardService';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { UserItemComponent } from './components/user-item/user-item.component';
     MatDialogModule
     
   ],
-  providers: [],
+  providers: [LoginGuardService],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

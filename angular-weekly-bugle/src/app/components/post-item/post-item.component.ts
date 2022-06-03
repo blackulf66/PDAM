@@ -20,9 +20,9 @@ export class PostItemComponent implements OnInit {
 
   deletePost() {
     this.postService.deletePost(this.postInput.postId).subscribe(resp => {
+      alert("Se ha eliminado correctamente")
       this.postsList = resp;
       })
-      alert("Se ha eliminado correctamente")
   };
 
 
