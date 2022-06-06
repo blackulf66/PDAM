@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:pdamfinal/models/subpost/Subpost_response.dart';
+import 'package:pdamfinal/repository/followRepository/follow_repository.dart';
+import 'package:pdamfinal/repository/followRepository/follow_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
 import '../../bloc/subpost/bloc/subpost_bloc.dart';
 import '../../constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../models/subpost/Subpost_response.dart';
 import '../../repository/subpostRepository/subpost_repository.dart';
 import '../../repository/subpostRepository/subpost_repository_impl.dart';
 
@@ -21,6 +23,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
     late SubPostApiRepository subPostApiRepository;
+    late FollowRepository followRepository;
 
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = const Text('Busca aqui tu comunidad');
@@ -28,6 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     void initState() {
     super.initState();
     subPostApiRepository = SubPostApiRepositoryImpl();
+    followRepository = FollowRepositoryImpl();
   }
   @override
   void dispose() {
@@ -37,90 +41,11 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return BlocProvider<SubPostBloc>(
       create: (context) => SubPostBloc(subPostApiRepository)..add(FetchSubPost()),
-    child:Scaffold(
-      
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: customSearchBar,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                if (customIcon.icon == Icons.search) {
-                  customIcon = const Icon(Icons.cancel);
-                  customSearchBar = const ListTile(
-                    leading: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'pon aqui el nombre de la comunidad',
-                        hintStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                } else {
-                  customIcon = const Icon(Icons.search);
-                  customSearchBar = const Text('Busca aqui tu comunidad');
-                }
-              });
-            },
-            icon: customIcon,
-          )
-        ],
-        centerTitle: true,
-      ),
-      //listview
-      
-      body: 
+    child:
       _createComunityList(context)
     
       
-      
-      
-      
-      /* SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 80),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image(
-                  image: NetworkImage('url'),
-                  height: 45.0,
-                  width: 45.0,
-                ),
-              ),
-            ),
-            Text(
-              'Comunidad 1',
-              style: TextStyle(color: Colors.white),
-            ),
-            InkWell(
-                child: Container(
-                  child: Icon(Icons.add, color: Colors.white, size: 35),
-                ),
-                onTap: () {})
-          ],
-        ),
-      )),*/
-    ),);
+    );
   }
 
  Widget _createComunityList(BuildContext context) {
@@ -167,14 +92,20 @@ class _SearchScreenState extends State<SearchScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         
-          ClipRRect(
-                          borderRadius:BorderRadius.horizontal(),
-                          child: Image(
-                            image: NetworkImage(subpost.imagen ),
-                            height: 100.0,
-                            width: 100.0,
+          InkWell(
+            child: ClipRRect(
+                            borderRadius:BorderRadius.horizontal(),
+                            child: Image(
+                              image: NetworkImage(subpost.imagen ),
+                              height: 100.0,
+                              width: 100.0,
+                            ),
                           ),
-                        ),
+                          onTap: (){
+         Navigator.pushNamed(context, '/comunity',arguments: subpost);
+       },
+          ),
+          
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(subpost.nombre , style: TextStyle(color: Style.LetraColor
@@ -184,7 +115,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Container(
                   child: Icon(Icons.add, color: Colors.white, size: 35),
                 ),
-                onTap: () {})
+                onTap: () {
+                  followRepository.fetchFollow(subpost.id);
+                })
       
 
       ],

@@ -8,8 +8,9 @@ abstract class VoteEvent extends Equatable {
 }
 
 class FetchVote extends VoteEvent{
+  final VoteDto votedto;
 
-  const FetchVote();
+  const FetchVote(this.votedto);
 
   @override
   List<Object> get props => [];

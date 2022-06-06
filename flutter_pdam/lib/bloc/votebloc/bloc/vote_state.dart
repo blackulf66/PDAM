@@ -13,12 +13,12 @@ class VoteInitial extends VoteState {}
 class VoteLoading extends VoteState {}
 
 class VoteSuccessState extends VoteState {
-  final VoteResponse meResponse;
+  final VoteResponse voteResponse;
 
-  const VoteSuccessState(this.meResponse);
+  const VoteSuccessState(this.voteResponse);
 
   @override
-  List<Object> get props => [meResponse];
+  List<Object> get props => [voteResponse];
 }
 
 class VoteErrorState extends VoteState {

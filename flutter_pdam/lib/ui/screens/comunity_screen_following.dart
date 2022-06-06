@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:pdamfinal/bloc/postbloc/bloc/post_bloc.dart';
+import 'package:pdamfinal/models/auth/me_response.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
 import 'package:pdamfinal/models/subpost/Subpost_response.dart';
 import 'package:pdamfinal/models/vote/vote_dto.dart';
@@ -14,14 +15,14 @@ import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
 import '../../constants.dart';
 
-class Comunitycreen extends StatefulWidget {
-  Comunitycreen({Key? key}) : super(key: key);
+class ComunitycreenFollowing extends StatefulWidget {
+  ComunitycreenFollowing({Key? key}) : super(key: key);
 
   @override
   _ComunitycreenState createState() => _ComunitycreenState();
 }
 
-class _ComunitycreenState extends State<Comunitycreen> {
+class _ComunitycreenState extends State<ComunitycreenFollowing> {
 
     late VoteRepository voteRepository;
 
@@ -40,7 +41,7 @@ class _ComunitycreenState extends State<Comunitycreen> {
 
   @override
   Widget build(BuildContext context) {
-          final subpost = ModalRoute.of(context)!.settings.arguments as SubPostApiResponse;
+          final subpost = ModalRoute.of(context)!.settings.arguments as Following;
 
     return Scaffold(
         appBar: AppBar(

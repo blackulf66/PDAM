@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pdamfinal/models/vote/vote_dto.dart';
 
 import '../../../models/vote/vote_response.dart';
 import '../../../repository/voteRepository/vote_repository.dart';
@@ -16,7 +17,7 @@ class VoteBloc extends Bloc<VoteEvent, VoteState> {
 }
 void _VoteFetched(FetchVote event, Emitter<VoteState> emit) async {
     try {
-      final Vote = await public.fetchVote();
+      final Vote = await public.fetchVote(event.votedto);
 
       emit(VoteFetched(Vote));
       return;

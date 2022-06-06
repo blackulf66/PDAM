@@ -16,7 +16,7 @@ class SubPostApiResponse {
   late final List<PostList> postList;
   late final String userEntityId;
   
-  SubPostApiResponse.fromJson(Map<String, dynamic> json){
+SubPostApiResponse.fromJson(Map<String, dynamic> json){
     imagen = json['imagen'];
     id = json['id'];
     nombre = json['nombre'];

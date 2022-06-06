@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 120.0,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage('/images/daily.png' ),
+                            image: DecorationImage(image: NetworkImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/06d20874-f823-4eb0-8b93-2b9f4aa85518/denu4za-c6b070ae-c0ee-4d5b-872d-f4383cf011c8.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA2ZDIwODc0LWY4MjMtNGViMC04YjkzLTJiOWY0YWE4NTUxOFwvZGVudTR6YS1jNmIwNzBhZS1jMGVlLTRkNWItODcyZC1mNDM4M2NmMDExYzgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.c0OLccCwziYNp_dRaqL-ymIj2OmkMUPASTtp_TOH208' ),
                             ),
                             
                               color: Style.VKNGGron,
@@ -123,7 +123,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         
                       ),
                     )),
-                
               ],
             ),
             Center(

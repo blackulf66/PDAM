@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:http/http.dart';
+import 'package:pdamfinal/bloc/votebloc/bloc/vote_bloc.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
+import 'package:pdamfinal/models/vote/vote_dto.dart';
 import 'package:pdamfinal/repository/userRepository/user_repository.dart';
+import 'package:pdamfinal/repository/voteRepository/vote_repository.dart';
+import 'package:pdamfinal/repository/voteRepository/vote_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 import 'package:pdamfinal/bloc/user/bloc3/user_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
 
 
 import '../../bloc/postbloc/bloc/post_bloc.dart';
@@ -29,12 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late PostApiRepository postApiRepository;
   late UserRepository userRepository;
+  late VoteRepository voteRepository;
 
   @override
     void initState() {
     super.initState();
     postApiRepository = PostApiRepositoryImpl();
     userRepository = UserRepositoryImpl();
+    voteRepository = VoteRepositoryImpl();
   }
   @override
   void dispose() {
@@ -116,7 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
   Widget _createFollowsList(BuildContext context) {
     return BlocBuilder<UserBloc3, UserStateFollow>(
       builder: (context, state) {
@@ -160,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (BuildContext context, int index){
                       return _followItem(context , me[index] ) ;                         
                     },
-                    itemCount: me.length,
+                    itemCount: me.length ,
                   ),
                 ],
               ),  
@@ -216,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
        onTap: (){
-         Navigator.pushNamed(context, '/comunity');
+         Navigator.pushNamed(context, '/comunityFollowing',arguments: subpost);
        },
     );
 }
@@ -252,18 +263,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(              
                     children: <Widget>[
         
-                     /* Container(
-                        padding: EdgeInsets.only(top: 12.0 , left: 18.0, bottom: 12.0, right: 12.0 ),
-                        child: ClipRRect(
-                          borderRadius:BorderRadius.circular(50.0),
-                          child: Image(
-                            image: NetworkImage(post.imagenportada ),
-                            height: 45.0,
-                            width: 45.0,
-                          ),
-                        ),
-                      ),*/
-                   
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Text( 
@@ -288,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
             
             
           ){
-            Navigator.pushNamed(context,'/detailpage');
+            Navigator.pushNamed(context,'/detailpage' ,arguments: post);
           },
                   child: SizedBox(
                     width:  MediaQuery.of(context).size.width,
@@ -308,7 +307,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           InkWell(
-                            onTap: (){},
+                            onTap: () async {
+                              final VoteDto voteDto = VoteDto(voteType: 'LIKE', postId: post.postId);
+
+                              voteRepository.fetchVote(voteDto);
+
+                            },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(Icons.check , color: Style.LetraColor,),
@@ -324,7 +328,13 @@ class _HomeScreenState extends State<HomeScreen> {
                            
                            
                            InkWell(
-                              onTap: (){},
+                              onTap: (){
+
+                                final VoteDto voteDto = VoteDto(voteType: 'DISLIKE', postId: post.postId);
+
+                                 voteRepository.fetchVote(voteDto);
+
+                              },
                              child: Padding(
                                padding: const EdgeInsets.all(8.0),
                                child: Icon(Typicons.cancel, color: Style.LetraColor,),

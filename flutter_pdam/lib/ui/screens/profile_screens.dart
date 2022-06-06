@@ -5,6 +5,8 @@ import 'package:pdamfinal/bloc/user/bloc3/user_bloc.dart';
 import 'package:pdamfinal/bloc/user/bloc/user_bloc.dart';
 import 'package:pdamfinal/models/auth/me_response.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
+import 'package:pdamfinal/repository/followRepository/unfollow_repository.dart';
+import 'package:pdamfinal/repository/followRepository/unfollow_repository_impl.dart';
 import 'package:pdamfinal/repository/subpostRepository/subpost_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
@@ -28,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   late UserRepository userRepository;
   late PostApiRepository postApiRepository;
+  late UnFollowRepository unFollowRepository;
   
 
   @override
@@ -35,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     userRepository = UserRepositoryImpl();
     postApiRepository = PostApiRepositoryImpl();
+    unFollowRepository = UnFollowRepositoryImpl();
   }
   @override
   void dispose() {
@@ -323,7 +327,10 @@ Widget _createPostList(BuildContext context) {
 
             InkWell(
               child: Icon(Icons.minimize_rounded, color: Colors.white,),
-              onTap: (){},
+              onTap: (){
+               unFollowRepository.fetchUnFollow(me.id);
+
+              },
             )
 
           ],

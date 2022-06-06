@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdamfinal/ui/screens/comunity_screen.dart';
+import 'package:pdamfinal/ui/screens/comunity_screen_following.dart';
 import 'package:pdamfinal/ui/screens/profile_screens.dart';
 import 'ui/screens/addform_screen.dart';
 import 'ui/screens/detail_screen.dart';
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
     '/search':(context)=>SearchScreen() ,
     '/perfil':(context) => ProfileScreen(),
     '/addform':(context) =>formScreen(),
-    '/comunity':(context) => Comunitycreen()
+    '/comunity':(context) => Comunitycreen(),
+        '/comunityFollowing':(context) => ComunitycreenFollowing()
+
   },
     );
   }
