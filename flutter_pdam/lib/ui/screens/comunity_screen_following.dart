@@ -17,11 +17,9 @@ import '../../constants.dart';
 
 class ComunitycreenFollowing extends StatefulWidget {
   ComunitycreenFollowing({Key? key}) : super(key: key);
-
   @override
   _ComunitycreenState createState() => _ComunitycreenState();
 }
-
 class _ComunitycreenState extends State<ComunitycreenFollowing> {
 
     late VoteRepository voteRepository;

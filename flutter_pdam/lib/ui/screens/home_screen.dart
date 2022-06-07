@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:http/http.dart';
-import 'package:pdamfinal/bloc/votebloc/bloc/vote_bloc.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
 import 'package:pdamfinal/models/vote/vote_dto.dart';
 import 'package:pdamfinal/repository/userRepository/user_repository.dart';
@@ -11,8 +9,6 @@ import 'package:pdamfinal/repository/voteRepository/vote_repository.dart';
 import 'package:pdamfinal/repository/voteRepository/vote_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 import 'package:pdamfinal/bloc/user/bloc3/user_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 
 
@@ -21,7 +17,6 @@ import '../../bloc/user/bloc/user_bloc.dart';
 import '../../bloc/user/bloc3/user_bloc.dart';
 import '../../constants.dart';
 import '../../models/auth/me_response.dart';
-import '../../models/subpost/Subpost_response.dart';
 import '../../repository/postRepository/post_repository.dart';
 import '../../repository/postRepository/post_repository_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late PostApiRepository postApiRepository;
   late UserRepository userRepository;
   late VoteRepository voteRepository;
+
 
   @override
     void initState() {
@@ -64,6 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
      BlocProvider<UserBloc3>(
       create: (context) => UserBloc3(userRepository)..add(FetchUserListFollow()),
     ),
+    BlocProvider<UserBloc>(
+      create: (context) => UserBloc(userRepository)..add(FetchUser()),
+    ),
   ],
     child: Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 0, 0),  
@@ -74,21 +73,52 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            _parteabajo(),                
-            Divider(color: Colors.grey, thickness: 0.5 , height: 0.0),
+            Padding(
+              padding: const EdgeInsets.only(left:20,right: 20,top:40),
+              child: _createUserProfile(context),
+            ),
             _createPostList(context),
           ]))));
   }
-
-  Widget _parteabajo() {
-    return Container(
-      margin: EdgeInsets.only( top: 5.0, left: 14.0, right: 14.0 ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-       
-      ),
+ Widget _createUserProfile(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        if (state is BlocUserInitial) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is UserFetchError) {
+          return ErrorPage(
+            message: state.message,
+            retry: () {
+              context.watch<UserBloc>().add(FetchUser());
+            },
+          );
+        } else if (state is UserFetched) {
+          return _usermenu(context , state.user);
+        } else {
+          return const Text('Not support');
+        }
+      },
     );
   }
+   Widget _usermenu(BuildContext context ,MeResponse me){
+     return Container(
+       
+       child: Row(
+         
+         children: [
+         CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+                      backgroundImage: NetworkImage(
+                          me.avatar),
+                    ),
+                    SizedBox(width:40,
+                    ),
+           Text(me.username , style: TextStyle(color: Colors.white , fontSize: 20),)
+         ],
+       )
+     );
+   }
 
   
 
@@ -192,8 +222,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics() ,
                 itemBuilder: (BuildContext context, int index){
-                  return _Post(context , post[index] ) ;                         
+                  return _Post(context , post[index] ) ;   
+                                        
                 },
+                reverse: true,
                 itemCount: post.length,
               ),
             ],
@@ -246,17 +278,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 400),
-                  child: Container(
-                    child:  Text( 
-                          post.subpostsName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
-                            color: Style.LetraColor
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:10),
+                    child: Container(
+                      child:  Text( 
+                            post.subpostsName,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.0,
+                              color: Style.LetraColor
+                            ),
                           ),
-                        ),
+                    ),
                   ),
                 ),
                 Container(
