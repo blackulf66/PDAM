@@ -145,14 +145,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                   const Padding(
-                padding: const EdgeInsets.only(bottom: 80),
+                padding: const EdgeInsets.only(bottom: 30),
                 child: Center(
                   child: SizedBox(
                     width: 120.0,
                     height: 120.0,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage('images/daily.png' ),
+                            image: DecorationImage(image: NetworkImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/06d20874-f823-4eb0-8b93-2b9f4aa85518/denu4za-c6b070ae-c0ee-4d5b-872d-f4383cf011c8.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA2ZDIwODc0LWY4MjMtNGViMC04YjkzLTJiOWY0YWE4NTUxOFwvZGVudTR6YS1jNmIwNzBhZS1jMGVlLTRkNWItODcyZC1mNDM4M2NmMDExYzgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.c0OLccCwziYNp_dRaqL-ymIj2OmkMUPASTtp_TOH208' ),
                             ),
                           color: Style.VKNGGron,
                           borderRadius: BorderRadius.only(
@@ -161,9 +161,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 )),
+                Padding(
+              padding: const EdgeInsets.only(bottom:30.0),
+              child: Center(child: Text("Weekly bugle", style: TextStyle(color: Style.VKNGGron , fontSize: 20,),)),
+            ),
             Center(
               child: Container(
-                height: 30,
+                height: 50,
                 width: 300,
                 decoration: BoxDecoration(
                           color: Style.VKNGGron,
@@ -173,33 +177,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Expanded(
                 child: Container(),
                 ),
-              new RaisedButton(
-                splashColor: Colors.pinkAccent,
-                color: Colors.transparent,
-                child: new Text(
-                  "login",
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
+              InkWell(
+                  splashColor: Colors.pinkAccent,
+                child: new Container(
+                  color: Colors.transparent,
+                  child: new Text(
+                    "login",
+                    style: new TextStyle(fontSize: 25.0, color: Colors.white),
+                  ),
+                  
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
-                  );
-                },
+                onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    );
+                  },
               ),
               new Expanded(
                 child: Container(),
               ),
-              RaisedButton(
-                splashColor: Colors.pinkAccent,
-                color: Colors.transparent,
-                child: new Text(
-                  "signup",
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
+              InkWell(
+                 splashColor: Colors.pinkAccent,
+                child: Container(
+                  color: Colors.transparent,
+                  child: new Text(
+                    "signup",
+                    style: new TextStyle(fontSize: 25.0, color: Colors.white),
+                  ),
+                
                 ),
-              onPressed: () {
-                  
-}
+                onTap: () {
+                    
+              }
               ),
               new Expanded(
                 child: Container(),
@@ -209,7 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -340,7 +350,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 lastDate: DateTime.now(),
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(
-                            Icons.blender_rounded,
+                            Icons.calendar_today,
                             color: Colors.white,
                             size: 24.0,
                             semanticLabel:
@@ -350,18 +360,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   errorStyle: TextStyle(color: Colors.redAccent),
                                   suffixIcon: Icon(Icons.calendar_today),
                                   labelText: 'fecha de nacimiento',
-
                                   labelStyle: TextStyle(color:Style.LetraColor)
                                 ),
                                 mode: DateTimeFieldPickerMode.date,
                                 autovalidateMode: AutovalidateMode.always,
-                                validator: (e) => (e?.day ?? 0) == 1
-                                    ? 'Please not the first day'
+                                validator: (e) => (e?.year ?? 0) >= 2003
+                                    ? 'necesitas ser mayor de edad'
                                     : null,
                                 onDateSelected: (DateTime value) {
                                   selectedDate = value;
                                   print(value);
                                 },
+                                
+                                
+                                
                               ),
                             ),
                           ),

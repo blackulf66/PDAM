@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'FinalPDAM',
+      title: 'WeeklyBugle',
       theme: ThemeData(
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0)

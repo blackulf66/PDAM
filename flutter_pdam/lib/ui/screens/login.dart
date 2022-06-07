@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                
                 Padding(
-                    padding: const EdgeInsets.only(bottom: 80),
+                    padding: const EdgeInsets.only(bottom: 30),
                     child: Center(
                       child: SizedBox(
                         width: 120.0,
@@ -125,9 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(bottom:30.0),
+              child: Center(child: Text("Weekly bugle", style: TextStyle(color: Style.VKNGGron , fontSize: 20,),)),
+            ),
             Center(
               child: Container(
-                height: 30,
+                height: 50,
                 width: 300,
                 decoration: BoxDecoration(
                     color: Style.VKNGGron,
@@ -137,34 +141,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: Container(),
                     ),
-                    new RaisedButton(
-                      splashColor: Colors.pinkAccent,
-                      color: Colors.transparent,
-                      child: new Text(
-                        "login",
-                        style:
-                            new TextStyle(fontSize: 20.0, color: Colors.white),
+                    InkWell(
+                                              splashColor: Colors.pinkAccent,
+
+                      child: new Container(
+                        child: new Text(
+                          "login",
+                          style:
+                              new TextStyle(fontSize: 25.0, color: Colors.white),
+                        ),
                       ),
-                      onPressed: () {},
+                                              onTap: () {},
+
                     ),
                     new Expanded(
                       child: Container(),
                     ),
-                    RaisedButton(
-                        splashColor: Colors.pinkAccent,
-                        color: Colors.transparent,
-                        child: new Text(
-                          "signup",
-                          style: new TextStyle(
-                              fontSize: 20.0, color: Colors.white),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterScreen()),
-                          );
-                        }),
+                    InkWell(
+                                                splashColor: Colors.pinkAccent,
+
+                      child: Container(
+                          color: Colors.transparent,
+                          child: new Text(
+                            "signup",
+                            style: new TextStyle(
+                                fontSize: 25.0, color: Colors.white),
+                          ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen()),
+                            );
+                          }
+                    ),
                     new Expanded(
                       child: Container(),
                     ),
@@ -173,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(7.0),
               child: Form(
                 key: _formKey,
                 child: Column(

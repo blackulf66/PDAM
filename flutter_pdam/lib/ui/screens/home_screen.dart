@@ -181,8 +181,9 @@ class _HomeScreenState extends State<HomeScreen> {
    Widget _followsList(BuildContext context, List<Following> me){
     return  Column(
       children: [
+        
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top:50.0),
           child: Text("Tus Comunidades", style: TextStyle(color: Style.VKNGGron),),
         ),
         Padding(

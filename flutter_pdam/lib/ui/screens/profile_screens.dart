@@ -331,6 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           onTap: () {
             unFollowRepository.fetchUnFollow(me.id);
+            Navigator.pushNamed(context, '/perfil');
           },
         )
       ],
@@ -420,6 +421,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     InkWell(
                       onTap: () {
                         deleteRepository.fetchDelete(post.postId);
+                        Navigator.pushNamed(context, '/perfil',
+                      arguments: post);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
