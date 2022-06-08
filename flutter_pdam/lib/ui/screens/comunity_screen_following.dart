@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:pdamfinal/bloc/postbloc/bloc/post_bloc.dart';
+import 'package:pdamfinal/bloc/post/postbloc/bloc/post_bloc.dart';
 import 'package:pdamfinal/models/auth/me_response.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
 import 'package:pdamfinal/models/subpost/Subpost_response.dart';
@@ -12,8 +12,11 @@ import 'package:pdamfinal/repository/postRepository/post_repository_impl.dart';
 import 'package:pdamfinal/repository/voteRepository/vote_repository.dart';
 import 'package:pdamfinal/repository/voteRepository/vote_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../bloc/post/blocpostsubostid/postsubpostid_bloc.dart';
 import '../../constants.dart';
+import 'menu_screen.dart';
 
 class ComunitycreenFollowing extends StatefulWidget {
   ComunitycreenFollowing({Key? key}) : super(key: key);
@@ -23,6 +26,8 @@ class ComunitycreenFollowing extends StatefulWidget {
 class _ComunitycreenState extends State<ComunitycreenFollowing> {
 
     late VoteRepository voteRepository;
+
+      late Future<SharedPreferences> _prefs;
 
     late PostApiRepository postApiRepository;
 
@@ -39,9 +44,21 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
 
   @override
   Widget build(BuildContext context) {
-          final subpost = ModalRoute.of(context)!.settings.arguments as Following;
+        
 
-    return Scaffold(
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<PostSubPostIdBloc>(
+      create: (context) => PostSubPostIdBloc(postApiRepository)..add(FetchPostSubPostId()),
+    ),
+        ],
+        child: _principalScreen(),
+      );
+    }
+
+    Widget _principalScreen(){
+                final subpost = ModalRoute.of(context)!.settings.arguments as Following;
+      return Scaffold(
         appBar: AppBar(
             title: Text("Detalle de comunidad"),
             iconTheme: IconThemeData(color: Colors.white),
@@ -77,7 +94,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
                 child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
             ),
       
-            //_createPostList(context)
+            //_createPostList(context , subpost.id)
       
       
       
@@ -88,19 +105,56 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
     ));
     }
 
-Widget _createPostList(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    Widget _createPostList2(BuildContext context){
+      return BlocConsumer<PostSubPostIdBloc, postsubpostidState>(listenWhen: (context, state) {
+              return state is PostSuccessState || state is PostErrorState;
+            }, listener: (context, state) async {
+              if (state is postsubpostidSuccessState) {
+                _loginSuccess(context, state.loginResponse);
+              } else if (state is postsubpostidErrorState) {
+                _showSnackbar(context, state.message);
+              }
+            }, buildWhen: (context, state) {
+              return state is BlocpostsubpostidInitial || state is postsubpostidLoading;
+            }, builder: (ctx, state) {
+              if (state is postsubpostidFetched) {
+                return _PostList(context , state.post);
+              } else if (state is postsubpostidLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return Text('falo');
+              }
+            });
+    }
+      Future<void> _loginSuccess(BuildContext context, PostApiResponse late) async {
+    _prefs.then((SharedPreferences prefs) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MenuScreen()),
+      );
+    });
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+Widget _createPostList(BuildContext context , int postId) {
+    return BlocBuilder<PostSubPostIdBloc, postsubpostidState>(
       builder: (context, state) {
-        if (state is BlocPostInitial) {
+        if (state is BlocpostsubpostidInitial) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is PostFetchError) {
+        } else if (state is postsubpostidFetchError) {
           return ErrorPage(
             message: state.message,
             retry: () {
-              context.watch<PostBloc>().add(FetchPost());
+              context.watch<PostSubPostIdBloc>().add(FetchPostSubPostId2(postId));
             },
           );
-        } else if (state is PostFetched) {
+        } else if (state is postsubpostidFetched) {
           return _PostList(context, state.post);
         } else {
           return const Text('Not support');

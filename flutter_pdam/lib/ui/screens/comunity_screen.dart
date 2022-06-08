@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:pdamfinal/bloc/postbloc/bloc/post_bloc.dart';
+import 'package:pdamfinal/bloc/post/postbloc/bloc/post_bloc.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
 import 'package:pdamfinal/models/subpost/Subpost_response.dart';
 import 'package:pdamfinal/models/vote/vote_dto.dart';

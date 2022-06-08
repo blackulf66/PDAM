@@ -21,7 +21,6 @@ class PostSuccessState extends PostState {
   @override
   List<Object> get props => [loginResponse];
 }
-
 class PostErrorState extends PostState {
   final String message;
 

@@ -12,7 +12,7 @@ import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/image_pick_bloc/bloc/image_pick_bloc.dart';
-import '../../bloc/postbloc/bloc/post_bloc.dart';
+import '../../bloc/post/postbloc/bloc/post_bloc.dart';
 import '../../constants.dart';
 import '../../models/post/post_dto.dart';
 import '../../models/post/post_response.dart';
@@ -188,6 +188,8 @@ class _formScreenState extends State<formScreen> {
                             ),
                           ),
                           child: TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 5,
                             controller: descripcion,
                             decoration: InputDecoration(
                               hintText: 'descripcion',

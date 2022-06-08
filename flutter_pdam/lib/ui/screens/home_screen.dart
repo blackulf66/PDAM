@@ -9,10 +9,9 @@ import 'package:pdamfinal/repository/voteRepository/vote_repository.dart';
 import 'package:pdamfinal/repository/voteRepository/vote_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 import 'package:pdamfinal/bloc/user/bloc3/user_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-import '../../bloc/postbloc/bloc/post_bloc.dart';
+import '../../bloc/post/postbloc/bloc/post_bloc.dart';
 import '../../bloc/user/bloc/user_bloc.dart';
 import '../../bloc/user/bloc3/user_bloc.dart';
 import '../../constants.dart';
@@ -35,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late PostApiRepository postApiRepository;
   late UserRepository userRepository;
   late VoteRepository voteRepository;
+  late Future<SharedPreferences> _prefs;
 
 
   @override
@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return
-     //BlocProvider(create: (context) { return PostBloc(postApiRepository)..add(FetchPost()); },
     MultiBlocProvider(
   providers: [
     BlocProvider<PostBloc>(
@@ -114,7 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width:40,
                     ),
-           Text(me.username , style: TextStyle(color: Colors.white , fontSize: 20),)
+           Text(me.username , style: TextStyle(color: Colors.white , fontSize: 20),),
+           InkWell(child: Icon(Icons.ac_unit),
+           onTap: (){
+             
+            Navigator.pushNamed(context, '/login');
+           },
+           ),
          ],
        )
      );

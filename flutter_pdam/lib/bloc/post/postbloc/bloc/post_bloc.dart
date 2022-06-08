@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../models/post/post_response.dart';
-import '../../../models/post/post_dto.dart';
-import '../../../repository/postRepository/post_repository.dart';
+import '../../../../models/post/post_dto.dart';
+import '../../../../models/post/post_response.dart';
+import '../../../../repository/postRepository/post_repository.dart';
 
 part 'post_event.dart';
 part 'post_state.dart';

@@ -31,6 +31,22 @@ class PostApiRepositoryImpl extends PostApiRepository {
     }
   }
 
+   Future<List<PostApiResponse>> fetchPostsBySubpostId(int postId) async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+                
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/subpost/${postId}'),headers: {
+        'Authorization':
+            /*'Bearer ${Constantes.token}',*/
+             'Bearer ${prefs.getString('token')}'
+    },);
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List).map((i) =>
+              PostApiResponse.fromJson(i)).toList();
+    } else {
+      throw Exception('Fail to load post');
+    }
+  }
+
 @override
   Future<PostApiResponse> createPost(PostDto postdto, String imagePath) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
