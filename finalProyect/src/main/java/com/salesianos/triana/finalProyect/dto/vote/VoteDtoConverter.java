@@ -14,6 +14,7 @@ public class VoteDtoConverter {
                     .builder()
                     .postId(vote.getPost().getPostId())
                     .voteType(vote.getVoteType())
+                    .user(vote.getUser())
                     .build();
         }
 

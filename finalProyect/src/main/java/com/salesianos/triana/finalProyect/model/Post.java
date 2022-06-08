@@ -35,7 +35,7 @@ public class Post {
     @Nullable
     @Lob
     private String description;
-
+    //@OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE)
     private Integer voteCount = 0;
 
     @ManyToOne(fetch = LAZY)
