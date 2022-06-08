@@ -48,41 +48,43 @@ class _ComunitycreenState extends State<Comunitycreen> {
             iconTheme: IconThemeData(color: Colors.white),
             backgroundColor: Colors.transparent),
         body: Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom:20.0),
-            child: Image(image: NetworkImage(subpost.imagen)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              alignment: Alignment.bottomLeft,
-              child: Text(subpost.nombre , style: TextStyle(color:Colors.white , fontSize: 25),)),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              alignment: Alignment.bottomLeft,
-              child: Text(subpost.descripcion , style: TextStyle(color:Colors.white , fontSize: 15),)),
-          ),
-
-  
-
-           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              alignment: Alignment.bottomLeft,
-              child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
-          ),
-
-          //_createPostList(context)
-
-
-
-
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom:20.0),
+              child: Image(image: NetworkImage(subpost.imagen)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                child: Text(subpost.nombre , style: TextStyle(color:Colors.white , fontSize: 25),)),
+            ),
+      
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                child: Text(subpost.descripcion , style: TextStyle(color:Colors.white , fontSize: 15),)),
+            ),
+      
+        
+      
+             Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
+            ),
+      
+            //_createPostList(context)
+      
+      
+      
+      
+          ],
+        ),
       )
     ));
     }

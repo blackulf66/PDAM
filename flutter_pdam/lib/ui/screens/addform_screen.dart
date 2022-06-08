@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdamfinal/bloc/subpost/bloc/subpost_bloc.dart';
@@ -222,41 +223,57 @@ class _formScreenState extends State<formScreen> {
                                     ),
                                   ]);
                                 }
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Center(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                            width: 50,
-                                            height: 50,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                BlocProvider.of<
-                                                            ImagePickBlocBloc>(
-                                                        context)
-                                                    .add(const SelectImageEvent(
-                                                        ImageSource.gallery));
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Style.VKNGGron,
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Center(
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                ImagePickBlocBloc>(
+                                                            context)
+                                                        .add(const SelectImageEvent(
+                                                            ImageSource.gallery));
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: Style.VKNGGron,
+                                                  ),
+                                                  child: Center(
+                                                      child: Icon(
+                                                          Icons.arrow_circle_up)),
+                                                )),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(left: 15.0),
+                                              child: Text(
+                                                'Seleccionar Imagen',
+                                                style:
+                                                    TextStyle(color: Colors.white),
                                               ),
-                                              child: Center(
-                                                  child: Icon(
-                                                      Icons.arrow_circle_up)),
-                                            )),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15.0),
-                                          child: Text(
-                                            'Seleccionar Imagen',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        )
-                                      ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      width: 105,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topRight,
+                                      child: InkWell(
+                                        child: Icon(Typicons.camera ,color: Colors.white,),
+                                        onTap: (){
+                                          Navigator.pushNamed(context, '/camera');
+                                        },
+                                      ),
+                                    )
+                                  ],
                                 );
                               }),
                         ],
@@ -264,7 +281,7 @@ class _formScreenState extends State<formScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top:8.0),
                         child: Container(
-                          alignment: Alignment.bottomLeft,
+                          alignment: Alignment.center,
                           child: DecoratedBox(
                             
                             decoration:  BoxDecoration(

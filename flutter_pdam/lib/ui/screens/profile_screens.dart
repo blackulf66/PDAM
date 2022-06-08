@@ -378,16 +378,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Expanded(child: SizedBox()),
-                    InkWell(
-                      onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    
                   ],
                 ),
               ),

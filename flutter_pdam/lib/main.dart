@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pdamfinal/ui/screens/comunity_screen.dart';
-import 'package:pdamfinal/ui/screens/comunity_screen_following.dart';
-import 'package:pdamfinal/ui/screens/detail_screenPostList.dart';
-import 'package:pdamfinal/ui/screens/profile_screens.dart';
+import 'package:pdamfinal/ui/screens/camera_screen.dart';
+import 'ui/screens/comunity_screen.dart';
+import 'ui/screens/comunity_screen_following.dart';
+import 'ui/screens/detail_screenPostList.dart';
+import 'ui/screens/profile_screens.dart';
 import 'ui/screens/addform_screen.dart';
 import 'ui/screens/detail_screen.dart';
 import 'ui/screens/login.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
     '/perfil':(context) => ProfileScreen(),
     '/addform':(context) =>formScreen(),
     '/comunity':(context) => Comunitycreen(),
-    '/comunityFollowing':(context) => ComunitycreenFollowing()
+    '/comunityFollowing':(context) => ComunitycreenFollowing(),
+    '/camera':(context) =>  Home()
   },
     );
   }

@@ -8,7 +8,7 @@ class Constantes{
 }
 
 class Style{
-  static const Color VKNGGron = Color.fromRGBO(96, 176, 128, 1);
+  static const Color VKNGGron = Color.fromARGB(255,84,154,149);
   static const Color LetraColor = Color.fromARGB(123, 255, 255, 255);
   
 }
