@@ -2,6 +2,7 @@ package com.salesianos.triana.finalProyect.service;
 
 import com.salesianos.triana.finalProyect.dto.vote.GetVoteDto;
 import com.salesianos.triana.finalProyect.exception.FileNotFoundException;
+import com.salesianos.triana.finalProyect.exception.VoteException;
 import com.salesianos.triana.finalProyect.model.Post;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.model.Vote;
@@ -24,11 +25,16 @@ public class VoteService {
     private final UserEntityService authService;
 
     @Transactional
-    public void vote(GetVoteDto voteDto , UserEntity user) {
+    public void vote(GetVoteDto voteDto , UserEntity user) throws VoteException {
         Post post = postRepository.findById(voteDto.getPostId())
                 .orElseThrow(() -> new FileNotFoundException("Post no encontrado con ID - " + voteDto.getPostId()));
         Optional<Vote> voteByPostAndUser = voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post, user);
-
+        if (voteByPostAndUser.isPresent() &&
+                voteByPostAndUser.get().getVoteType()
+                        .equals(voteDto.getVoteType())) {
+            throw new VoteException("ya has votado"
+                    + voteDto.getVoteType() + " para este post");
+        }
         if (LIKE.equals(voteDto.getVoteType())) {
             post.setVoteCount(post.getVoteCount() + 1);
         } else {

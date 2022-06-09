@@ -2,7 +2,9 @@ package com.salesianos.triana.finalProyect.service;
 
 import com.salesianos.triana.finalProyect.dto.subpost.SubPostDtoConverter;
 import com.salesianos.triana.finalProyect.dto.user.*;
+import com.salesianos.triana.finalProyect.exception.FollowException;
 import com.salesianos.triana.finalProyect.exception.UnsupportedMediaType;
+import com.salesianos.triana.finalProyect.exception.VoteException;
 import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.repository.SubPostsRepository;
 import io.jsonwebtoken.Jwt;
@@ -109,13 +111,18 @@ public class UserEntityService extends BaseService<UserEntity, UUID, UserEntityR
                 .orElseThrow(() -> new UsernameNotFoundException("nombre de usuario no encontrado"));
     }
 
-    public void addfollow(UserEntity user,Long SubpostId){
+    public void addfollow(UserEntity user,Long SubpostId) throws FollowException {
 
         SubPost idSubpost = subPostsRepository.findById(SubpostId).get();
 
         UserEntity usuario = repositorio.findByEmail(user.getEmail()).get();
 
-        usuario.getSubPostsList().add(idSubpost);
+
+        if(usuario.getSubPostsList().contains(idSubpost)){
+            throw new FollowException("ya sigues a este subpost");
+        } else{
+            usuario.getSubPostsList().add(idSubpost);
+        }
 
     }
 

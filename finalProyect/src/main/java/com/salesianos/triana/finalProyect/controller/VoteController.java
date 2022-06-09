@@ -1,6 +1,7 @@
 package com.salesianos.triana.finalProyect.controller;
 
 import com.salesianos.triana.finalProyect.dto.vote.GetVoteDto;
+import com.salesianos.triana.finalProyect.exception.VoteException;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 import com.salesianos.triana.finalProyect.model.Vote;
 import com.salesianos.triana.finalProyect.service.VoteService;
@@ -38,7 +39,7 @@ public class VoteController {
     })
 
     @PostMapping("/")
-    public ResponseEntity<Void> vote(@RequestBody GetVoteDto voteDto, @AuthenticationPrincipal UserEntity user) {
+    public ResponseEntity<Void> vote(@RequestBody GetVoteDto voteDto, @AuthenticationPrincipal UserEntity user) throws VoteException {
 
         voteService.vote(voteDto , user);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -3,7 +3,9 @@ package com.salesianos.triana.finalProyect.controller;
 
 import com.salesianos.triana.finalProyect.dto.post.PostDtoConverter;
 import com.salesianos.triana.finalProyect.dto.user.*;
+import com.salesianos.triana.finalProyect.exception.FollowException;
 import com.salesianos.triana.finalProyect.exception.SingleEntityNotFoundException;
+import com.salesianos.triana.finalProyect.exception.VoteException;
 import com.salesianos.triana.finalProyect.model.SubPost;
 import com.salesianos.triana.finalProyect.model.UserEntity;
 
@@ -101,7 +103,7 @@ public class UserController {
                     content = @Content),
     })
     @PostMapping("follow/{id}")
-    public ResponseEntity<?> followsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id){
+    public ResponseEntity<?> followsubpost(@AuthenticationPrincipal UserEntity user, @PathVariable Long id) throws FollowException {
         userEntityService.addfollow(user , id);
         return ResponseEntity.ok().build();
     }
