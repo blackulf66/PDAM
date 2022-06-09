@@ -105,43 +105,6 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
     ));
     }
 
-    Widget _createPostList2(BuildContext context){
-      return BlocConsumer<PostSubPostIdBloc, postsubpostidState>(listenWhen: (context, state) {
-              return state is PostSuccessState || state is PostErrorState;
-            }, listener: (context, state) async {
-              if (state is postsubpostidSuccessState) {
-                _loginSuccess(context, state.loginResponse);
-              } else if (state is postsubpostidErrorState) {
-                _showSnackbar(context, state.message);
-              }
-            }, buildWhen: (context, state) {
-              return state is BlocpostsubpostidInitial || state is postsubpostidLoading;
-            }, builder: (ctx, state) {
-              if (state is postsubpostidFetched) {
-                return _PostList(context , state.post);
-              } else if (state is postsubpostidLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return Text('falo');
-              }
-            });
-    }
-      Future<void> _loginSuccess(BuildContext context, PostApiResponse late) async {
-    _prefs.then((SharedPreferences prefs) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MenuScreen()),
-      );
-    });
-  }
-
-  void _showSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
 Widget _createPostList(BuildContext context , int postId) {
     return BlocBuilder<PostSubPostIdBloc, postsubpostidState>(
       builder: (context, state) {

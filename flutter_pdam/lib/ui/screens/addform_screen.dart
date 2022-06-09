@@ -156,7 +156,7 @@ class _formScreenState extends State<formScreen> {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.transparent,
                           borderRadius: BorderRadius.circular(14.0),
                           border: Border.all(
                             color: Colors.grey,
@@ -167,7 +167,7 @@ class _formScreenState extends State<formScreen> {
                           controller: nombre,
                           decoration: InputDecoration(
                             hintText: 'nombre',
-                            hintStyle: TextStyle(color: Colors.grey),
+                            hintStyle: TextStyle(color: Color.fromARGB(190, 255, 255, 255)),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -180,7 +180,7 @@ class _formScreenState extends State<formScreen> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.circular(14.0),
                             border: Border.all(
                               color: Colors.grey,
@@ -193,7 +193,7 @@ class _formScreenState extends State<formScreen> {
                             controller: descripcion,
                             decoration: InputDecoration(
                               hintText: 'descripcion',
-                              hintStyle: TextStyle(color: Colors.grey),
+                              hintStyle: TextStyle(color: Color.fromARGB(190, 255, 255, 255)),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
@@ -219,37 +219,39 @@ class _formScreenState extends State<formScreen> {
                                   path = state.pickedFile.path;
                                   print('PATH ${state.pickedFile.path}');
                                   return Column(children: [
-                                    Image.file(
-                                      File(state.pickedFile.path),
-                                      height: 100,
-                                    ),
+                                 
+                                      Image.file(
+                                        File(state.pickedFile.path),
+                                        height: MediaQuery.of(context).size.height / 2,
+                                        width: MediaQuery.of(context).size.height / 3 ,
+                                      ),
+                                    
                                   ]);
                                 }
                                 return Row(
+                                  
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0),
                                       child: Center(
                                         child: Row(
                                           children: [
-                                            SizedBox(
-                                                width: 50,
-                                                height: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    BlocProvider.of<
-                                                                ImagePickBlocBloc>(
-                                                            context)
-                                                        .add(const SelectImageEvent(
-                                                            ImageSource.gallery));
-                                                  },
-                                                  style: ElevatedButton.styleFrom(
-                                                    primary: Style.VKNGGron,
-                                                  ),
-                                                  child: Center(
-                                                      child: Icon(
-                                                          Icons.arrow_circle_up)),
-                                                )),
+                                           Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        alignment: Alignment.topRight,
+                                        child: InkWell(
+                                          child: Icon(Typicons.upload ,color: Colors.white,),
+                                           onTap: () {
+                                                      BlocProvider.of<
+                                                                  ImagePickBlocBloc>(
+                                                              context)
+                                                          .add(const SelectImageEvent(
+                                                              ImageSource.gallery));
+                                                    },
+                                        ),
+                                      ),
+                                    ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.only(left: 15.0),
@@ -264,17 +266,33 @@ class _formScreenState extends State<formScreen> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 105,
+                                      width: 50,
                                     ),
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      child: InkWell(
-                                        child: Icon(Typicons.camera ,color: Colors.white,),
-                                        onTap: (){
-                                          Navigator.pushNamed(context, '/camera');
-                                        },
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        alignment: Alignment.topRight,
+                                        child: InkWell(
+                                          child: Icon(Typicons.camera ,color: Colors.white,),
+                                           onTap: () {
+                                                      BlocProvider.of<
+                                                                  ImagePickBlocBloc>(
+                                                              context)
+                                                          .add(const SelectImageEvent(
+                                                              ImageSource.camera));
+                                                    },
+                                        ),
                                       ),
-                                    )
+                                    ),
+                                    Padding(
+                                              padding:
+                                                  const EdgeInsets.only(left: 15.0),
+                                              child: Text(
+                                                'haz la foto',
+                                                style:
+                                                    TextStyle(color: Colors.white),
+                                              ),
+                                            )
                                   ],
                                 );
                               }),
@@ -298,12 +316,12 @@ class _formScreenState extends State<formScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownButton<String>(
                                 value: dropDownValue,
-                                icon: const Icon(Icons.arrow_downward),
+                                icon: const Icon(Icons.arrow_downward , color: Colors.black,),
                                 elevation: 0,
-                                style: const TextStyle(color: Style.VKNGGron),
+                                style: const TextStyle(color: Color.fromARGB(255, 85, 255, 244)),
                                 underline: Container(
                                   height: 2,
-                                  color: Colors.white,
+                                  color: Colors.transparent,
                                 ),
                                 onChanged: (String? newValue) {
                                   setState(() {
@@ -316,7 +334,7 @@ class _formScreenState extends State<formScreen> {
                                     value: value,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(value),
+                                      child: Text(value, style: TextStyle(color: Colors.black),),
                                     ),
                                   );
                                 }).toList(),
@@ -356,7 +374,7 @@ class _formScreenState extends State<formScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 fixedSize: const Size(240, 50),
-                                primary: Colors.grey),
+                                primary: Style.VKNGGron),
                             onPressed: () async {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();

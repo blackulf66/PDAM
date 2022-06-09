@@ -13,9 +13,9 @@ class PostSubPostIdBloc extends Bloc<PostsubpostidEvent, postsubpostidState> {
   final PostApiRepository public;
 
   PostSubPostIdBloc(this.public) : super(BlocpostsubpostidInitial()) {
-    on<FetchPostSubPostId2>(_PostFetched);
+    on<FetchPostSubPostId2>(_PostsubpostidFetched);
 }
-void _PostFetched(FetchPostSubPostId2 event, Emitter<postsubpostidState> emit) async {
+void _PostsubpostidFetched(FetchPostSubPostId2 event, Emitter<postsubpostidState> emit) async {
     try {
       final post = await public.fetchPostsBySubpostId(event.postId);
 
