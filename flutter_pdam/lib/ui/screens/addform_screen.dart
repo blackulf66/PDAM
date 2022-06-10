@@ -164,8 +164,10 @@ class _formScreenState extends State<formScreen> {
                           ),
                         ),
                         child: TextFormField(
+                          style:TextStyle(color: Colors.white),
                           controller: nombre,
                           decoration: InputDecoration(
+                        
                             hintText: 'nombre',
                             hintStyle: TextStyle(color: Color.fromARGB(190, 255, 255, 255)),
                             border: OutlineInputBorder(
@@ -174,7 +176,6 @@ class _formScreenState extends State<formScreen> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Container(
@@ -188,6 +189,7 @@ class _formScreenState extends State<formScreen> {
                             ),
                           ),
                           child: TextFormField(
+                            style:TextStyle(color: Colors.white),
                             keyboardType: TextInputType.multiline,
                             maxLines: 5,
                             controller: descripcion,
