@@ -50,7 +50,6 @@ public class Post {
     private SubPost subposts;
 
     //helpers
-
     public void addToUsuario(UserEntity u){
         this.userEntity = u;
         u.getPosts().add(this);
@@ -60,7 +59,6 @@ public class Post {
         u.getPosts().remove(this);
         this.userEntity = null;
     }
-
     public int getVoteCount() {
         long likes = votes.stream().filter(v -> v.getVoteType() == VoteType.LIKE).count();
         long dislikes = votes.size() - likes;

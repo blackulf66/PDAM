@@ -33,6 +33,7 @@ public class PostDtoConverter {
                 .description(c.getDescription())
                 .imagenportada(c.getImagenportada())
                 .subpostsName(c.getSubposts().getNombre())
+                .VoteCount(c.getVoteCount())
                 .build();
     }
 }
