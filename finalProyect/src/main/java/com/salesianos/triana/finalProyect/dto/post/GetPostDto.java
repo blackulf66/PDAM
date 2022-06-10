@@ -1,5 +1,6 @@
 package com.salesianos.triana.finalProyect.dto.post;
 
+import com.salesianos.triana.finalProyect.model.Vote;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
