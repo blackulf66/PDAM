@@ -10,6 +10,8 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -35,8 +37,9 @@ public class Post {
     @Nullable
     @Lob
     private String description;
-    //@OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE)
-    private Integer voteCount = 0;
+    @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE, orphanRemoval = true)
+    //private Integer voteCount = 0;
+    private List<Vote> votes = new ArrayList<>();
 
     @ManyToOne(fetch = LAZY)
     private UserEntity userEntity;
@@ -56,5 +59,13 @@ public class Post {
     public void removeFromUsuario(UserEntity u){
         u.getPosts().remove(this);
         this.userEntity = null;
+    }
+
+    public int getVoteCount() {
+        long likes = votes.stream().filter(v -> v.getVoteType() == VoteType.LIKE).count();
+        long dislikes = votes.size() - likes;
+        return (int) (likes - dislikes);
+
+
     }
 }

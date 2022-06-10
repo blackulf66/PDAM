@@ -35,11 +35,12 @@ public class VoteService {
             throw new VoteException("ya has votado"
                     + voteDto.getVoteType() + " para este post");
         }
-        if (LIKE.equals(voteDto.getVoteType())) {
-            post.setVoteCount(post.getVoteCount() + 1);
+       /* if (LIKE.equals(voteDto.getVoteType())) {
+            //post.setVoteCount(post.getVoteCount() + 1);
+
         } else {
-            post.setVoteCount(post.getVoteCount() - 1);
-        }
+            //post.setVoteCount(post.getVoteCount() - 1);
+        }*/
         voteRepository.save(mapToVote(voteDto, post , user));
         postRepository.save(post);
     }

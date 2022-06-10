@@ -89,7 +89,7 @@ public class PostService {
                     .subposts(data)
                     .imagenportada(uri)
                     .description(createPostDto.getDescription())
-                    .voteCount(0)
+                    //.voteCount(0)
                     .build();
 
             return postRepository.save(post);
