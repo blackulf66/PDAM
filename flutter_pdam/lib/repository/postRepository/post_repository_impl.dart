@@ -31,7 +31,7 @@ class PostApiRepositoryImpl extends PostApiRepository {
     }
   }
 
-   Future<List<PostApiResponse>> fetchPostsBySubpostId(int postId) async {
+   Future<List<PostApiResponse>> fetchPostsBySubpostId(String postId) async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
                 
     final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/subpost/${postId}'),headers: {

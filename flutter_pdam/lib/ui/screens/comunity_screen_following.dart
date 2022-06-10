@@ -94,7 +94,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
                 child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
             ),
       
-            //_createPostList(context , subpost.id)
+            // _createPostList(context , subpost.nombre)
       
       
       
@@ -105,7 +105,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
     ));
     }
 
-Widget _createPostList(BuildContext context , int postId) {
+Widget _createPostList(BuildContext context , String postId) {
     return BlocBuilder<PostSubPostIdBloc, postsubpostidState>(
       builder: (context, state) {
         if (state is BlocpostsubpostidInitial) {
