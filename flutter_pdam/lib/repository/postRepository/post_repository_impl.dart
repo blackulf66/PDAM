@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:pdamfinal/models/auth/me_response.dart';
+import 'package:pdamfinal/models/subpost/subpost_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -31,7 +33,7 @@ class PostApiRepositoryImpl extends PostApiRepository {
     }
   }
 
-   Future<List<PostApiResponse>> fetchPostsBySubpostId(String postId) async {
+   Future<List<PostListS>> fetchPostsBySubpostId(String postId) async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
                 
     final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/subpost/${postId}'),headers: {
@@ -41,7 +43,7 @@ class PostApiRepositoryImpl extends PostApiRepository {
     },);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List).map((i) =>
-              PostApiResponse.fromJson(i)).toList();
+              PostListS.fromJson(i)).toList();
     } else {
       throw Exception('Fail to load post');
     }

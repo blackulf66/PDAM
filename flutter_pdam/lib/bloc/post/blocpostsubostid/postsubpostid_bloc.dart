@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pdamfinal/models/subpost/subpost_response.dart';
 
 import '../../../models/post/post_response.dart';
 import '../../../repository/postRepository/post_repository.dart';
@@ -17,7 +18,7 @@ class PostSubPostIdBloc extends Bloc<PostsubpostidEvent, postsubpostidState> {
 }
 void _PostsubpostidFetched(FetchPostSubPostId2 event, Emitter<postsubpostidState> emit) async {
     try {
-      final post = await public.fetchPostsBySubpostId(event.postId);
+      final post = await public.fetchPostsBySubpostId(event.subpostName);
 
       emit(postsubpostidFetched(post));
       return;

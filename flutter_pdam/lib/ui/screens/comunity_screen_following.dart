@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:pdamfinal/bloc/post/postbloc/bloc/post_bloc.dart';
 import 'package:pdamfinal/models/auth/me_response.dart';
-import 'package:pdamfinal/models/post/post_response.dart';
-import 'package:pdamfinal/models/subpost/Subpost_response.dart';
+import 'package:pdamfinal/models/subpost/subpost_response.dart';
 import 'package:pdamfinal/models/vote/vote_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdamfinal/repository/postRepository/post_repository.dart';
@@ -19,7 +16,8 @@ import '../../constants.dart';
 import 'menu_screen.dart';
 
 class ComunitycreenFollowing extends StatefulWidget {
-  ComunitycreenFollowing({Key? key}) : super(key: key);
+  ComunitycreenFollowing({Key? key , required this.subpostName}) : super(key: key);
+   final String subpostName;
   @override
   _ComunitycreenState createState() => _ComunitycreenState();
 }
@@ -27,7 +25,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
 
     late VoteRepository voteRepository;
 
-      late Future<SharedPreferences> _prefs;
+    late Future<SharedPreferences> _prefs;
 
     late PostApiRepository postApiRepository;
 
@@ -49,7 +47,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
     return MultiBlocProvider(
         providers: [
           BlocProvider<PostSubPostIdBloc>(
-      create: (context) => PostSubPostIdBloc(postApiRepository)..add(FetchPostSubPostId()),
+      create: (context) => PostSubPostIdBloc(postApiRepository)..add(FetchPostSubPostId2(widget.subpostName)),
     ),
         ],
         child: _principalScreen(),
@@ -94,7 +92,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
                 child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
             ),
       
-            // _createPostList(context , subpost.nombre)
+            _createPostList(context , subpost.nombre)
       
       
       
@@ -105,7 +103,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
     ));
     }
 
-Widget _createPostList(BuildContext context , String postId) {
+Widget _createPostList(BuildContext context , String subpostName) {
     return BlocBuilder<PostSubPostIdBloc, postsubpostidState>(
       builder: (context, state) {
         if (state is BlocpostsubpostidInitial) {
@@ -114,7 +112,7 @@ Widget _createPostList(BuildContext context , String postId) {
           return ErrorPage(
             message: state.message,
             retry: () {
-              context.watch<PostSubPostIdBloc>().add(FetchPostSubPostId2(postId));
+              context.watch<PostSubPostIdBloc>().add(FetchPostSubPostId2(subpostName));
             },
           );
         } else if (state is postsubpostidFetched) {
@@ -125,7 +123,7 @@ Widget _createPostList(BuildContext context , String postId) {
       },
     );
   }
- Widget _PostList(BuildContext context, List<PostApiResponse> post){
+ Widget _PostList(BuildContext context, List<PostListS> post){
     return  SingleChildScrollView(
       child: Container(
           width: MediaQuery.of(context).size.width,
@@ -148,7 +146,7 @@ Widget _createPostList(BuildContext context , String postId) {
   }
 
 
- Widget _Post(BuildContext context,PostApiResponse post){
+ Widget _Post(BuildContext context, PostListS post){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),

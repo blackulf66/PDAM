@@ -18,7 +18,7 @@ class FetchPostSubPostId extends PostsubpostidEvent{
 }
 
 class FetchPostSubPostId2 extends FetchPostSubPostId{
-  final String postId;
+  final String subpostName;
   
-  const FetchPostSubPostId2(this.postId);
+  const FetchPostSubPostId2(this.subpostName);
 }

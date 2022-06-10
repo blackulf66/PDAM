@@ -146,27 +146,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     date.year.toString(),
                 style: TextStyle(color: Style.LetraColor),
               )),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(9),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(
-                            color: Style.VKNGGron,
-                            width: 2.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    child: Text('editar perfil'),
-                    onPressed: () {},
-                  ),
-                ),
-              ),
+              // Center(
+              //   child: Padding(
+              //     padding: EdgeInsets.all(9),
+              //     child: ElevatedButton(
+              //       style: ButtonStyle(
+              //         backgroundColor: MaterialStateProperty.all(Colors.black),
+              //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //           RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(18.0),
+              //             side: BorderSide(
+              //               color: Style.VKNGGron,
+              //               width: 2.0,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       child: Text('editar perfil'),
+              //       onPressed: () {},
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

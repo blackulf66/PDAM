@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
     '/perfil':(context) => ProfileScreen(),
     '/addform':(context) =>formScreen(),
     '/comunity':(context) => Comunitycreen(),
-    '/comunityFollowing':(context) => ComunitycreenFollowing(),
+    '/comunityFollowing':(context) => ComunitycreenFollowing(subpostName: 'MARVEL'),
     '/camera':(context) =>  Home()
   },
     );

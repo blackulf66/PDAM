@@ -328,7 +328,7 @@ class _formScreenState extends State<formScreen> {
                                     dropDownValue = newValue!;
                                   });
                                 },
-                                items: <String>['MARVEL', 'DC']
+                                items: <String>['MARVEL', 'DC'] 
                                     .map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
