@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -10,6 +11,7 @@ import 'package:pdamfinal/repository/postRepository/post_repository_impl.dart';
 import 'package:pdamfinal/repository/subpostRepository/subpost_repository_impl.dart';
 import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../../bloc/image_pick_bloc/bloc/image_pick_bloc.dart';
 import '../../bloc/post/postbloc/bloc/post_bloc.dart';
@@ -411,44 +413,6 @@ class _formScreenState extends State<formScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _createComunityList(BuildContext context) {
-    return BlocBuilder<SubPostBloc, SubPostState>(
-      builder: (context, state) {
-        if (state is BlocSubPostInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is SubPostFetchError) {
-          return ErrorPage(
-            message: state.message,
-            retry: () {
-              context.watch<SubPostBloc>().add(FetchSubPost());
-            },
-          );
-        } else if (state is SubPostFetched) {
-          return _comunityList(context, state.post);
-        } else {
-          return const Text('Not support');
-        }
-      },
-    );
-  }
-
-  Widget _comunityList(BuildContext context, List<SubPostApiResponse> post) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return _subPostItem(context, post[index]);
-              },
-              itemCount: post.length),
-        ],
       ),
     );
   }

@@ -275,9 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        color: Colors.black,
+        color: post.voteCount >= 0 ? Color.fromARGB(35, 30, 255, 0) : Color.fromARGB(35, 244, 67, 54),
         
-       
           child: Container(
              decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(14.0),
