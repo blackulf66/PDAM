@@ -37,7 +37,7 @@ public class Post {
     @Nullable
     @Lob
     private String description;
-    @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     //private Integer voteCount = 0;
     private List<Vote> votes = new ArrayList<>();
 
@@ -50,20 +50,23 @@ public class Post {
     private SubPost subposts;
 
     //helpers
-    public void addToUsuario(UserEntity u){
+    public void addToUsuario(UserEntity u) {
         this.userEntity = u;
         u.getPosts().add(this);
     }
 
-    public void removeFromUsuario(UserEntity u){
+    public void removeFromUsuario(UserEntity u) {
         u.getPosts().remove(this);
         this.userEntity = null;
     }
+
     public int getVoteCount() {
-        long likes = votes.stream().filter(v -> v.getVoteType() == VoteType.LIKE).count();
-        long dislikes = votes.size() - likes;
-        return (int) (likes - dislikes);
-
-
+        if (votes == null) {
+            return 0;
+        } else {
+            long likes = votes.stream().filter(v -> v.getVoteType() == VoteType.LIKE).count();
+            long dislikes = votes.size() - likes;
+            return (int) (likes - dislikes);
+        }
     }
 }
