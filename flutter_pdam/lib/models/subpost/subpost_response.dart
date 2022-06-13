@@ -13,7 +13,7 @@ class SubPostApiResponse {
   late final String nombre;
   late final String descripcion;
   late final String createdDate;
-  late final List<PostListS> postList;
+  late final List<PostListSU> postList;
   late final String userEntityId;
   
 SubPostApiResponse.fromJson(Map<String, dynamic> json){
@@ -22,7 +22,7 @@ SubPostApiResponse.fromJson(Map<String, dynamic> json){
     nombre = json['nombre'];
     descripcion = json['descripcion'];
     createdDate = json['createdDate'];
-    postList = List.from(json['postList']).map((e)=>PostListS.fromJson(e)).toList();
+    postList = List.from(json['postList']).map((e)=>PostListSU.fromJson(e)).toList();
     userEntityId = json['userEntityId'];
   }
 
@@ -39,8 +39,8 @@ SubPostApiResponse.fromJson(Map<String, dynamic> json){
   }
 }
 
-class PostListS {
-  PostListS({
+class PostListSU {
+  PostListSU({
     required this.imagenportada,
     required this.postId,
     required this.postName,
@@ -59,7 +59,7 @@ class PostListS {
   late final String subpostsName;
   late final int voteCount;
   
-  PostListS.fromJson(Map<String, dynamic> json){
+  PostListSU.fromJson(Map<String, dynamic> json){
     imagenportada = json['imagenportada'];
     postId = json['postId'];
     postName = json['postName'];

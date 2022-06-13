@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pdamfinal/models/subpost/subpost_response.dart';
+import 'package:pdamfinal/models/subpost/Subpost_response.dart';
 
 import '../../../models/post/post_response.dart';
 import '../../../repository/postRepository/post_repository.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:pdamfinal/models/auth/me_response.dart';
-import 'package:pdamfinal/models/subpost/subpost_response.dart';
+import 'package:pdamfinal/models/subpost/Subpost_response.dart';
 import 'package:pdamfinal/models/vote/vote_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdamfinal/repository/postRepository/post_repository.dart';
@@ -92,7 +92,7 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
                 child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
             ),
       
-            _createPostList(context , subpost.nombre)
+            //_createPostList(context , subpost.nombre)
       
       
       
@@ -103,50 +103,50 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
     ));
     }
 
-Widget _createPostList(BuildContext context , String subpostName) {
-    return BlocBuilder<PostSubPostIdBloc, postsubpostidState>(
-      builder: (context, state) {
-        if (state is BlocpostsubpostidInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is postsubpostidFetchError) {
-          return ErrorPage(
-            message: state.message,
-            retry: () {
-              context.watch<PostSubPostIdBloc>().add(FetchPostSubPostId2(subpostName));
-            },
-          );
-        } else if (state is postsubpostidFetched) {
-          return _PostList(context, state.post);
-        } else {
-          return const Text('Not support');
-        }
-      },
-    );
-  }
- Widget _PostList(BuildContext context, List<PostListS> post){
-    return  SingleChildScrollView(
-      child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics() ,
-                itemBuilder: (BuildContext context, int index){
-                  return _Post(context , post[index] ) ;                         
-                },
-                itemCount: post.length,
-              ),
-            ],
-          ),  
+// Widget _createPostList(BuildContext context , String subpostName) {
+//     return BlocBuilder<PostSubPostIdBloc, postsubpostidState>(
+//       builder: (context, state) {
+//         if (state is BlocpostsubpostidInitial) {
+//           return const Center(child: CircularProgressIndicator());
+//         } else if (state is postsubpostidFetchError) {
+//           return ErrorPage(
+//             message: state.message,
+//             retry: () {
+//               context.watch<PostSubPostIdBloc>().add(FetchPostSubPostId2(subpostName));
+//             },
+//           );
+//         } else if (state is postsubpostidFetched) {
+//           return _PostList(context, state.post);
+//         } else {
+//           return const Text('Not support');
+//         }
+//       },
+//     );
+//   }
+//  Widget _PostList(BuildContext context, List<PostListSU> post){
+//     return  SingleChildScrollView(
+//       child: Container(
+//           width: MediaQuery.of(context).size.width,
+//           child: Column(
+//             children: [
+//               ListView.builder(
+//                 shrinkWrap: true,
+//                 physics: NeverScrollableScrollPhysics() ,
+//                 itemBuilder: (BuildContext context, int index){
+//                   return _Post(context , post[index] ) ;                         
+//                 },
+//                 itemCount: post.length,
+//               ),
+//             ],
+//           ),  
         
         
-      ),
-    );
-  }
+//       ),
+//     );
+//   }
 
 
- Widget _Post(BuildContext context, PostListS post){
+ Widget _Post(BuildContext context, PostListSU post){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),

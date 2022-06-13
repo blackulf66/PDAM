@@ -29,7 +29,7 @@ class postsubpostidErrorState extends postsubpostidState {
 }
 
 class postsubpostidFetched extends postsubpostidState {
-  final List<PostListS> post;
+  final List<PostListSU> post;
 
   const postsubpostidFetched(this.post);
 

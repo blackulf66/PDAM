@@ -1,17 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:pdamfinal/bloc/post/postbloc/bloc/post_bloc.dart';
-import 'package:pdamfinal/models/post/post_response.dart';
-import 'package:pdamfinal/models/subpost/Subpost_response.dart';
+import 'package:http/http.dart';
+
 import 'package:pdamfinal/models/vote/vote_dto.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdamfinal/repository/postRepository/post_repository.dart';
 import 'package:pdamfinal/repository/postRepository/post_repository_impl.dart';
 import 'package:pdamfinal/repository/voteRepository/vote_repository.dart';
 import 'package:pdamfinal/repository/voteRepository/vote_repository_impl.dart';
-import 'package:pdamfinal/ui/screens/ErrorPage.dart';
 
 import '../../constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:http/http.dart' as http;
+
+import '../../models/subpost/Subpost_response.dart';
+
 
 class Comunitycreen extends StatefulWidget {
   Comunitycreen({Key? key}) : super(key: key);
@@ -22,15 +27,22 @@ class Comunitycreen extends StatefulWidget {
 
 class _ComunitycreenState extends State<Comunitycreen> {
 
+    final Client _client = Client();
+
     late VoteRepository voteRepository;
 
     late PostApiRepository postApiRepository;
 
+    late Future<List<PostListSU>> items2;
+
+    late String subpostname = 'DC';
     @override
     void initState() {
     super.initState();
     voteRepository = VoteRepositoryImpl();
     postApiRepository = PostApiRepositoryImpl();
+    items2 = fetchPostsBySubpostname(subpostname);
+
   }
   @override
   void dispose() {
@@ -40,6 +52,9 @@ class _ComunitycreenState extends State<Comunitycreen> {
   @override
   Widget build(BuildContext context) {
           final subpost = ModalRoute.of(context)!.settings.arguments as SubPostApiResponse;
+
+          subpostname = subpost.nombre;
+
 
     return Scaffold(
         appBar: AppBar(
@@ -67,9 +82,7 @@ class _ComunitycreenState extends State<Comunitycreen> {
                 alignment: Alignment.bottomLeft,
                 child: Text(subpost.descripcion , style: TextStyle(color:Colors.white , fontSize: 15),)),
             ),
-      
-        
-      
+    
              Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
@@ -77,10 +90,20 @@ class _ComunitycreenState extends State<Comunitycreen> {
                 child: Text("publicada en: "+subpost.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
             ),
       
-            //_createPostList(context)
-      
-      
-      
+           FutureBuilder<List<PostListSU>>(
+                                            future: items2,
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                return _PostList(
+                                                    snapshot.data!);
+                                              } else if (snapshot.hasError) {
+                                                return Text(
+                                                    '${snapshot.error}');
+                                              }
+                                              {
+                                                return const Text("buscando");
+                                              }
+                                            }),
       
           ],
         ),
@@ -88,27 +111,7 @@ class _ComunitycreenState extends State<Comunitycreen> {
     ));
     }
 
-Widget _createPostList(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
-      builder: (context, state) {
-        if (state is BlocPostInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is PostFetchError) {
-          return ErrorPage(
-            message: state.message,
-            retry: () {
-              context.watch<PostBloc>().add(FetchPost());
-            },
-          );
-        } else if (state is PostFetched) {
-          return _PostList(context, state.post);
-        } else {
-          return const Text('Not support');
-        }
-      },
-    );
-  }
- Widget _PostList(BuildContext context, List<PostApiResponse> post){
+ Widget _PostList(List<PostListSU> post){
     return  SingleChildScrollView(
       child: Container(
           width: MediaQuery.of(context).size.width,
@@ -118,20 +121,18 @@ Widget _createPostList(BuildContext context) {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics() ,
                 itemBuilder: (BuildContext context, int index){
-                  return _Post(context , post[index] ) ;                         
+                  return _Post(post.elementAt(index), index) ;                         
                 },
                 itemCount: post.length,
               ),
             ],
           ),  
-        
-        
       ),
     );
   }
 
 
- Widget _Post(BuildContext context,PostApiResponse post){
+ Widget _Post(PostListSU post , int index){
     
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -252,9 +253,24 @@ Widget _createPostList(BuildContext context) {
         ),
       
     );
-    
 
   }
+  Future<List<PostListSU>> fetchPostsBySubpostname(String subpostname) async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+                
+    final response = await _client.get(Uri.parse('https://pdam-prueba.herokuapp.com/post/subpost/${subpostname}'),headers: {
+        'Authorization':
+            /*'Bearer ${Constantes.token}',*/
+             'Bearer ${prefs.getString('token')}'
+    },);
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List).map((i) =>
+              PostListSU.fromJson(i)).toList();
+    } else {
+      throw Exception('Fail to load subpost');
+    }
+  }
+
 
   }
 

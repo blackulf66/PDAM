@@ -412,8 +412,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     InkWell(
                       onTap: () {
                         deleteRepository.fetchDelete(post.postId);
-                        Navigator.pushNamed(context, '/perfil',
-                      arguments: post);
+                       
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
