@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthLoginDto } from 'src/app/model/dto/auth.dto';
 import { AuthService } from 'src/app/service/auth.service';
-import { AuthLoginDto } from '../../models/dto/auth.dto';
 
 @Component({
   selector: 'app-login',

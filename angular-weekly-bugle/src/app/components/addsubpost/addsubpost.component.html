@@ -1,0 +1,42 @@
+<!-- <form [formGroup]="registerForm">
+
+    <label for="nombre">nombre: </label>
+    <input id="nombre" type="text" required  minlength="4" [(ngModel)]="addsubpostDto.nombre" formControlName="nombre">
+  
+    <label for="descripcion">descripcion: </label>
+    <input id="descripcion" type="text" [(ngModel)]="addsubpostDto.descripcion" formControlName="descripcion">
+
+    <label for="file">password: </label>
+    <input id="file" type="text" [(ngModel)]="addsubpostDto.file" formControlName="file">
+         
+    <button mat-raised-button color="primary" (click)="doaddSubpost()">registrar</button>
+  
+  </form> -->
+
+  
+  <div class="login-box">
+    <h2>Añade un nuevo SubPost</h2>
+    <form [formGroup]="addSubpostForm" enctype="multipart/form-data">
+      <div class="user-box">
+        <input id="nombre" type="text" required  minlength="4" [(ngModel)]="addsubpostDto.nombre" formControlName="nombre">
+
+        <label for="nombre">nombre: </label>
+      </div>
+      <div class="user-box">
+        <input id="descripcion" type="text" [(ngModel)]="addsubpostDto.descripcion" formControlName="descripcion">
+        <label for="descripcion">descripcion: </label>
+      </div>
+
+      <div class="user-box">
+        <label for="file"></label>
+        <input id="file" type="file" [(ngModel)]="addsubpostDto.file" formControlName="file">
+      </div>
+      <a (click)="doaddSubpost()">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Añadir
+      </a>
+    </form>
+  </div>

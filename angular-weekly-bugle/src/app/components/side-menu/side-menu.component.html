@@ -18,6 +18,12 @@
                     <mat-icon class="sidenav-icon">users</mat-icon> users
                 </a>
             </mat-list-item>
+
+            <mat-list-item role="listitem">
+                <a [routerLink]="['/addsubpost']" (click)="sidenav.toggle()" routerLinkActive="router-link-active">
+                    <mat-icon class="sidenav-icon">add</mat-icon> add subpost
+                </a>
+            </mat-list-item>
             
             <mat-divider></mat-divider>
             <mat-list-item role="listitem">
@@ -31,7 +37,7 @@
             <button (click)="sidenav.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
                 <mat-icon>menu</mat-icon>
             </button>
-            <span style="margin-left: 85%;">DailyBugle</span>
+            <span style="margin-left: 85%;">Weekly Bugle</span>
             <span class="example-spacer"></span>
             <ng-container [ngSwitch]="currentPage">
                 <button *ngSwitchCase="'movies'" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">

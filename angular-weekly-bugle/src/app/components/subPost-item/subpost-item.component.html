@@ -1,4 +1,4 @@
-
+<!-- 
   <mat-card class="example-card" style="margin-top: 2%;">
     <mat-card-header>
         <div mat-card-avatar [style]="getAvatar(subpostInput.imagen)"></div>
@@ -10,7 +10,19 @@
         <div class="juntos">
                     </div>
         <div mat-card-avatar class="example-header-image"></div>
-        <a href="http://localhost:4200/subpost"><button (click)="deletePost()"><mat-icon class="delete" aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></a>
+        <button (click)="deletePost()"><mat-icon class="delete" aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>
         
     </mat-card-content>
+</mat-card> -->
+<mat-card class="example-card" style="margin-top: 2%;">
+
+    <div class="targeta">
+      <mat-card-title>{{subpostInput.nombre}}</mat-card-title>
+      <mat-card-subtitle>{{subpostInput.descripcion}}</mat-card-subtitle>
+    <div class="container">
+      
+            <img [src]="getAvatar2(subpostInput)" width="100%" alt="">
+    </div>
+    <button (click)="deleteSubPost()"><mat-icon class="delete" aria-hidden="false" aria-label="Example home icon" >delete</mat-icon></button>
+  </div>
 </mat-card>

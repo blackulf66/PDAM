@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialImportsModule } from './module/material-imports.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { SubpostItemComponent } from './components/subPost-item/subpost-item.component';
@@ -19,6 +19,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { LoginGuardService } from './service/loginGuardService';
+import { AddsubpostComponent } from './components/addsubpost/addsubpost.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoginGuardService } from './service/loginGuardService';
     PostItemComponent,
     PostListComponent,
     UserListComponent,
-    UserItemComponent
+    UserItemComponent,
+    AddsubpostComponent
     
   ],
   imports: [
@@ -42,6 +44,7 @@ import { LoginGuardService } from './service/loginGuardService';
     FormsModule,
     MatIconModule,
     RouterModule,
+    ReactiveFormsModule,
     MatDialogModule
     
   ],

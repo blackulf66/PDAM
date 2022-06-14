@@ -6,6 +6,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { LoginGuardService } from './service/loginGuardService';
+import { AddsubpostComponent } from './components/addsubpost/addsubpost.component';
 
 const routes: Routes = [
   {path: '',pathMatch: 'full', redirectTo: 'login'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'subpost',component:SubpostListComponent},
   {path: 'post',component:PostListComponent},
   {path: 'user',component:UserListComponent},
+  {path: 'addsubpost',component:AddsubpostComponent},
   {path: 'menu', component:SideMenuComponent, canActivate:[LoginGuardService]},
 ];
 

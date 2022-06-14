@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
-import { AuthLoginDto } from '../model/dto/auth.dto';
-import { AuthService } from '../service/auth.service';
+import {Router } from '@angular/router';
+import { AuthLoginDto } from 'src/app/model/dto/auth.dto';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-dialog-login',
+  templateUrl: './dialog-login.component.html',
+  styleUrls: ['./dialog-login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class DialogLoginComponent implements OnInit {
 
   loginDto = new AuthLoginDto();
 
@@ -22,7 +22,10 @@ export class LoginComponent implements OnInit {
       alert(`Te has logueado y tu token es ${loginResult.token}`)
       localStorage.setItem('token', loginResult.token )
       this.router.navigate(['menu'])
+
     });
   }
 
 }
+ 
+

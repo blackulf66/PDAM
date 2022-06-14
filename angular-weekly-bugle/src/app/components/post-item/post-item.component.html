@@ -3,12 +3,11 @@
     <mat-card-header>
         <mat-card-title>{{postInput.postName}}</mat-card-title>
       </mat-card-header>
-    <mat-card-content>
-      <img src="{{postInput.imagenportada}}" alt="sisisisisisisi" width="100%">
-        <div class="juntos">
-                    </div>
-        <div mat-card-avatar class="example-header-image"></div>
+      <div class="container">
+      
+        <img src="{{postInput.imagenportada}}" alt="sisisisisisisi" width="100%">
+      </div>
+
         <button (click)="deletePost()"><mat-icon class="delete" aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>
         
-    </mat-card-content>
 </mat-card>

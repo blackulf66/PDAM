@@ -13,7 +13,7 @@ export class SubpostItemComponent implements OnInit {
 
   @Input() subpostInput!: SubPostResponse;
 
-  postsList: SubPostResponse[] | undefined;
+  postsLists: SubPostResponse[] | undefined;
 
   constructor(private subpostService: SubPostService) { }
   
@@ -29,12 +29,13 @@ export class SubpostItemComponent implements OnInit {
     return `${post.imagen}`;
   }
 
-  deletePost() {
-    this.subpostService.deletePost(this.subpostInput.id).subscribe(res => {
-      this.postsList = res;
-      })
+  deleteSubPost() {
+    this.subpostService.deleteSubPost(this.subpostInput.id).subscribe(resp => {
       alert("Se ha eliminado correctamente")
+      this.postsLists = resp;
+      })
   };
+
 
 }
 
