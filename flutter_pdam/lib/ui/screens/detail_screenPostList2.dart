@@ -1,22 +1,24 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:pdamfinal/models/auth/me_response.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
+import 'package:pdamfinal/models/subpost/Subpost_response.dart';
 
 import '../../constants.dart';
-class detailsPage extends StatefulWidget {
+class detailsPagePostList2 extends StatefulWidget {
     
-    detailsPage({ Key? key }) : super(key: key);
+    detailsPagePostList2({ Key? key }) : super(key: key);
 
     @override
     _detailsPageState createState() => _detailsPageState();
 }
 
-class _detailsPageState extends State<detailsPage> {
+class _detailsPageState extends State<detailsPagePostList2> {
 
     
     @override
     Widget build(BuildContext context) {
-      final post = ModalRoute.of(context)!.settings.arguments as PostApiResponse;
+      final post = ModalRoute.of(context)!.settings.arguments as PostList;
          return Scaffold(
       appBar: AppBar(
         title: Text(post.subpostsName),

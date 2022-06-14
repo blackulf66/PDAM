@@ -385,7 +385,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               InkWell(
                 splashColor: Colors.purple,
                 onTap: () {
-                  Navigator.pushNamed(context, '/detailpagePostList',
+                  Navigator.pushNamed(context, '/detailpagePostList2',
                       arguments: post);
                 },
                 child: SizedBox(

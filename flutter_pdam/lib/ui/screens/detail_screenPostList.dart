@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:pdamfinal/models/auth/me_response.dart';
 import 'package:pdamfinal/models/post/post_response.dart';
+import 'package:pdamfinal/models/subpost/Subpost_response.dart';
 
 import '../../constants.dart';
 class detailsPagePostList extends StatefulWidget {
@@ -17,10 +18,10 @@ class _detailsPageState extends State<detailsPagePostList> {
     
     @override
     Widget build(BuildContext context) {
-      final post = ModalRoute.of(context)!.settings.arguments as PostList;
+      final post = ModalRoute.of(context)!.settings.arguments as PostListSU;
          return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: Text(post.subpostsName),
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(

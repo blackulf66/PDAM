@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdamfinal/ui/screens/camera_screen.dart';
+import 'package:pdamfinal/ui/screens/detail_screenPostList2.dart';
 import 'ui/screens/comunity_screen.dart';
 import 'ui/screens/comunity_screen_following.dart';
 import 'ui/screens/detail_screenPostList.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
     '/menu':(context) => const MenuScreen(),
     '/detailpage':(context)=> detailsPage(),
     '/detailpagePostList':(context)=> detailsPagePostList(),
+    '/detailpagePostList2':(context)=> detailsPagePostList2(),
     '/search':(context)=>SearchScreen() ,
     '/perfil':(context) => ProfileScreen(),
     '/addform':(context) =>formScreen(),

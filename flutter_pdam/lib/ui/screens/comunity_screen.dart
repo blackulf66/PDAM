@@ -167,7 +167,7 @@ class _ComunitycreenState extends State<Comunitycreen> {
               InkWell(
                 splashColor: Colors.purple,
                 onTap: () {
-                  Navigator.pushNamed(context, '/detailpage', arguments: post);
+                  Navigator.pushNamed(context, '/detailpagePostList', arguments: post);
                 },
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
