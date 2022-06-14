@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -40,27 +40,36 @@ export class SubPostService {
     return this.http.delete<SubPostResponse[]>(`${environment.apiBaseUrl}/subpost/${id}`, {headers: headers});
   }
   
-   AddSubpost(addsubpostDto: SubPostDto): Observable<SubPostResponse> {
+   AddSubpost(addsubpostDto: SubPostDto) {
+
 
   const headers = new HttpHeaders({
-    "Content-Type":"multipart/form-data",
+     "Content-Type":"multipart/form-data",
      'Authorization': `Bearer ${localStorage.getItem('token')}`
      
   })
-  const parametros = {
-    'nombre': addsubpostDto.nombre,
-    'descripcion':addsubpostDto.descripcion,
-    'file':addsubpostDto.file
-  }
+  // const parametros = {
+  //   'nombre': addsubpostDto.nombre,
+  //   'descripcion':addsubpostDto.descripcion,
+  //   'file': addsubpostDto.file
+  // }
+   var formData = new FormData();
 
+    formData.append("file", addsubpostDto.file )
+    formData.append("descripcion", addsubpostDto.descripcion )
+    formData.append("nombre", addsubpostDto.nombre )
+
+
+    
     let requestUrl = `https://pdam-prueba.herokuapp.com/subpost/`;
     // let params = new HttpParams()
     // .set('nombre', addsubpostDto.nombre)
     // .set('file', addsubpostDto.file)
     // .set('descripcion', addsubpostDto.descripcion)
 
-  return this.http.post<SubPostResponse>(requestUrl , {queryParams : parametros} , {headers});
+  return new HttpRequest('POST',requestUrl , formData , {headers: headers});
   }
+
 
   // AddSubpost(addsubpostDto: SubPostDto): Observable<any> {
   //   const headers = {
