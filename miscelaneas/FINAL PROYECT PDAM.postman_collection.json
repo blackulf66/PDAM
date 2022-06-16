@@ -1,0 +1,820 @@
+{
+	"info": {
+		"_postman_id": "90885e6d-0038-4e7c-9515-11d90599b306",
+		"name": "FINAL PROYECT PDAM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17830077"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "multipart/form-data",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/450_1000.jpg"
+								},
+								{
+									"key": "username",
+									"value": "si",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email23@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "ADMIN",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"token\" , jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"email23@gmail.com\",\r\n    \"password\":\"123\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:777/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:777/user/si",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"user",
+								"si"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/user/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/user.json"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/screenshot - copia.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/user/si",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"user",
+								"si"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subpost",
+			"item": [
+				{
+					"name": "new SubPost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/450_1000.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "merek2",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "ewqewqewqewqeqweqwe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/subpost/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"subpost",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove subpost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/subpost/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"subpost",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update subpost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "publicacion",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/Untitled-1.json"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/450_1000.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/subpost/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"subpost",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get subpost by name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "merek",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/subpost/merek",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"subpost",
+								"merek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all subpost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/subpost/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"subpost",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create a post Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/screenshot - copia.png"
+								},
+								{
+									"key": "nombre",
+									"value": "elposdemereketengue",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "la mejor descripcion que s em eha ocurridoahora mismo",
+									"type": "text"
+								},
+								{
+									"key": "subpost",
+									"value": "merek",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/post/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/post/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"post",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "publicacion",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/post.json"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/jnavarro/Desktop/450_1000.jpg"
+								},
+								{
+									"key": "subpost",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/post/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get post by name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "merek",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:777/post/elposdemereketengue",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"post",
+								"elposdemereketengue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getall",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/post/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"post",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by subpost id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/post/subpost/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"post",
+								"subpost",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vote",
+			"item": [
+				{
+					"name": "follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/follow/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"follow",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vote Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"voteType\":\"DISLIKE\",\r\n    \"postId\":\"1\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:777/votes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"votes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unfollow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:777/unfollow/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "777",
+							"path": [
+								"unfollow",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
