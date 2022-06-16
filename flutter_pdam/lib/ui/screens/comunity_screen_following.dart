@@ -55,6 +55,9 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
 
          items2 = fetchPostsBySubpostname(subpost.nombre);
 
+             final date = DateTime.parse(subpost.createdDate);
+
+
     return Scaffold(
         appBar: AppBar(
             title: Text("Detalle de comunidad"),
@@ -90,10 +93,16 @@ class _ComunitycreenState extends State<ComunitycreenFollowing> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                     alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "publicada en: " + subpost.createdDate,
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    )),
+                    child:
+                 Text(
+                "creado en: " +
+                    date.day.toString() +
+                    "/" +
+                    date.month.toString() +
+                    "/" +
+                    date.year.toString(),
+                style: TextStyle(color: Style.LetraColor),
+              ),),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
