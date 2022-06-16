@@ -17,6 +17,9 @@ class _detailsPageState extends State<detailsPage> {
     @override
     Widget build(BuildContext context) {
       final post = ModalRoute.of(context)!.settings.arguments as PostApiResponse;
+
+                   final date = DateTime.parse(post.createdDate);
+
          return Scaffold(
       appBar: AppBar(
         title: Text(post.subpostsName),
@@ -54,7 +57,15 @@ class _detailsPageState extends State<detailsPage> {
               padding: const EdgeInsets.all(10.0),
               child: Container(
                 alignment: Alignment.bottomLeft,
-                child: Text("publicada en: "+post.createdDate, style: TextStyle(color:Colors.white , fontSize: 15),)),
+                child:Text(
+                "creado en: " +
+                    date.day.toString() +
+                    "/" +
+                    date.month.toString() +
+                    "/" +
+                    date.year.toString(),
+                style: TextStyle(color: Style.LetraColor),
+              ),),
             )
       
       
